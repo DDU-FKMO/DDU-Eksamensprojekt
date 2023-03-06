@@ -30,8 +30,12 @@
 					],
 					"background": {
 						"activeOnStart": true,
-						"beginsPattern": {"regexp": "."},
-						"endsPattern": {"regexp": "."}
+						"beginsPattern": {
+							"regexp": "."
+						},
+						"endsPattern": {
+							"regexp": "."
+						}
 					}
 				}
 			]
@@ -58,8 +62,12 @@
 					],
 					"background": {
 						"activeOnStart": true,
-						"beginsPattern": {"regexp": "."},
-						"endsPattern": {"regexp": "."}
+						"beginsPattern": {
+							"regexp": "."
+						},
+						"endsPattern": {
+							"regexp": "."
+						}
 					}
 				}
 			]
@@ -67,12 +75,30 @@
 		{
 			"label": "build-frontend",
 			"options": {
-				"cwd": "${workspaceFolder}/site"
+				"cwd": "${workspaceFolder}/frontend"
 			},
 			"command": "npm run build",
 			"isBackground": false,
 			"group": "build",
 			"type": "shell"
+		},
+		{
+			"label": "startup",
+			"type": "shell",
+			"group": "none",
+			"command": "npx prettier --write .;cd frontend;npm i;cd ../backend;npm i",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			},
+			"runOptions": {
+				"runOn": "folderOpen"
+			},
+			"dependsOn": ["frontend: npm install", "backend: npm install"],
+			"problemMatcher": []
 		}
 	]
 }
