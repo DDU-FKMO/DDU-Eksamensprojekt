@@ -1,0 +1,78 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "debug-both",
+			"group": "test",
+			"dependsOrder": "sequence",
+			"problemMatcher": [],
+			"dependsOn": ["build-frontend", "start-backend"]
+		},
+		{
+			"label": "debug-frontend",
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"command": "npm run dev",
+			"isBackground": true,
+			"group": "test",
+			"type": "shell",
+			"problemMatcher": [
+				{
+					"pattern": [
+						{
+							"regexp": ".",
+							"file": 1,
+							"line": 1,
+							"column": 1,
+							"message": 1
+						}
+					],
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": {"regexp": "."},
+						"endsPattern": {"regexp": "."}
+					}
+				}
+			]
+		},
+		{
+			"label": "start-backend",
+			"options": {
+				"cwd": "${workspaceFolder}/backend"
+			},
+			"command": "nodemon .",
+			"isBackground": true,
+			"group": "test",
+			"type": "shell",
+			"problemMatcher": [
+				{
+					"pattern": [
+						{
+							"regexp": ".",
+							"file": 1,
+							"line": 1,
+							"column": 1,
+							"message": 1
+						}
+					],
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": {"regexp": "."},
+						"endsPattern": {"regexp": "."}
+					}
+				}
+			]
+		},
+		{
+			"label": "build-frontend",
+			"options": {
+				"cwd": "${workspaceFolder}/site"
+			},
+			"command": "npm run build",
+			"isBackground": false,
+			"group": "build",
+			"type": "shell"
+		}
+	]
+}
