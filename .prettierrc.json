@@ -1,5 +1,5 @@
 {
-	"printWidth": 300,
+	"printWidth": 400,
 	"tabWidth": 4,
 	"useTabs": true,
 	"semi": true,
@@ -9,5 +9,5 @@
 	"arrowParens": "always",
 	"requirePragma": false,
 	"vueIndentScriptAndStyle": true,
-	"singleAttributePerLine": true
+	"singleAttributePerLine": false
 }

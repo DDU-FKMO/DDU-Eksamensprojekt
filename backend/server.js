@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const fs = require("fs");
-
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
+//Setup server settings
 const limiter = rateLimit({
 	windowMs: 1 * 60 * 1000, // 1 minutes
 	max: 100 // limit each IP to 100 requests per windowMs
@@ -14,11 +14,13 @@ const limiter = rateLimit({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(helmet());
 app.use(limiter);
+app.use(express.json());
 app.use(express.static("../frontend/dist"));
+
+//Index page
 app.get("/", (req, res) => {
 	res.sendFile("../frontend/dist/index.html");
 });
-app.use("/*", express.static("../frontend/dist/index.html"));
 
 //Setup server
 const http = require("http");
@@ -38,10 +40,6 @@ const credentials = {
 ///const httpsServer = https.createServer(credentials, app);
 const httpServer = http.createServer(app);
 
-//Socket
-const {Server} = require("socket.io");
-const {Socket} = require("socket.io-client");
-
 /**httpsServer.listen(443, () => {
     console.log('listening on *:443');
 });*/
@@ -52,9 +50,11 @@ httpServer.listen(5000, () => {
 
 //Export io
 module.exports = {
-	io: new Server(httpServer),
 	app: app
 };
 
 //Load logic
-///require("./logic.js");
+require("./trainingProgram.js");
+
+//Redirect everything else to index
+app.use("/*", express.static("../frontend/dist/index.html"));
