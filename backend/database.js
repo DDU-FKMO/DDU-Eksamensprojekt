@@ -1,4 +1,25 @@
 require("dotenv").config();
-GOOGLE_API = process.env.GOOGLE_API
+require("./database_connection.js").connection();
+//const bcrypt = require("bcryptjs");
+//const jwt = require("jsonwebtoken");
 
-console.log(GOOGLE_API)
+const User = require("./models/model_user.js");
+
+
+async function cre () {
+const user = await User.create({
+	userName: "FIlip",
+	email: "Filipemailsss",
+	password: "Filippassword"
+})}
+
+async function adsd () {
+    const user = await User.findOne({"email": "Filipemailsss"});
+    console.log(user)
+}
+
+
+//cre();
+
+
+adsd();
