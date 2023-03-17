@@ -61,6 +61,11 @@ async function addExerciseToProgram(programName,exerciseJSON){
 }
 
 async function createExercise(exerciseJSON){
+    const exists = await getExerciseByName(exerciseJSON.name);
+    if (exists){
+        console.log("exercise already exists")
+        return exists
+    }
     const sucess = await Exercise.create(
     {   "name": exerciseJSON.name,
 		"type": exerciseJSON.type,
@@ -75,6 +80,13 @@ async function createExercise(exerciseJSON){
     return sucess
 }
 
+async function getExerciseByName(name){
+    const exer = await Exercise.findOne({"name": name});
+    if (exer){
+        return exer
+    }
+    return null
+}
 
 async function addProgramToUser(programName, email){
     const program = await getProgramByName(programName);
@@ -100,6 +112,7 @@ async function getUserByEmail(email) {
    // console.log("Found user: " + user.username)
     return user
 }
+
 
 async function getProgramByName(name) {
 	const program = await Program.findOne({"programName": name});
