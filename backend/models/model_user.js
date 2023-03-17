@@ -88,9 +88,9 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = {
-	user: mongoose.model("user", userSchema),
-	program: mongoose.model("program", programSchema),
-	exercise: mongoose.model("exercise", exerciseSchema),
-	session: mongoose.model("session", sessionSchema),
+	User: mongoose.model("user", userSchema),
+	Program: mongoose.model("program", programSchema),
+	Exercise: mongoose.model("exercise", exerciseSchema),
+	Session: mongoose.model("session", sessionSchema),
 	//sessionLog: mongoose.model("sessionLog", sessionLogSchema)
 };

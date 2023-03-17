@@ -8,6 +8,7 @@ const {Program} = require("./models/model_user.js");
 const {Exercise} = require("./models/model_user.js");
 const {Session} = require("./models/model_user.js");
 
+console.log(User)
 
 async function register(username, email, password) {
     // encrypt password
@@ -66,6 +67,7 @@ async function addProgramToUser(programName, email){
 
 async function getUserByEmail(email) {
     const user = await User.findOne({"email": email});
+   // console.log("Found user: " + user.username)
     return user
 }
 
@@ -75,9 +77,16 @@ async function getProgramByName(name) {
 }
 
 async function updateStreak(email){ // Filipemails
+    console.log("got here");
     return User.updateOne({"email": email}, {"$inc": {streak: 1}})
 }
 
 
+    register("Filip", "Filipemails", "123");
+    updateStreak("Filipemails");
+    createProgram("program1");
+    addExerciseToProgram("program1", {"name": "øvelse1", "type": "cardio", "muscle": "biceps"});
+    addProgramToUser("program1", "Filipemails");
 
-updateStreak("Filipemails");
+
+
