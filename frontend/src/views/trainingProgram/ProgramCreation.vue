@@ -49,12 +49,10 @@
 
 	export default defineComponent({
 		name: "UserSettings",
-		data() {
-			return {
-				type: null,
-				suggestions: []
-			};
-		},
+		data: () => ({
+			type: null,
+			suggestions: []
+		}),
 		components: {Program},
 		mounted() {
 			console.log("Settings mounted");
