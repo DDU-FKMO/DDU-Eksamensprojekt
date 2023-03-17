@@ -120,15 +120,23 @@ async function updateStreak(email){ // Filipemails
     //updateStreak("Filipemails");
     //createProgram("program1");
 
-    data = {"name": "1",
-		"type": "1",
-		"muscle": "1",
-		"equipment": "1",
-		"difficulty": "1",
-		"instructions":"1",
-		"weighted": false,
-		"defaultSets":2
-    }
+    // data = {"name": "1",
+	// 	"type": "1",
+	// 	"muscle": "1",
+	// 	"equipment": "1",
+	// 	"difficulty": "1",
+	// 	"instructions":"1",
+	// 	"weighted": false,
+	// 	"defaultSets":2
+    // }
     //addExerciseToProgram("program1", data);
-    addProgramToUser("program1", "Filipemails");
+    //addProgramToUser("program1", "Filipemails");
+
+    module.exports = {
+    register,
+    updateStreak,
+    createProgram,
+    addExerciseToProgram,
+    addProgramToUser,
+    }
 
