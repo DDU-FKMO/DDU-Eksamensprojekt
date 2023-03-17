@@ -10,7 +10,7 @@ const router = createRouter({
 		},
 		{
 			path: "/training",
-			name: "Traning Program",
+			name: "Training Program",
 			component: () => import("../views/trainingProgram/TrainingPage.vue")
 		},
 		{

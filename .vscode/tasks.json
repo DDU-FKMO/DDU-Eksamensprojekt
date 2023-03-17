@@ -3,6 +3,7 @@
 	"tasks": [
 		{
 			"label": "debug-both",
+			"type": "shell",
 			"group": "test",
 			"dependsOrder": "sequence",
 			"problemMatcher": [],
@@ -10,13 +11,13 @@
 		},
 		{
 			"label": "debug-frontend",
+			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/frontend"
 			},
 			"command": "npm run dev",
 			"isBackground": true,
 			"group": "test",
-			"type": "shell",
 			"problemMatcher": [
 				{
 					"pattern": [
@@ -42,13 +43,13 @@
 		},
 		{
 			"label": "start-backend",
+			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/backend"
 			},
 			"command": "nodemon .",
 			"isBackground": true,
 			"group": "test",
-			"type": "shell",
 			"problemMatcher": [
 				{
 					"pattern": [
@@ -74,13 +75,13 @@
 		},
 		{
 			"label": "build-frontend",
+			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/frontend"
 			},
 			"command": "npm run build",
 			"isBackground": false,
-			"group": "build",
-			"type": "shell"
+			"group": "build"
 		},
 		{
 			"label": "startup",
