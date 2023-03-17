@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 
 const exerciseSchema = new mongoose.Schema({
-    name: String,
-    type: String,
-    muscle: String,
-    equipment: String,
-    difficulty: String,
-    instructions: String,
-    weighted: Boolean,
-    defaultSets: Number
-})
+	name: String,
+	type: String,
+	muscle: String,
+	equipment: String,
+	difficulty: String,
+	instructions: String,
+	weighted: Boolean,
+	defaultSets: Number
+});
 
 /*
 const sessionSchema = new mongoose.Schema({
@@ -27,7 +27,7 @@ const sessionSchema = new mongoose.Schema({
 			nameOfExercise: String,
 			sets: Number //eller noget
 		}
-	],/*
+	] /*
 	session: {
 		type: exerciseSchema,
 		default: {}
@@ -50,7 +50,7 @@ const programSchema = new mongoose.Schema({
 			type: exerciseSchema,
 			default: {}
 		}
-	],
+	]
 	//workout: {type: Boolean, default: false} // Er det et træningsprogram
 });
 
@@ -77,20 +77,22 @@ const userSchema = new mongoose.Schema({
 				}
 			]
 		}
-	],/*
+	] /*
 	logs: [
 		{
 			type: sessionSchema,
 			default: {}
 		}
-	],*/
+	],*/,
 	token: String
 });
+
+//module.exports = mongoose.model("user", userSchema);
 
 module.exports = {
 	User: mongoose.model("user", userSchema),
 	Program: mongoose.model("program", programSchema),
 	Exercise: mongoose.model("exercise", exerciseSchema),
-	Session: mongoose.model("session", sessionSchema),
+	Session: mongoose.model("session", sessionSchema)
 	//sessionLog: mongoose.model("sessionLog", sessionLogSchema)
 };
