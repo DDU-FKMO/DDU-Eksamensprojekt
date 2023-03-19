@@ -1,83 +1,53 @@
 const fetch = require("node-fetch");
 const {app} = require("./server.js");
+const {getAllExercises, getAllPrograms} = require("./database.js");
+const {Exercise, Program} = require("./models/model_user.js");
 
 //Program Recommendations
-app.get("/trainingProgram/recommend", (req, res) => {
-	let programs = [
-		{
-			name: "Recommendation 1",
-			description: "The first recommended training program",
-			exercises: [
-				{
-					name: "Test",
-					description: "Test",
-					sets: [
-						{
-							reps: 5
-						}
-					]
-				}
-			]
-		},
-		{
-			name: "Recommendation 2",
-			description: "The second recommended training program",
-			exercises: [
-				{
-					name: "Test",
-					description: "Test",
-					sets: [
-						{
-							reps: 5
-						}
-					]
-				}
-			]
-		},
-		{
-			name: "Recommendation 3",
-			description: "The third and final recommended training program",
-			exercises: [
-				{
-					name: "Test",
-					description: "Test",
-					sets: [
-						{
-							reps: 5
-						}
-					]
-				}
-			]
-		}
-	];
+app.get("/trainingProgram/recommend", async (req, res) => {
+	let allPrograms = await getAllPrograms();
+	let programs = allPrograms.filter((program) => program.programName.includes("Default-") && program.owner == "Global");
 	console.log(programs);
 	res.json(programs);
 });
 
 //Program Suggestions
-app.post("/trainingProgram/suggest", (req, res) => {
+app.post("/trainingProgram/suggest", async (req, res) => {
 	let settings = req.body;
 	console.log(settings);
+
+	let allExercises = await getAllExercises();
+
+	let availableExercises = allExercises.filter((exercise) => {
+		// Filter out exercises that are not available
+		if ((exercise.difficulty = settings.difficulty && settings.muscleGroup.includes(exercise.muscle))) {
+			if (settings.equipment.includes(exercise.equipment)) {
+				return true;
+			} else {
+				///return false;
+				return true;
+			}
+		} else {
+			return false;
+		}
+	});
 
 	let programs = [];
 
 	for (let i = 0; i < 3; i++) {
 		let program = {
 			name: "Suggestion " + (i + 1),
-			description: "Test",
-			exercises: [
-				{
-					name: "Test",
-					description: "Test",
-					sets: [
-						{
-							reps: 10
-						}
-					]
-				}
-			]
+			exercises: [],
+			owner: "Auto-generated"
 		};
 
+		//Add 3 exercises per training day
+		for (let day = 0; day < 3; day++) {
+			for (let e = 0; e < 3; e++) {
+				let exercise = availableExercises[Math.floor(Math.random() * availableExercises.length)];
+				program.exercises.push(exercise);
+			}
+		}
 		programs.push(program);
 	}
 

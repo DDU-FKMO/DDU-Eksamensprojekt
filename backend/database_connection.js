@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const {onDatabaseConnected} = require("./database.js");
 
 const {MONGO_URI} = process.env;
 mongoose.set("strictQuery", false);
@@ -9,6 +10,7 @@ exports.connection = () => {
 		})
 		.then(() => {
 			console.log("Successfully connected to database");
+			onDatabaseConnected();
 		})
 		.catch((error) => {
 			console.log("Database connection failed. exiting now...");

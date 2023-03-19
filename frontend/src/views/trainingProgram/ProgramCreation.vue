@@ -8,20 +8,45 @@
 		<h3>User Settings</h3>
 		<form @submit="getSuggestions">
 			<label for="muscleGroups">Muscle Group:</label>
-			<select name="Muscle groups" id="muscleGroups">
-				<option value="Chest">Chest</option>
-				<option value="Back">Back</option>
-				<option value="Shoulders">Shoulders</option>
-				<option value="Biceps">Biceps</option>
-				<option value="Triceps">Triceps</option>
-				<option value="Legs">Legs</option>
-				<option value="Abs">Abs</option>
-			</select>
+			<div>
+				<input type="checkbox" name="muscleGroups" value="abdominals" checked />
+				<label>Abdominals</label>
+				<input type="checkbox" name="muscleGroups" value="abductors" checked />
+				<label>Abductors</label>
+				<input type="checkbox" name="muscleGroups" value="adductors" checked />
+				<label>Adductors</label>
+				<input type="checkbox" name="muscleGroups" value="biceps" checked />
+				<label>Biceps</label>
+				<input type="checkbox" name="muscleGroups" value="calves" checked />
+				<label>Calves</label>
+				<input type="checkbox" name="muscleGroups" value="chest" checked />
+				<label>Chest</label>
+				<input type="checkbox" name="muscleGroups" value="forearms" checked />
+				<label>Forearms</label>
+				<input type="checkbox" name="muscleGroups" value="glutes" checked />
+				<label>Glutes</label>
+				<input type="checkbox" name="muscleGroups" value="hamstrings" checked />
+				<label>Hamstrings</label>
+				<input type="checkbox" name="muscleGroups" value="lats" checked />
+				<label>Lats</label>
+				<input type="checkbox" name="muscleGroups" value="lower_back" checked />
+				<label>Lower back</label>
+				<input type="checkbox" name="muscleGroups" value="middle_back" checked />
+				<label>Middle back</label>
+				<input type="checkbox" name="muscleGroups" value="neck" checked />
+				<label>Neck</label>
+				<input type="checkbox" name="muscleGroups" value="quadriceps" checked />
+				<label>Quadriceps</label>
+				<input type="checkbox" name="muscleGroups" value="traps" checked />
+				<label>Traps</label>
+				<input type="checkbox" name="muscleGroups" value="triceps" checked />
+				<label>Triceps</label>
+			</div>
 			<label for="difficulty">Difficulty:</label>
-			<select name="Difficulty" id="difficulty">
-				<option value="Beginner">Beginner</option>
-				<option value="Intermediate">Intermediate</option>
-				<option value="Advanced">Advanced</option>
+			<select name="difficulty" id="difficulty">
+				<option value="beginner">Beginner</option>
+				<option value="intermediate">Intermediate</option>
+				<option value="expert">Expert</option>
 			</select>
 			<label for="equipment">Equipment:</label>
 			<div>
@@ -39,7 +64,9 @@
 	</div>
 	<div class="suggestions" v-if="type == 0 || type == 1">
 		<h3>Program suggestions</h3>
-		<Program v-for="program in suggestions" :name="program.name" :excersises="program.excersises" :schedule="program.schedule" />
+		<Program v-for="program in suggestions" :name="program.name" :excersises="program.excersises" :schedule="program.schedule">
+			<button @onclick="selectProgram(program)">Use this suggestion</button>
+		</Program>
 	</div>
 </template>
 
@@ -63,6 +90,9 @@
 				this.type = type;
 				if (type == 0) this.getRecommendations();
 			},
+			selectProgram: function (program) {
+				console.log("Selected program", program);
+			},
 			getRecommendations: function () {
 				fetch("/trainingProgram/recommend")
 					.then((response) => response.json())
@@ -80,8 +110,8 @@
 				//Get form data settings
 				const data = new FormData(e.target);
 				let settings = {
-					muscleGroup: data.get("Muscle groups"),
-					difficulty: data.get("Difficulty"),
+					muscleGroup: data.getAll("muscleGroups"),
+					difficulty: data.get("difficulty"),
 					equipment: data.getAll("equipment")
 				};
 				console.log(settings);
