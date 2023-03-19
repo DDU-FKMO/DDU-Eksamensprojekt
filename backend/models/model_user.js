@@ -50,7 +50,8 @@ const programSchema = new mongoose.Schema({
 			type: exerciseSchema,
 			default: {}
 		}
-	]
+	],
+	owner: {type: String, default: "Global"}
 	//workout: {type: Boolean, default: false} // Er det et træningsprogram
 });
 

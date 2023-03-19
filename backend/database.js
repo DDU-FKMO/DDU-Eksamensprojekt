@@ -33,10 +33,89 @@ async function createProgram(programName) {
 		console.log("program exists" + exists);
 		return false; // eller noget
 	}
-	const program = Program.create({
-		programName: programName
-	});
-	console.log("created program" + programName);
+    const program = Program.create({
+        programName: programName,
+    })
+    console.log("created program" + programName)
+    return program
+}
+
+async function addExerciseToProgram(programName,exerciseJSON){
+    const exists = await getProgramByName(programName);
+	if (!exists) {
+        console.log("program does not exists")
+		return false; // eller noget
+	}
+    console.log("exissts, trying to add program")
+     const exerExists = exists[exerciseJSON.name];
+		if (exerExists) {
+            console.log("exercise exists");
+			return false; // eller noget
+		}
+    const sucess = await createExercise(exerciseJSON);
+    exists.exercises.push(sucess)
+    exists.save();
+    console.log("Successfully added exercise to program")
+    return sucess
+}
+
+async function createExercise(exerciseJSON){
+    const exists = await getExerciseByName(exerciseJSON.name);
+    if (exists){
+        console.log("exercise already exists")
+        return exists
+    }
+    const sucess = await Exercise.create(
+    {   "name": exerciseJSON.name,
+		"type": exerciseJSON.type,
+		"muscle": exerciseJSON.muscle,
+		"equipment": exerciseJSON.equipment,
+		"difficulty": exerciseJSON.difficulty,
+		"instructions": exerciseJSON.instructions,
+		"weighted": exerciseJSON.weighted,
+		"defaultSets": exerciseJSON.defaultSets
+    });
+    console.log("added exercise")
+    return sucess
+}
+
+async function getExerciseByName(name){
+    const exer = await Exercise.findOne({"name": name});
+    if (exer){
+        return exer
+    }
+    return null
+}
+
+async function addProgramToUser(programName, email){
+    const program = await getProgramByName(programName);
+	if (!program) {
+        console.log("No such program exists")
+		return false; // eller noget
+	}
+    const userExists = await getUserByEmail(email);
+	if (!userExists) {
+        console.log("user does not exist")
+		return false; // eller noget
+	}
+    data = {"program": program};
+    userExists.programList.push({"program": program})
+    userExists.save()
+    console.log("added to user")
+    return true
+    //return User.updateOne({email: email}, {"$push":{"programList":data}});
+}
+
+async function getUserByEmail(email) {
+    const user = await User.findOne({"email": email});
+   // console.log("Found user: " + user.username)
+    return user
+}
+
+
+async function getProgramByName(name) {
+	const program = await Program.findOne({"programName": name});
+    console.log("fetched " + program.programName)
 	return program;
 }
 
