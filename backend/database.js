@@ -33,37 +33,37 @@ async function createProgram(programName) {
 		console.log("program exists" + exists);
 		return false; // eller noget
 	}
-    const program = Program.create({
-        programName: programName,
-    })
-    console.log("created program" + programName)
-    return program
+	const program = Program.create({
+		programName: programName
+	});
+	console.log("created program" + programName);
+	return program;
 }
 
-async function addExerciseToProgram(programName,exerciseJSON){
-    const exists = await getProgramByName(programName);
+async function addExerciseToProgram(programName, exerciseJSON) {
+	const exists = await getProgramByName(programName);
 	if (!exists) {
-        console.log("program does not exists")
+		console.log("program does not exists");
 		return false; // eller noget
 	}
-    console.log("exissts, trying to add program")
-     const exerExists = exists[exerciseJSON.name];
-		if (exerExists) {
-            console.log("exercise exists");
-			return false; // eller noget
-		}
-    const sucess = await createExercise(exerciseJSON);
-    exists.exercises.push(sucess)
-    exists.save();
-    console.log("Successfully added exercise to program")
-    return sucess
+	console.log("exissts, trying to add program");
+	const exerExists = exists[exerciseJSON.name];
+	if (exerExists) {
+		console.log("exercise exists");
+		return false; // eller noget
+	}
+	const sucess = await createExercise(exerciseJSON);
+	exists.exercises.push(sucess);
+	exists.save();
+	console.log("Successfully added exercise to program");
+	return sucess;
 }
 
-async function createExercise(exerciseJSON){
+async function createExercise(exerciseJSON) {
     const exists = await getExerciseByName(exerciseJSON.name);
-    if (exists){
-        console.log("exercise already exists")
-        return exists
+	if (exists) {
+		console.log("exercise already exists");
+		return exists;
     }
     const sucess = await Exercise.create(
     {   "name": exerciseJSON.name,
@@ -79,23 +79,23 @@ async function createExercise(exerciseJSON){
     return sucess
 }
 
-async function getExerciseByName(name){
-    const exer = await Exercise.findOne({"name": name});
-    if (exer){
-        return exer
+async function getExerciseByName(name) {
+	const exer = await Exercise.findOne({name: name});
+	if (exer) {
+		return exer;
     }
-    return null
+	return null;
 }
 
-async function addProgramToUser(programName, email){
+async function addProgramToUser(programName, email) {
     const program = await getProgramByName(programName);
 	if (!program) {
-        console.log("No such program exists")
+		console.log("No such program exists");
 		return false; // eller noget
 	}
     const userExists = await getUserByEmail(email);
 	if (!userExists) {
-        console.log("user does not exist")
+		console.log("user does not exist");
 		return false; // eller noget
 	}
     data = {"program": program};
@@ -109,7 +109,7 @@ async function addProgramToUser(programName, email){
 async function getUserByEmail(email) {
     const user = await User.findOne({"email": email});
    // console.log("Found user: " + user.username)
-    return user
+	return user;
 }
 
 
@@ -210,15 +210,15 @@ async function updateStreak(email) {
 async function refreshExerciseList() {
 	console.log("Fetching exercises from API");
 	for (let i = 0; i < 1; i++) {
-		fetch("https://api.api-ninjas.com/v1/exercises?offset=" + i * 10, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"X-Api-Key": process.env.NINJA_API
-			}
-		})
-			.then((response) => response.json())
-			.then((data) => {
+	fetch("https://api.api-ninjas.com/v1/exercises?offset=" + i * 10, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			"X-Api-Key": process.env.NINJA_API
+		}
+	})
+		.then((response) => response.json())
+		.then((data) => {
 				data.forEach((exercise) => {
 					if (getExerciseByName(exercise.name)) return;
 					exercise.defaultSets = 3;
@@ -228,10 +228,10 @@ async function refreshExerciseList() {
 					}
 					createExercise(exercise);
 				});
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-			});
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
 	}
 }
 
