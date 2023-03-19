@@ -16,10 +16,10 @@
 				<h3>Saturday</h3>
 				<ul>
 					<li>
-						<Collapsible summary="Barbell lift" description="Lift it yeah"/>
+						<Collapsible summary="Barbell lift" description="Lift it yeah" />
 					</li>
 					<li>
-						<Collapsible summary="Dumbbell lift" description="Woo yeah lift it baby"/>
+						<Collapsible summary="Dumbbell lift" description="Woo yeah lift it baby" />
 					</li>
 				</ul>
 			</div>
@@ -27,10 +27,10 @@
 				<h3>Sunday</h3>
 				<ul>
 					<li>
-						<Collapsible summary="Barbell squat" description="Squat with the barbell"/>
+						<Collapsible summary="Barbell squat" description="Squat with the barbell" />
 					</li>
 					<li>
-						<Collapsible summary="Crunches" description="Become thigh god"/>
+						<Collapsible summary="Crunches" description="Become thigh god" />
 					</li>
 				</ul>
 			</div>
@@ -39,13 +39,13 @@
 </template>
 
 <script>
-import Collapsible from './Collapsible.vue';
+	import Collapsible from "./Collapsible.vue";
 
 	export default {
-    mounted() { },
-    methods: {},
-    components: { Collapsible }
-}
+		mounted() {},
+		methods: {},
+		components: {Collapsible}
+	};
 </script>
 
 <style>
