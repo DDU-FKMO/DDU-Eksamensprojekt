@@ -184,6 +184,9 @@ async function getExerciseByName(name) {
 async function updateStreak(email) {
 	// Filipemails
 	let user = await getUserByEmail(email);
+	if (!user) {
+		return false;
+	}
 	user.streak += 1;
 	user.save();
 	return "done";
@@ -234,6 +237,8 @@ async function refreshExerciseList() {
 		});
 	}
 }
+
+updateStreak("Filipemails")
 
 //Export
 module.exports = {
