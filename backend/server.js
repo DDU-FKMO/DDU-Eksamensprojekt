@@ -54,6 +54,9 @@ module.exports = {
 	app: app
 };
 
+//Load database
+require("./database.js");
+
 //Load logic
 require("./trainingProgram.js");
 
