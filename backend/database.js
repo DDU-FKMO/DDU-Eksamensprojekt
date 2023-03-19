@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("./database_connection.js").connection();
+const fetch = require("node-fetch");
 //const bcrypt = require("bcryptjs");
 //const jwt = require("jsonwebtoken");
 
@@ -8,8 +9,6 @@ const {User} = require("./models/model_user.js");
 const {Program} = require("./models/model_user.js");
 const {Exercise} = require("./models/model_user.js");
 const {Session} = require("./models/model_user.js");
-
-console.log(User);
 
 async function register(username, email, password) {
 	// encrypt password
@@ -97,6 +96,12 @@ async function getProgramByName(name) {
 	return program;
 }
 
+async function getExerciseByName(name) {
+	const exercise = await Exercise.findOne({name: name});
+	console.log("fetched " + exercise.name);
+	return exercise;
+}
+
 async function updateStreak(email) {
 	// Filipemails
 	let user = await getUserByEmail(email);
@@ -122,28 +127,38 @@ async function updateStreak(email) {
 //addExerciseToProgram("program1", data);
 //addProgramToUser("program1", "Filipemails");
 
-//Refresh excerise list
-/**let testExercises = [];
-for (let i = 0; i < 3; i++) {
-	fetch("https://api.api-ninjas.com/v1/exercises?offset=" + i * 10, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			"X-Api-Key": process.env.NINJA_API
-		}
-	})
-		.then((response) => response.json())
-		.then((data) => {
-			testExercises = testExercises.concat(data);
-			console.log(testExercises.length);
+//Refresh exercise list
+async function refreshExerciseList() {
+	console.log("Fetching exercises from API");
+	for (let i = 0; i < 1; i++) {
+		fetch("https://api.api-ninjas.com/v1/exercises?offset=" + i * 10, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"X-Api-Key": process.env.NINJA_API
+			}
 		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
-}*/
+			.then((response) => response.json())
+			.then((data) => {
+				data.forEach((exercise) => {
+					if (getExerciseByName(exercise.name)) return;
+					exercise.defaultSets = 3;
+					exercise.weighted = false;
+					if (exercise.type == "strength" || exercise.type == "powerlifting" || exercise.type == "olympic_weightlifting") {
+						exercise.weighted = true;
+					}
+					createExercise(exercise);
+				});
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
+	}
+}
 
 //Export
 module.exports = {
+	refreshExerciseList,
 	register,
 	updateStreak,
 	createProgram,
