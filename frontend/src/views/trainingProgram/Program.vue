@@ -14,12 +14,12 @@
 				type: String,
 				required: true
 			},
-			excersises: {
+			exercises: {
 				type: Array,
 				required: true
 			},
 			schedule: {
-				type: Object,
+				type: Array,
 				required: true
 			}
 		},
@@ -29,7 +29,7 @@
 			};
 		},
 		mounted() {
-			console.log("Program mounted");
+			console.log("Program mounted", this.name, this.exercises, this.schedule);
 		}
 	});
 </script>

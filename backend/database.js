@@ -11,7 +11,7 @@ const {Schedule} = require("./models/model_user.js");
 
 //On database connected function
 function onDatabaseConnected() {
-	console.log("Database connected...");
+	console.log("Database connected!");
 	refreshExerciseList();
 	///addDefaultPrograms();
 }
@@ -54,16 +54,17 @@ async function register(username, email, password) {
 }
 
 //Create new program
-async function createProgram(programName) {
+async function createProgram(programName, owner) {
 	const exists = await getProgramByName(programName);
 	if (exists) {
-		console.log("program exists" + exists);
+		console.log("program already exists");
 		return false; // eller noget
 	}
-	const program = Program.create({
-		programName: programName
+	const program = await Program.create({
+		programName: programName,
+		owner: owner ?? null
 	});
-	console.log("created program" + programName);
+	console.log("created program: " + programName);
 	return program;
 }
 
@@ -74,15 +75,15 @@ async function addExerciseToProgram(programName, exerciseJSON) {
 		console.log("program does not exists");
 		return false; // eller noget
 	}
-	console.log("exissts, trying to add program");
+	console.log("program exists, trying to add exercise to program");
 	const exerExists = exists[exerciseJSON.name];
 	if (exerExists) {
-		console.log("exercise exists");
+		console.log("exercise already exists");
 		return false; // eller noget
 	}
 	const sucess = await createExercise(exerciseJSON);
 	exists.exercises.push(sucess);
-	exists.save();
+	await exists.save();
 	console.log("Successfully added exercise to program");
 	return sucess;
 }
@@ -144,7 +145,6 @@ async function getAllExercises() {
 //Get program by name
 async function getProgramByName(name) {
 	const program = await Program.findOne({programName: name});
-	console.log("fetched " + program.programName);
 	return program;
 }
 

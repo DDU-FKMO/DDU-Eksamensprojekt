@@ -1,7 +1,6 @@
 const fetch = require("node-fetch");
 const {app} = require("./server.js");
-const {getAllExercises, getAllPrograms} = require("./database.js");
-const {Exercise, Program} = require("./models/model_user.js");
+const {getAllExercises, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser} = require("./database.js");
 
 //Program Recommendations
 app.get("/trainingProgram/recommend", async (req, res) => {
@@ -32,24 +31,53 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 		}
 	});
 
+	if (availableExercises.length < 9) {
+		return res.json({status: "error", message: "Not enough exercises available for your settings."});
+	}
+
 	let programs = [];
 
 	for (let i = 0; i < 3; i++) {
 		let program = {
-			name: "Suggestion " + (i + 1),
+			programName: "Suggestion " + (i + 1),
 			exercises: [],
+			schedule: [],
 			owner: "Auto-generated"
 		};
 
 		//Add 3 exercises per training day
 		for (let day = 0; day < 3; day++) {
+			let scheduleData = {day: "Day " + day * 2, exercises: []};
 			for (let e = 0; e < 3; e++) {
 				let exercise = availableExercises[Math.floor(Math.random() * availableExercises.length)];
-				program.exercises.push(exercise);
+				scheduleData.exercises.push({name: exercise.name, sets: exercise.defaultSets});
+				if (program.exercises.includes(exercise) == false) program.exercises.push(exercise);
 			}
+			program.schedule.push(scheduleData);
 		}
 		programs.push(program);
 	}
 
 	res.json(programs);
+});
+
+//Select program
+app.post("/trainingProgram/select", async (req, res) => {
+	let program = req.body;
+	console.log(program);
+	let createdProgram = await createProgram(program.programName);
+	if (createdProgram == false) return res.json({status: "error", message: "Program already exists."});
+
+	for (let exercise of program.exercises) {
+		console.log("Adding exercise: " + exercise.name);
+		await addExerciseToProgram(program.programName, exercise);
+	}
+	for (let day of program.schedule) {
+		console.log("Adding schedule day");
+		await addScheduleToProgram(program.programName, day);
+	}
+
+	///addProgramToUser(program.programName, "Email");
+
+	res.json({status: "success"});
 });

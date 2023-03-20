@@ -50,23 +50,22 @@
 			</select>
 			<label for="equipment">Equipment:</label>
 			<div>
-				<input type="checkbox" id="equipment" name="equipment" value="Barbell" checked />
-				<label for="Barbell">Barbell</label>
-				<input type="checkbox" id="equipment" name="equipment" value="Dumbbell" checked />
-				<label for="Dumbbell">Dumbbell</label>
-				<input type="checkbox" id="equipment" name="equipment" value="Kettlebell" checked />
-				<label for="Kettlebell">Kettlebell</label>
-				<input type="checkbox" id="equipment" name="equipment" value="Bodyweight" checked />
-				<label for="Bodyweight">Bodyweight</label>
+				<input type="checkbox" name="equipment" value="barbell" checked />
+				<label>Barbell</label>
+				<input type="checkbox" name="equipment" value="dumbbell" checked />
+				<label>Dumbbell</label>
+				<input type="checkbox" name="equipment" value="e-z_curl_bar" checked />
+				<label>E-Z Curl bar</label>
 			</div>
 			<input type="submit" value="Get training program suggestions" />
 		</form>
 	</div>
 	<div class="suggestions" v-if="type == 0 || type == 1">
 		<h3>Program suggestions</h3>
-		<Program v-for="program in suggestions" :name="program.name" :excersises="program.excersises" :schedule="program.schedule">
-			<button @onclick="selectProgram(program)">Use this suggestion</button>
-		</Program>
+		<div v-for="program in suggestions">
+			<Program :name="program.programName" :exercises="program.exercises" :schedule="program.schedule" v-if="program != null" />
+			<button @click="selectProgram(program)" v-if="program != null">Use this suggestion</button>
+		</div>
 	</div>
 </template>
 
@@ -91,14 +90,38 @@
 				if (type == 0) this.getRecommendations();
 			},
 			selectProgram: function (program) {
+				program.programName = "Custom program - User";
 				console.log("Selected program", program);
+				//Tell backend to save program
+				fetch("/trainingProgram/select", {
+					method: "POST",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(program)
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.status == "error") throw new Error(data.message);
+						else {
+							console.log("Success:", data);
+							this.type = null;
+						}
+					})
+					.catch((error) => {
+						console.error("Error:", error);
+					});
 			},
 			getRecommendations: function () {
 				fetch("/trainingProgram/recommend")
 					.then((response) => response.json())
 					.then((data) => {
-						console.log("Success:", data);
-						this.suggestions = data;
+						if (data.status == "error") throw new Error(data.message);
+						else {
+							console.log("Success:", data);
+							this.suggestions = data;
+						}
 					})
 					.catch((error) => {
 						console.error("Error:", error);
@@ -126,8 +149,11 @@
 				})
 					.then((response) => response.json())
 					.then((data) => {
-						console.log("Success:", data);
-						this.suggestions = data;
+						if (data.status == "error") throw new Error(data.message);
+						else {
+							console.log("Success:", data);
+							this.suggestions = data;
+						}
 					})
 					.catch((error) => {
 						console.error("Error:", error);

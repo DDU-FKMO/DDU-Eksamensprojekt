@@ -33,6 +33,26 @@ const sessionSchema = new mongoose.Schema({
 		default: {}
 	}*/
 });
+
+// "monday": [
+//         {"name":"Test exercise", "sets": 10},
+//         {"name":"Test exercise 3", "sets": 3}
+//     ]
+
+const scheduleSchema = new mongoose.Schema({
+	days: [
+		{
+			day: String,
+			exercises: [
+				{
+					name: String,
+					sets: Number
+				}
+			]
+		}
+	]
+});
+
 /*
 const programSchema = new mongoose.Schema({
 	programName: String,
@@ -42,7 +62,6 @@ const programSchema = new mongoose.Schema({
         }],
     workout: {type: Boolean, default: false} // Er det et træningsprogram
 });*/
-
 const programSchema = new mongoose.Schema({
 	programName: String,
 	exercises: [
@@ -57,22 +76,6 @@ const programSchema = new mongoose.Schema({
 		default: {}
 	}
 });
-
-// "monday": [
-//         {"name":"Test exercise", "sets": 10},
-//         {"name":"Test exercise 3", "sets": 3}
-//     ]
-
-const scheduleSchema = new mongoose.Schema({
-	days: [
-		{
-		day: String,
-		exercises: [{
-			name: String,
-			sets: Number
-		}]
-	}]
-})
 
 const userSchema = new mongoose.Schema({
 	username: {type: String},
