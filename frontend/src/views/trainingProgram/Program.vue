@@ -2,6 +2,12 @@
 	<div class="program">
 		Program...
 		<h3>{{ name }}</h3>
+		<div class="day" v-for="dayObject of schedule">
+			<h4>{{ dayObject.day }}</h4>
+			<div class="exercise" v-for="exercise of dayObject.exercises">
+				<p>{{ exercise.sets }} sets of {{ exercise.name }}</p>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -14,12 +20,12 @@
 				type: String,
 				required: true
 			},
-			excersises: {
+			exercises: {
 				type: Array,
 				required: true
 			},
 			schedule: {
-				type: Object,
+				type: Array,
 				required: true
 			}
 		},
@@ -29,7 +35,7 @@
 			};
 		},
 		mounted() {
-			console.log("Program mounted");
+			console.log("Program mounted", this.name, this.exercises, this.schedule);
 		}
 	});
 </script>
