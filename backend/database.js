@@ -32,7 +32,6 @@ module.exports = {
 	getAllExercises,
 	updateStreak,
 	addScheduleToProgram,
-	addScheduleToProgram,
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -187,18 +186,6 @@ async function updateStreak(email) {
 	return "done";
 	//return User.updateOne({"email": email}, {"$inc": {streak: 1}})
 }
-
-async function addScheduleToProgram(programName, scheduleData) {
-	const program = await getProgramByName(programName);
-	if (!program) {
-		console.log("No such program exists");
-		return false; // eller noget
-	}
-	program.schedule.days.push(scheduleData);
-	program.save();
-	return program;
-}
-
 
 //Refresh exercise list
 let updateExercises = false;
