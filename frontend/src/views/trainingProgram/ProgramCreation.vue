@@ -50,12 +50,28 @@
 			</select>
 			<label for="equipment">Equipment:</label>
 			<div>
+				<input type="checkbox" name="equipment" value="body_only" checked />
+				<label>Body</label>
 				<input type="checkbox" name="equipment" value="barbell" checked />
 				<label>Barbell</label>
 				<input type="checkbox" name="equipment" value="dumbbell" checked />
 				<label>Dumbbell</label>
 				<input type="checkbox" name="equipment" value="e-z_curl_bar" checked />
 				<label>E-Z Curl bar</label>
+				<input type="checkbox" name="equipment" value="other" checked />
+				<label>Other</label>
+				<input type="checkbox" name="equipment" value="machine" checked />
+				<label>Machine</label>
+				<input type="checkbox" name="equipment" value="cable" checked />
+				<label>Cable</label>
+				<input type="checkbox" name="equipment" value="kettlebells" checked />
+				<label>Kettlebells</label>
+				<input type="checkbox" name="equipment" value="exercise_ball" checked />
+				<label>Exercise ball</label>
+				<input type="checkbox" name="equipment" value="medicine_ball" checked />
+				<label>Medicine ball</label>
+				<input type="checkbox" name="equipment" value="bands" checked />
+				<label>Bands</label>
 			</div>
 			<input type="submit" value="Get training program suggestions" />
 		</form>

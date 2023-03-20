@@ -183,7 +183,7 @@ let updateExercises = false;
 async function refreshExerciseList() {
 	if (!updateExercises) return;
 	console.log("Fetching exercises from API");
-	for (let i = 0; i < 1; i++) {
+	for (let i = 0; i < 30; i++) {
 		fetch("https://api.api-ninjas.com/v1/exercises?offset=" + i * 10, {
 			method: "GET",
 			headers: {

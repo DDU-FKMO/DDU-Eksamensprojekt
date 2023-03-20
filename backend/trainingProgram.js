@@ -20,11 +20,10 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 	let availableExercises = allExercises.filter((exercise) => {
 		// Filter out exercises that are not available
 		if ((exercise.difficulty = settings.difficulty && settings.muscleGroup.includes(exercise.muscle))) {
-			if (settings.equipment.includes(exercise.equipment)) {
+			if (settings.equipment.includes(exercise.equipment) || exercise.equipment == "None" || exercise.equipment == "none") {
 				return true;
 			} else {
-				///return false;
-				return true;
+				return false;
 			}
 		} else {
 			return false;
