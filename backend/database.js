@@ -32,7 +32,7 @@ module.exports = {
 	getAllExercises,
 	updateStreak,
 	addScheduleToProgram,
-	addSessionToProgram,
+	addScheduleToProgram,
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -84,7 +84,7 @@ async function addExerciseToProgram(programName, exerciseJSON) {
 	}
 	const sucess = await createExercise(exerciseJSON);
 	exists.exercises.push(sucess);
-	exists.save();
+	await exists.save();
 	console.log("Successfully added exercise to program");
 	return sucess;
 }
@@ -165,6 +165,16 @@ async function getAllPrograms() {
 	return program;
 }
 
+async function addSessionToUser(email, sessionList){
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("no sucj user");
+		return false;
+	}
+	// cereata session
+	//user.push ^^
+
+}
 //Update streak
 async function updateStreak(email) {
 	// Filipemails
@@ -173,7 +183,7 @@ async function updateStreak(email) {
 		return false;
 	}
 	user.streak += 1;
-	user.save();
+	await user.save();
 	return "done";
 	//return User.updateOne({"email": email}, {"$inc": {streak: 1}})
 }
@@ -188,6 +198,7 @@ async function addScheduleToProgram(programName, scheduleData) {
 	program.save();
 	return program;
 }
+
 
 //Refresh exercise list
 let updateExercises = false;
@@ -221,16 +232,18 @@ async function refreshExerciseList() {
 	}
 }
 
-async function addSessionToProgram(programName, sessionData) {
+async function addScheduleToProgram(programName, scheduleData) {
 	const program = await getProgramByName(programName);
 	if (!program) {
 		console.log("program does not exists");
 		return false; // eller noget
 	}
-	program.schedule.days.push(sessionData);
+	program.schedule.days.push(scheduleData);
 	program.save();
 	return program;
 }
+
+
 
 //Add default programs
 async function addDefaultPrograms() {
