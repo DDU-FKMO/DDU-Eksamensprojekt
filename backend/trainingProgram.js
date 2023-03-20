@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const {app} = require("./server.js");
-const {getAllExercises, getAllPrograms} = require("./database.js");
+const {getAllExercises, getUserByEmail, getAllPrograms, getExerciseByName} = require("./database.js");
 const {Exercise, Program} = require("./models/model_user.js");
 
 //Program Recommendations
@@ -61,5 +61,16 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 
 	let user = await getUserByEmail(email);
 	let userProgram = user.programList[0];
+	// equipment: String,
+	// instructions: String,
+
+	for (let day of userProgram.schedule.days){
+		for (let exercise of day.exercises){
+			exerData = await getExerciseByName(exercise.name);
+			exercise.equipment = exerData.equipment;
+			exercise.instructions = exerData.instructions;
+		} 
+	}
+	console.log(userProgram.schedule.days);
 	res.status(200).json(userProgram);
 })
