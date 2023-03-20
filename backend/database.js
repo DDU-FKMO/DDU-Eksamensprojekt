@@ -7,6 +7,7 @@ const {User} = require("./models/model_user.js");
 const {Program} = require("./models/model_user.js");
 const {Exercise} = require("./models/model_user.js");
 const {Session} = require("./models/model_user.js");
+const {Schedule} = require("./models/model_user.js");
 
 //On database connected function
 function onDatabaseConnected() {
@@ -28,7 +29,8 @@ module.exports = {
 	getExerciseByName,
 	getAllPrograms,
 	getAllExercises,
-	updateStreak
+	updateStreak,
+	addScheduleToProgram
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -163,6 +165,17 @@ async function updateStreak(email) {
 	user.save();
 	return "done";
 	//return User.updateOne({"email": email}, {"$inc": {streak: 1}})
+}
+
+async function addScheduleToProgram(programName, scheduleData) {
+	const program = await getProgramByName(programName);
+	if (!program) {
+		console.log("No such program exists");
+		return false; // eller noget
+	}
+	program.schedule.days.push(scheduleData);
+	program.save();
+	return program;
 }
 
 //Refresh exercise list

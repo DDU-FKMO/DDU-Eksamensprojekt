@@ -51,9 +51,28 @@ const programSchema = new mongoose.Schema({
 			default: {}
 		}
 	],
-	owner: {type: String, default: "Global"}
-	//workout: {type: Boolean, default: false} // Er det et træningsprogram
+	owner: {type: String, default: "Global"},
+	schedule: {
+		type: scheduleSchema,
+		default: {}
+	}
 });
+
+// "monday": [
+//         {"name":"Test exercise", "sets": 10},
+//         {"name":"Test exercise 3", "sets": 3}
+//     ]
+
+const scheduleSchema = new mongoose.Schema({
+	days: [
+		{
+		day: String,
+		exercises: [{
+			name: String,
+			sets: Number
+		}]
+	}]
+})
 
 const userSchema = new mongoose.Schema({
 	username: {type: String},
@@ -94,6 +113,7 @@ module.exports = {
 	User: mongoose.model("user", userSchema),
 	Program: mongoose.model("program", programSchema),
 	Exercise: mongoose.model("exercise", exerciseSchema),
-	Session: mongoose.model("session", sessionSchema)
+	Session: mongoose.model("session", sessionSchema),
+	Schedule: mongoose.model("schedule", scheduleSchema)
 	//sessionLog: mongoose.model("sessionLog", sessionLogSchema)
 };
