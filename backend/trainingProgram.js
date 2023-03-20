@@ -80,3 +80,13 @@ app.post("/trainingProgram/select", async (req, res) => {
 
 	res.json({status: "success"});
 });
+
+//Import user programs
+app.get("/trainingProgram/import/:email", async (req, res) => {
+	let email = req.params.email;
+	console.log(email);
+
+	let user = await getUserByEmail(email);
+	let userProgram = user.programList[0];
+	res.status(200).json(userProgram);
+});

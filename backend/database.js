@@ -22,6 +22,7 @@ module.exports = {
 	register,
 	createProgram,
 	addExerciseToProgram,
+	createProgramMakeExercise,
 	createExercise,
 	addProgramToUser,
 	getUserByEmail,
@@ -30,7 +31,8 @@ module.exports = {
 	getAllPrograms,
 	getAllExercises,
 	updateStreak,
-	addScheduleToProgram
+	addScheduleToProgram,
+	addSessionToProgram,
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -86,6 +88,15 @@ async function addExerciseToProgram(programName, exerciseJSON) {
 	await exists.save();
 	console.log("Successfully added exercise to program");
 	return sucess;
+}
+
+async function createProgramMakeExercise(programName, exerciseJSON) {
+	const sucess = createProgram(programName);
+	if (sucess){
+		addExerciseToProgram(programName,exerciseJSON);
+		return sucess;
+	}
+	return false;
 }
 
 //Create new exercise
@@ -208,6 +219,17 @@ async function refreshExerciseList() {
 				console.error("Error:", error);
 			});
 	}
+}
+
+async function addSessionToProgram(programName, sessionData) {
+	const program = await getProgramByName(programName);
+	if (!program) {
+		console.log("program does not exists");
+		return false; // eller noget
+	}
+	program.schedule.days.push(sessionData);
+	program.save();
+	return program;
 }
 
 //Add default programs
