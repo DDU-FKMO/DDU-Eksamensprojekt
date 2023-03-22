@@ -164,14 +164,23 @@ async function getAllPrograms() {
 	return program;
 }
 
-async function addSessionToUser(email, sessionList){
+async function addSessionToUser(email, programName, sessionList){
 	let user = await getUserByEmail(email);
 	if (!user) {
-		console.log("no sucj user");
+		console.log("Session: no such user");
 		return false;
 	}
 	// cereata session
-	//user.push ^^
+	session = Session.create({
+		info:sessionList
+	})
+	for (let program of user.programList){
+		if (program.programName = programName){
+			program.sessionList.push(session);
+		}
+	}
+	user.save();
+	return session;
 
 }
 //Update streak
