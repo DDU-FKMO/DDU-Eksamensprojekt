@@ -31,7 +31,7 @@ module.exports = {
 	getAllPrograms,
 	getAllExercises,
 	updateStreak,
-	addScheduleToProgram,
+	addScheduleToProgram
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -91,8 +91,8 @@ async function addExerciseToProgram(programName, exerciseJSON) {
 
 async function createProgramMakeExercise(programName, exerciseJSON) {
 	const sucess = createProgram(programName);
-	if (sucess){
-		addExerciseToProgram(programName,exerciseJSON);
+	if (sucess) {
+		addExerciseToProgram(programName, exerciseJSON);
 		return sucess;
 	}
 	return false;
@@ -164,7 +164,7 @@ async function getAllPrograms() {
 	return program;
 }
 
-async function addSessionToUser(email, programName, sessionList){
+async function addSessionToUser(email, programName, sessionList) {
 	let user = await getUserByEmail(email);
 	if (!user) {
 		console.log("Session: no such user");
@@ -172,16 +172,15 @@ async function addSessionToUser(email, programName, sessionList){
 	}
 	// cereata session
 	session = Session.create({
-		info:sessionList
-	})
-	for (let program of user.programList){
-		if (program.programName = programName){
+		info: sessionList
+	});
+	for (let program of user.programList) {
+		if ((program.programName = programName)) {
 			program.sessionList.push(session);
 		}
 	}
 	user.save();
 	return session;
-
 }
 //Update streak
 async function updateStreak(email) {
@@ -238,8 +237,6 @@ async function addScheduleToProgram(programName, scheduleData) {
 	program.save();
 	return program;
 }
-
-
 
 //Add default programs
 async function addDefaultPrograms() {
