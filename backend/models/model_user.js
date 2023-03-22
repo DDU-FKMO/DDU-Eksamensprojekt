@@ -21,23 +21,14 @@ const sessionSchema = new mongoose.Schema({
 })
 */
 const sessionSchema = new mongoose.Schema({
-	date: {type: Date, defualt: Date.now()},
+	date: {type: Date, defualt: new Date.getDate()},
 	info: [
 		{
 			nameOfExercise: String,
 			sets: Number //eller noget
 		}
-	] /*
-	session: {
-		type: exerciseSchema,
-		default: {}
-	}*/
+	]
 });
-
-// "monday": [
-//         {"name":"Test exercise", "sets": 10},
-//         {"name":"Test exercise 3", "sets": 3}
-//     ]
 
 const scheduleSchema = new mongoose.Schema({
 	days: [
@@ -53,15 +44,6 @@ const scheduleSchema = new mongoose.Schema({
 	]
 });
 
-/*
-const programSchema = new mongoose.Schema({
-	programName: String,
-        sessions:[{
-            type: sessionSchema,
-            default: {}
-        }],
-    workout: {type: Boolean, default: false} // Er det et træningsprogram
-});*/
 const programSchema = new mongoose.Schema({
 	programName: String,
 	exercises: [
@@ -82,7 +64,7 @@ const userSchema = new mongoose.Schema({
 	email: {type: String, unique: true},
 	password: {type: String},
 	level: {type: Number},
-	streak: {type: Number},
+	streak: {type: Number, default: 0},
 	/*unlocks: {
 		unlockName: {type: String},
         exercises: {
@@ -93,6 +75,7 @@ const userSchema = new mongoose.Schema({
 	programList: [
 		{
 			program: programSchema,
+			weekStreaks: [],
 			sessionList: [
 				{
 					type: sessionSchema,
@@ -100,13 +83,7 @@ const userSchema = new mongoose.Schema({
 				}
 			]
 		}
-	] /*
-	logs: [
-		{
-			type: sessionSchema,
-			default: {}
-		}
-	],*/,
+	],
 	token: String
 });
 
