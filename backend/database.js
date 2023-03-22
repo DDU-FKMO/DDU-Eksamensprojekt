@@ -32,6 +32,8 @@ module.exports = {
 	getAllExercises,
 	updateStreak,
 	addScheduleToProgram,
+	streakCalculation,
+	addSessionToUser,
 	streakCalculation
 };
 //Connect to database
