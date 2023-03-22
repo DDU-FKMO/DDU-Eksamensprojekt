@@ -92,8 +92,8 @@ async function addExerciseToProgram(programName, exerciseJSON) {
 
 async function createProgramMakeExercise(programName, exerciseJSON) {
 	const sucess = createProgram(programName);
-	if (sucess) {
-		addExerciseToProgram(programName, exerciseJSON);
+	if (sucess){
+		await addExerciseToProgram(programName,exerciseJSON);
 		return sucess;
 	}
 	return false;
@@ -125,7 +125,7 @@ async function addProgramToUser(programName, email) {
 	}
 	data = {program: program};
 	userExists.programList.push({program: program});
-	userExists.save();
+	await userExists.save();
 	console.log("added to user");
 	return true;
 	//return User.updateOne({email: email}, {"$push":{"programList":data}});
@@ -197,7 +197,7 @@ async function addSessionToUser(email, programName, sessionList) {
 			program.sessionList.push(session);
 		}
 	}
-	user.save();
+	await user.save();
 	return session;
 }
 //Update streak
@@ -209,7 +209,7 @@ async function updateStreak(email) {
 	}
 	user.streak += 1;
 	await user.save();
-	return "done";
+	return user.streak;
 	//return User.updateOne({"email": email}, {"$inc": {streak: 1}})
 }
 
@@ -273,6 +273,52 @@ async function addDefaultPrograms() {
 		});
 	}
 }
+
+async function streakCalculation(email){
+	let user = await getUserByEmail(email);
+	if (!user){
+		console.log("no such user");
+		return false
+	}
+	let schedule = user.programList[0].program.schedule
+	if (!schedule.days){
+		console.log("No schedule");
+		return false;
+	}
+
+	let sessionList = user.programList[0].sessionList
+	let numOfDays =  schedule.days.length > sessionList ? sessionList.length : schedule.days.length;
+	
+	let prevMonday = new Date();
+	//let prevPrevMonday = new Date();
+	let today = new Date();
+	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
+	//prevPrevMonday.setDate(prevMonday.getDate() - 7);
+	if (user.programList.weekStreak.length > 0){
+		if (user.programList.weekStreak[user.programList.weekStreak.length - 1] == today.getWeek()) {
+			console.log("User has already fulfilled their streak this week.");
+			return true;
+		}
+	}
+	let daysTrained = 0;
+	for (let i = 0; i <numOfDays; i++){
+		session = sessionList[sessionList.length - (1+i)];
+		if (session.date.getDate() >= prevMonday.getDate()){
+			daysTrained++;
+		}
+	}
+
+	if (daysTrained >= schedule.days.length) { // hvis der er trænet der korrekte antal
+		user.programList.weekStreak.push(today.getWeek());
+		updateStreak(email);
+		return true
+	}
+	
+	return false;
+	
+}
+
+
 
 //TEST stuff
 

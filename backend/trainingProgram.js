@@ -87,7 +87,11 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 	console.log(email);
 
 	let user = await getUserByEmail(email);
-	let userProgram = user.programList[0];
+	if (!user){
+		console.log("No such user");
+		return res.status(400).send("No such user");
+	}
+	let userProgram = user.programList[0].program;
 	// equipment: String,
 	// instructions: String,
 	try {
