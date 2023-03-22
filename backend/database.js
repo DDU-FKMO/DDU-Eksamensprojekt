@@ -31,7 +31,8 @@ module.exports = {
 	getAllPrograms,
 	getAllExercises,
 	updateStreak,
-	addScheduleToProgram
+	addScheduleToProgram,
+	streakCalculation
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -132,7 +133,7 @@ async function addProgramToUser(programName, email) {
 
 //Get user by email
 async function getUserByEmail(email) {
-	const user = await User.findOne({email: email});
+	const user = await User.findOne({"email": email.toLowerCase()});
 	// console.log("Found user: " + user.username)
 	return user;
 }
@@ -171,7 +172,7 @@ async function addSessionToUser(email, programName, sessionList) {
 		return false;
 	}
 	// cereata session
-	session = Session.create({
+	session = await Session.create({
 		info: sessionList
 	});
 	for (let program of user.programList) {
@@ -191,6 +192,7 @@ async function updateStreak(email) {
 	}
 	user.streak += 1;
 	await user.save();
+	console.log("Updatet streak for " + user.username)
 	return user.streak;
 	//return User.updateOne({"email": email}, {"$inc": {streak: 1}})
 }
@@ -276,8 +278,8 @@ async function streakCalculation(email){
 	let today = new Date();
 	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
 	//prevPrevMonday.setDate(prevMonday.getDate() - 7);
-	if (user.programList.weekStreak.length > 0){
-		if (user.programList.weekStreak[user.programList.weekStreak.length - 1] == today.getWeek()) {
+	if (user.programList[0].weekStreaks.length > 0){
+		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) {
 			console.log("User has already fulfilled their streak this week.");
 			return true;
 		}
@@ -285,14 +287,16 @@ async function streakCalculation(email){
 	let daysTrained = 0;
 	for (let i = 0; i <numOfDays; i++){
 		session = sessionList[sessionList.length - (1+i)];
-		if (session.date.getDate() >= prevMonday.getDate()){
+		if (session.date.getTime() >= prevMonday.getTime()){
+			console.log(session);
 			daysTrained++;
 		}
 	}
 
 	if (daysTrained >= schedule.days.length) { // hvis der er trænet der korrekte antal
-		user.programList.weekStreak.push(today.getWeek());
-		updateStreak(email);
+		user.programList[0].weekStreaks.push(prevMonday);
+		await updateStreak(email);
+		await user.save();
 		return true
 	}
 	
@@ -300,7 +304,17 @@ async function streakCalculation(email){
 	
 }
 
-
+// TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN 
+/*
+async function asd() {
+	//user = await getUserByEmail("Filipemails");
+	//user.programList[0].sessionList = [];
+	//await user.save();
+	//await addSessionToUser("Filipemails", "program1", {"sets": 3, "nameOfExercise":"ArmCurls"});
+	//await streakCalculation("Filipemails");
+}
+asd();
+*/
 
 //TEST stuff
 
@@ -319,4 +333,4 @@ async function streakCalculation(email){
 // }
 //addExerciseToProgram("program1", data);
 //addProgramToUser("program1", "Filipemails");
-updateStreak("Filipemails");
+//updateStreak("Filipemails");

@@ -21,7 +21,7 @@ const sessionSchema = new mongoose.Schema({
 })
 */
 const sessionSchema = new mongoose.Schema({
-	date: {type: Date, defualt: new Date.getDate()},
+	date: {type: Date, default: Date.now()},
 	info: [
 		{
 			nameOfExercise: String,
