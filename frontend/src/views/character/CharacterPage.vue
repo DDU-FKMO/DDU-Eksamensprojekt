@@ -1,5 +1,17 @@
 <template>
-	<main>Character</main>
+	<main>
+		<h1>Character</h1>
+		<MuscleGroups />
+	</main>
 </template>
 
-<script></script>
+<script>
+	import MuscleGroups from "./MuscleGroups.vue";
+
+	export default {
+		name: "CharacterPage",
+		components: {
+			MuscleGroups
+		}
+	};
+</script>

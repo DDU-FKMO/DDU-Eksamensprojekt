@@ -82,7 +82,7 @@ app.post("/trainingProgram/select", async (req, res) => {
 });
 
 //Import user programs
-app.get("/trainingProgram/import/:email", async (req, res) => { 
+app.get("/trainingProgram/import/:email", async (req, res) => {
 	let email = req.params.email;
 	console.log(email);
 
@@ -94,19 +94,18 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 	let userProgram = user.programList[0].program;
 	// equipment: String,
 	// instructions: String,
-	try
-	{
-		for (let day of userProgram.schedule.days){
-			for (let exercise of day.exercises){
+	try {
+		for (let day of userProgram.schedule.days) {
+			for (let exercise of day.exercises) {
 				exerData = await getExerciseByName(exercise.name);
 				exercise.equipment = exerData.equipment;
 				exercise.instructions = exerData.instructions;
-			} 
+			}
 		}
-	console.log(userProgram.schedule.days);
-	} catch (error){
+		console.log(userProgram.schedule.days);
+	} catch (error) {
 		console.log("no schedule: ", error);
-		return res.status(404).json(userProgram); // 
-	}	
+		return res.status(404).json(userProgram); //
+	}
 	return res.status(200).json(userProgram);
 });
