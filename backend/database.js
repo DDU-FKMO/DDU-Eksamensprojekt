@@ -30,6 +30,7 @@ module.exports = {
 	getExerciseByName,
 	getAllPrograms,
 	getAllExercises,
+	getAllSessions,
 	updateStreak,
 	addScheduleToProgram,
 	streakCalculation,
@@ -167,6 +168,23 @@ async function getAllPrograms() {
 	return program;
 }
 
+//Get all sessions
+async function getAllSessions(userEmail) {
+	const user = await getUserByEmail(userEmail);
+	if (user) {
+		let sessions = [];
+		user.programList.forEach((program) => {
+			program.sessionList.forEach((session) => {
+				sessions.push(session);
+			});
+		});
+		return sessions;
+	} else {
+		console.log("No such user exists");
+		return [];
+	}
+}
+
 async function addSessionToUser(email, programName, sessionList) {
 	let user = await getUserByEmail(email);
 	if (!user) {
@@ -174,7 +192,7 @@ async function addSessionToUser(email, programName, sessionList) {
 		return false;
 	}
 	// cereata session
-	session = await Session.create({
+	let session = await Session.create({
 		info: sessionList
 	});
 	for (let program of user.programList) {
