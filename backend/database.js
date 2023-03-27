@@ -325,7 +325,6 @@ async function streakCalculation(email) {
 }
 
 // TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN
-
 async function asd() {
 	//user = await getUserByEmail("Filipemails");
 	//user.programList[0].sessionList = [];
