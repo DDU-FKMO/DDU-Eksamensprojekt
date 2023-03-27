@@ -35,7 +35,7 @@ module.exports = {
 	addScheduleToProgram,
 	streakCalculation,
 	addSessionToUser,
-	streakCalculation
+	
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -95,8 +95,8 @@ async function addExerciseToProgram(programName, exerciseJSON) {
 
 async function createProgramMakeExercise(programName, exerciseJSON) {
 	const sucess = createProgram(programName);
-	if (sucess){
-		await addExerciseToProgram(programName,exerciseJSON);
+	if (sucess) {
+		await addExerciseToProgram(programName, exerciseJSON);
 		return sucess;
 	}
 	return false;
@@ -136,7 +136,7 @@ async function addProgramToUser(programName, email) {
 
 //Get user by email
 async function getUserByEmail(email) {
-	const user = await User.findOne({"email": email.toLowerCase()});
+	const user = await User.findOne({email: email.toLowerCase()});
 	// console.log("Found user: " + user.username)
 	return user;
 }
@@ -212,7 +212,7 @@ async function updateStreak(email) {
 	}
 	user.streak += 1;
 	await user.save();
-	console.log("Updatet streak for " + user.username)
+	console.log("Updatet streak for " + user.username);
 	return user.streak;
 	//return User.updateOne({"email": email}, {"$inc": {streak: 1}})
 }
@@ -278,63 +278,64 @@ async function addDefaultPrograms() {
 	}
 }
 
-async function streakCalculation(email){
+async function streakCalculation(email) {
 	let user = await getUserByEmail(email);
-	if (!user){
+	if (!user) {
 		console.log("no such user");
-		return false
+		return false;
 	}
-	let schedule = user.programList[0].program.schedule
-	if (!schedule.days){
+	let schedule = user.programList[0].program.schedule;
+	if (!schedule.days) {
 		console.log("No schedule");
 		return false;
 	}
 
-	let sessionList = user.programList[0].sessionList
-	let numOfDays =  schedule.days.length > sessionList ? sessionList.length : schedule.days.length;
-	
+	let sessionList = user.programList[0].sessionList;
+	//Sets the number of days checked to the shortest value of the two, to prevent IndexOutOfRange
+	let numOfDays = schedule.days.length > sessionList ? sessionList.length : schedule.days.length;
+
 	let prevMonday = new Date();
-	//let prevPrevMonday = new Date();
 	let today = new Date();
 	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
-	//prevPrevMonday.setDate(prevMonday.getDate() - 7);
-	if (user.programList[0].weekStreaks.length > 0){
+	
+	if (user.programList[0].weekStreaks.length > 0) {
 		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) {
 			console.log("User has already fulfilled their streak this week.");
 			return true;
 		}
 	}
 	let daysTrained = 0;
-	for (let i = 0; i <numOfDays; i++){
-		session = sessionList[sessionList.length - (1+i)];
-		if (session.date.getTime() >= prevMonday.getTime()){
+	for (let i = 0; i < numOfDays; i++) {
+		session = sessionList[sessionList.length - (1 + i)];
+		if (session.date.getTime() >= prevMonday.getTime()) {
 			console.log(session);
 			daysTrained++;
 		}
 	}
 
-	if (daysTrained >= schedule.days.length) { // hvis der er trænet der korrekte antal
+	if (daysTrained >= schedule.days.length) {
+		// hvis der er trænet der korrekte antal
 		user.programList[0].weekStreaks.push(prevMonday);
 		await updateStreak(email);
 		await user.save();
-		return true
+		return true;
 	}
-	
+
 	return false;
-	
 }
 
-// TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN 
-/*
+// TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN
+
 async function asd() {
 	//user = await getUserByEmail("Filipemails");
 	//user.programList[0].sessionList = [];
 	//await user.save();
 	//await addSessionToUser("Filipemails", "program1", {"sets": 3, "nameOfExercise":"ArmCurls"});
 	//await streakCalculation("Filipemails");
+	await addProgramToUser("", "Filipemails");
 }
 asd();
-*/
+
 
 //TEST stuff
 

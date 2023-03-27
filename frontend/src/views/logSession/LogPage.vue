@@ -5,10 +5,7 @@
 				<h3>{{ program.schedule.days[n].day }}</h3>
 				<ul v-for="i in program.schedule.days[n].exercises.length">
 					<li>
-						<Collapsible 
-						summary="program.schedule.days[n].exercises[i].name + ' - ' + program.schedule.days[n].exercises[i].sets + ' sets'"
-						description="program.schedule.days[n].exercises[i].equipment + program.schedule.days[n].exercises[i].instructions">
-						</Collapsible>
+						<Collapsible summary="program.schedule.days[n].exercises[i].name + ' - ' + program.schedule.days[n].exercises[i].sets + ' sets'" description="program.schedule.days[n].exercises[i].equipment + program.schedule.days[n].exercises[i].instructions"> </Collapsible>
 					</li>
 				</ul>
 			</div>
@@ -53,31 +50,32 @@
 </template>
 
 <script>
-import Collapsible from './Collapsible.vue';
+	import Collapsible from "./Collapsible.vue";
 
 	export default {
-    mounted() { 
-		fetch("/trainingProgram/import/" + this.userEmail).then((response) => response.json()).then((data) => {
-			console.log("Success", data);
-			this.program = data;
-		}).catch((error) => {
-			console.error("Error", error)
-		});
-	},
-	data() {
-		return {
-			userEmail: "Filipemails",
-			program,
-			isPopupOpen: false
-		}
-	},
-    methods: {
-		OpenPopup(day) {
-
-		}
-	},
-    components: { Collapsible }
-}
+		mounted() {
+			fetch("/trainingProgram/import/" + this.userEmail)
+				.then((response) => response.json())
+				.then((data) => {
+					console.log("Success", data);
+					this.program = data;
+				})
+				.catch((error) => {
+					console.error("Error", error);
+				});
+		},
+		data() {
+			return {
+				userEmail: "Filipemails",
+				program,
+				isPopupOpen: false
+			};
+		},
+		methods: {
+			OpenPopup(day) {}
+		},
+		components: {Collapsible}
+	};
 </script>
 
 <style>

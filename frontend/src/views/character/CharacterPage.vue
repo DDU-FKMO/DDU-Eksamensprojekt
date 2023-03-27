@@ -12,7 +12,9 @@
 	export default {
 		name: "CharacterPage",
 		data: () => ({
-			level: null
+			level: null,
+			streak: 0,
+			gotStreakThisWeek: false
 		}),
 		components: {
 			MuscleGroups
@@ -39,6 +41,9 @@
 					.catch((error) => {
 						console.error("Error:", error);
 					});
+			},
+			getStreak: function(){
+				
 			}
 		},
 		mounted() {

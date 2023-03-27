@@ -1,13 +1,9 @@
 <template>
-    <main>
-
-    </main>
+	<main></main>
 </template>
 
 <script>
-export default {
-    props: {
-        
-    }
-}
+	export default {
+		props: {}
+	};
 </script>

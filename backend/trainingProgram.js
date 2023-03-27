@@ -87,7 +87,7 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 	console.log(email);
 
 	let user = await getUserByEmail(email);
-	if (!user){
+	if (!user) {
 		console.log("No such user");
 		return res.status(400).send("No such user");
 	}
@@ -102,7 +102,10 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 				exercise.instructions = exerData.instructions;
 			}
 		}
-		console.log(userProgram.schedule.days);
+		console.log("Schedule days: "+ userProgram.schedule.days);
+		if (userProgram.schedule.days.length == 0){
+			throw new Error("No schedule?");
+		}
 	} catch (error) {
 		console.log("no schedule: ", error);
 		return res.status(404).json(userProgram); //
