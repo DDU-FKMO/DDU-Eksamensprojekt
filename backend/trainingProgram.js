@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const {app} = require("./server.js");
-const {getAllExercises, getUserByEmail, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser} = require("./database.js");
+const {getAllExercises, getUserByEmail, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser, getExerciseByName} = require("./database.js");
 
 //Program Recommendations
 app.get("/trainingProgram/recommend", async (req, res) => {

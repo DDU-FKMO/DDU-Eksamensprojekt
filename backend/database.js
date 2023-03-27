@@ -331,7 +331,7 @@ async function asd() {
 	//await user.save();
 	//await addSessionToUser("Filipemails", "program1", {"sets": 3, "nameOfExercise":"ArmCurls"});
 	//await streakCalculation("Filipemails");
-	await addProgramToUser("", "Filipemails");
+	//await addProgramToUser("Custom program - User", "Filipemails");
 }
 asd();
 
