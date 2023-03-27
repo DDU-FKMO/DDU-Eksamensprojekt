@@ -1,52 +1,21 @@
 <template>
-	<main>
+	<div v-if="program">
+		<p>Hej</p>
 		<div class="overview" v-for="n in program.schedule.days.length">
 			<div class="sessionBlock">
 				<h3>{{ program.schedule.days[n].day }}</h3>
 				<ul v-for="i in program.schedule.days[n].exercises.length">
 					<li>
-						<Collapsible summary="program.schedule.days[n].exercises[i].name + ' - ' + program.schedule.days[n].exercises[i].sets + ' sets'" description="program.schedule.days[n].exercises[i].equipment + program.schedule.days[n].exercises[i].instructions"> </Collapsible>
+						<Collapsible v-bind:summary="program.schedule.days[n].exercises[i].name + ' - ' + program.schedule.days[n].exercises[i].sets + ' sets'" v-bind:description="'Equipment: ' + program.schedule.days[n].exercises[i].equipment + '\n' + program.schedule.days[n].exercises[i].instructions"> </Collapsible>
 					</li>
 				</ul>
+				<button @click="OpenPopup(n)">Log</button>
 			</div>
-			<!--
-			<div class="sessionBlock">
-				<h3>Friday</h3>
-				<ul>
-					<li>
-						<Collapsible summary="Pushups" description="Do pushups lmao" />
-					</li>
-					<li>
-						<Collapsible summary="Pullups" description="Do pullups lmao" />
-					</li>
-				</ul>
-				<button @click="OpenPopup(this.value)" value="Friday">Log</button>
-			</div>
-			<div class="sessionBlock">
-				<h3>Saturday</h3>
-				<ul>
-					<li>
-						<Collapsible summary="Barbell lift" description="Lift it yeah"/>
-					</li>
-					<li>
-						<Collapsible summary="Dumbbell lift" description="Woo yeah lift it baby"/>
-					</li>
-				</ul>
-			</div>
-			<div class="sessionBlock">
-				<h3>Sunday</h3>
-				<ul>
-					<li>
-						<Collapsible summary="Barbell squat" description="Squat with the barbell"/>
-					</li>
-					<li>
-						<Collapsible summary="Crunches" description="Become thigh god"/>
-					</li>
-				</ul>
-			</div>
-		-->
 		</div>
-	</main>
+	</div>
+	<div v-if="isPopupOpen">
+
+	</div>
 </template>
 
 <script>
@@ -67,12 +36,14 @@
 		data() {
 			return {
 				userEmail: "Filipemails",
-				program,
+				program: null,
 				isPopupOpen: false
 			};
 		},
 		methods: {
-			OpenPopup(day) {}
+			OpenPopup(index) {
+				this.isPopupOpen = true;
+			}
 		},
 		components: {Collapsible}
 	};
