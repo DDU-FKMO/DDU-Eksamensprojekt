@@ -92,23 +92,34 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 		return res.status(400).send("No such user");
 	}
 	let userProgram = user.programList[0].program;
+	userProgram = Object.create(userProgram)
 	// equipment: String,
 	// instructions: String,
 	try {
-		for (let day of userProgram.schedule.days) {
-			for (let exercise of day.exercises) {
-				exerData = await getExerciseByName(exercise.name);
-				exercise.equipment = exerData.equipment;
-				exercise.instructions = exerData.instructions;
-			}
-		}
-		console.log("Schedule days: "+ userProgram.schedule.days);
-		if (userProgram.schedule.days.length == 0){
+		if (userProgram.schedule.days.length == 0) {
 			throw new Error("No schedule?");
 		}
+
+		for (let day = 0; day < userProgram.schedule.days.length; day++) {
+			///console.log(userProgram.schedule.days[day]);
+			for (let exercise = 0; exercise < userProgram.schedule.days[day].exercises.length; exercise++) {
+				let exerciseInfo = {
+					name: userProgram.schedule.days[day].exercises[exercise].name,
+					sets: userProgram.schedule.days[day].exercises[exercise].sets,
+					equipment: "",
+					instructions: "",
+				};
+				exerData = await getExerciseByName(exerciseInfo.name);
+				exerciseInfo.equipment = exerData.equipment;
+				exerciseInfo.instructions = exerData.instructions;
+			}
+		}
+		
 	} catch (error) {
 		console.log("no schedule: ", error);
 		return res.status(404).json(userProgram); //
 	}
-	return res.status(200).json(userProgram);
+	//console.log("Schedule days: " + userProgram.schedule.days[0].exercises);
+	console.log("Success, sending user program")
+	return res.status(200).json( userProgram.schedule)//userProgram);
 });
