@@ -1,6 +1,7 @@
 <template>
 	<main>
 		<h1>Character</h1>
+		<Character />
 		<p>Level: {{ level }}</p>
 		<p>Streak: {{ streak }}</p>
 		<p v-if="gotStreakThisWeek">User has completed their training this week! Good Job!</p>
@@ -10,6 +11,7 @@
 
 <script>
 	import MuscleGroups from "./MuscleGroups.vue";
+	import Character from "./Character.vue";
 
 	export default {
 		name: "CharacterPage",
@@ -19,7 +21,8 @@
 			gotStreakThisWeek: false
 		}),
 		components: {
-			MuscleGroups
+			MuscleGroups,
+			Character
 		},
 		methods: {
 			getLevel: function () {
