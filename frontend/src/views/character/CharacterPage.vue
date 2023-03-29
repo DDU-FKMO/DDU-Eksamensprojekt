@@ -42,9 +42,7 @@
 						console.error("Error:", error);
 					});
 			},
-			getStreak: function(){
-				
-			}
+			getStreak: function () {}
 		},
 		mounted() {
 			this.getLevel();

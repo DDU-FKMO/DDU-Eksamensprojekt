@@ -34,8 +34,7 @@ module.exports = {
 	updateStreak,
 	addScheduleToProgram,
 	streakCalculation,
-	addSessionToUser,
-	
+	addSessionToUser
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -297,7 +296,7 @@ async function streakCalculation(email) {
 	let prevMonday = new Date();
 	let today = new Date();
 	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
-	
+
 	if (user.programList[0].weekStreaks.length > 0) {
 		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) {
 			console.log("User has already fulfilled their streak this week.");
@@ -334,7 +333,6 @@ async function asd() {
 	//await addProgramToUser("Custom program - User", "Filipemails");
 }
 asd();
-
 
 //TEST stuff
 
