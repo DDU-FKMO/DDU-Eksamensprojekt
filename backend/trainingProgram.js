@@ -92,7 +92,7 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 		return res.status(400).send("No such user");
 	}
 	let userProgram = user.programList[0].program;
-	userProgram = Object.create(userProgram)
+	userProgram = Object.create(userProgram);
 	// equipment: String,
 	// instructions: String,
 	try {
@@ -107,19 +107,18 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 					name: userProgram.schedule.days[day].exercises[exercise].name,
 					sets: userProgram.schedule.days[day].exercises[exercise].sets,
 					equipment: "",
-					instructions: "",
+					instructions: ""
 				};
 				exerData = await getExerciseByName(exerciseInfo.name);
 				exerciseInfo.equipment = exerData.equipment;
 				exerciseInfo.instructions = exerData.instructions;
 			}
 		}
-		
 	} catch (error) {
 		console.log("no schedule: ", error);
 		return res.status(404).json(userProgram); //
 	}
 	//console.log("Schedule days: " + userProgram.schedule.days[0].exercises);
-	console.log("Success, sending user program")
-	return res.status(200).json( userProgram.schedule)//userProgram);
+	console.log("Success, sending user program");
+	return res.status(200).json(userProgram); //userProgram);
 });

@@ -13,9 +13,7 @@
 			</div>
 		</div>
 	</div>
-	<div v-if="isPopupOpen">
-
-	</div>
+	<div v-if="isPopupOpen"></div>
 </template>
 
 <script>
