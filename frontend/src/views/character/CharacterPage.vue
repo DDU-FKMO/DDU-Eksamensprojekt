@@ -1,6 +1,7 @@
 <template>
 	<main>
 		<h1>Character</h1>
+		<Character />
 		<p>Level: {{ level }}</p>
 		<MuscleGroups />
 	</main>
@@ -8,6 +9,7 @@
 
 <script>
 	import MuscleGroups from "./MuscleGroups.vue";
+	import Character from "./Character.vue";
 
 	export default {
 		name: "CharacterPage",
@@ -17,7 +19,8 @@
 			gotStreakThisWeek: false
 		}),
 		components: {
-			MuscleGroups
+			MuscleGroups,
+			Character
 		},
 		methods: {
 			getLevel: function () {
@@ -42,9 +45,7 @@
 						console.error("Error:", error);
 					});
 			},
-			getStreak: function(){
-				
-			}
+			getStreak: function () {}
 		},
 		mounted() {
 			this.getLevel();
