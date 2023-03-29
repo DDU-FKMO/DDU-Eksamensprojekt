@@ -8,12 +8,12 @@
 						<Collapsible v-bind:summary="exercise.name + ' - ' + exercise.sets + ' sets'" v-bind:description="'Equipment: ' + exercise.equipment + '\n' + exercise.instructions"> </Collapsible>
 					</li>
 				</ul>
-				<button @click="OpenPopup(n)">Log</button>
+				<button @click="OpenPopup(day)">Log</button>
 			</div>
 		</div>
 		<div class="popup" v-if="isPopupOpen">
-			<div v-for="n in days[index].exercises">
-			<span>{{ days[index].exercises[n].name }}</span>
+			<div v-for="exercise in chosenDay.exercises">
+			<span>{{ exercise.name }}</span>
 			<input type="text" placeholder="number of sets..." v-bind="info[n].sets" />
 			</div>
 		</div>
@@ -47,7 +47,6 @@
 							}
 						}
 					}
-					console.log(this.days);
 				})
 				.catch((error) => {
 					console.error("Error", error);
@@ -58,24 +57,24 @@
 				userEmail: "Filipemails",
 				days: null,
 				isPopupOpen: false,
-				index: null,
-				info: [
-					{
-						nameOfExercise: String,
-						sets: Number //eller noget
-					}
-				]
+				chosenDay: null,
+				info: null
 			};
 		},
 		methods: {
-			OpenPopup(id) {
+			OpenPopup(day) {
 				this.isPopupOpen = true;
-				this.index = id;
-				this.info.length = 0;
-				for (var i = 0; i < this.program.schedule.days[id].exercises.length; i++) {
-					this.info.push;
-					this.info[i].name = this.program.schedule.days[id].exercises[i].name;
+				this.chosenDay = day;
+				this.info = []
+				let count = 0;
+				for (let exercise in day.exercises) {
+					this.info[count];
+					this.info[count].name = exercise.name;
+					this.info[count].sets = 0;
+					count++;
+					console.log(count);
 				}
+				console.log(this.info);
 			}
 		},
 		components: {Collapsible}
