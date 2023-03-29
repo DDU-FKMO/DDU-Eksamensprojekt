@@ -1,5 +1,5 @@
 const {app} = require("./server.js");
-const {getAllExercises, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser, getProgramByName, getAllSessions} = require("./database.js");
+const {getAllExercises, getAllPrograms, gotStreakThisWeek, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser, getProgramByName, getAllSessions, getUserByEmail} = require("./database.js");
 
 //Character muscle groups hit by exercises
 app.post("/character/muscleGroups", async (req, res) => {
@@ -22,7 +22,7 @@ app.post("/character/muscleGroups", async (req, res) => {
 	}
 	//Send data
 	console.log(data);
-	res.json(data);
+	return res.json(data);
 });
 
 //Character muscle groups hit by exercises
@@ -34,5 +34,16 @@ app.post("/character/level", async (req, res) => {
 	let level = Math.floor(sessions.length / 5);
 	console.log(level);
 	//Send data
-	res.json(level);
+	return res.json(level);
+});
+
+app.post("/character/get-streak", async (req, res) => {
+	//Get training sessions
+	let email = "Filipemails";
+	let user = await getUserByEmail(email);
+	console.log("Got " +user.username);
+	//Send data
+	let trained = await gotStreakThisWeek(email);
+	console.log("Has user trained? " + trained)
+	return res.json({streak: user.streak, hasTrained: trained});
 });

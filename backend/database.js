@@ -34,7 +34,8 @@ module.exports = {
 	updateStreak,
 	addScheduleToProgram,
 	streakCalculation,
-	addSessionToUser
+	addSessionToUser,
+	gotStreakThisWeek
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -315,12 +316,26 @@ async function streakCalculation(email) {
 	if (daysTrained >= schedule.days.length) {
 		// hvis der er trænet der korrekte antal
 		user.programList[0].weekStreaks.push(prevMonday);
-		await updateStreak(email);
+		user.streak += 1;
 		await user.save();
 		return true;
 	}
 
 	return false;
+}
+
+async function gotStreakThisWeek(email){
+	let user = await getUserByEmail(email);
+	let prevMonday = new Date();
+	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
+
+	if (user.programList[0].weekStreaks.length > 0) {
+		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) {
+			console.log("User has already fulfilled their streak this week.");
+			return true;
+		}
+	}
+	return false
 }
 
 // TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN
