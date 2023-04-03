@@ -43,7 +43,19 @@
 			}
 		},
 		mounted() {
-			console.log("Training page mounted");
+			let email = "Filipemails";
+			fetch("/trainingProgram/import/" + email)
+				.then((response) => response.json())
+				.then((data) => {
+					if (data.status == "error") throw new Error(data.message);
+					else {
+						console.log("Success:", data);
+						this.program = data;
+					}
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+				});
 		}
 	});
 </script>

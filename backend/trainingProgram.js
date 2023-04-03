@@ -122,3 +122,26 @@ app.get("/trainingProgram/import/:email", async (req, res) => {
 	console.log("Success, sending user program");
 	return res.status(200).json(userProgram); //userProgram);
 });
+
+//Available Exercises
+app.post("/trainingProgram/exercises", async (req, res) => {
+	let settings = req.body;
+	console.log(settings);
+
+	let allExercises = await getAllExercises();
+
+	let availableExercises = allExercises.filter((exercise) => {
+		// Filter out exercises that are not available
+		if ((exercise.difficulty = settings.difficulty && settings.muscleGroup.includes(exercise.muscle))) {
+			if (settings.equipment.includes(exercise.equipment) || exercise.equipment == "None" || exercise.equipment == "none") {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	});
+
+	res.json(availableExercises);
+});
