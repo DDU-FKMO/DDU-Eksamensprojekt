@@ -324,7 +324,7 @@ async function streakCalculation(email) {
 	return false;
 }
 
-async function gotStreakThisWeek(email){
+async function gotStreakThisWeek(email) {
 	let user = await getUserByEmail(email);
 	let prevMonday = new Date();
 	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
@@ -335,7 +335,7 @@ async function gotStreakThisWeek(email){
 			return true;
 		}
 	}
-	return false
+	return false;
 }
 
 // TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN
