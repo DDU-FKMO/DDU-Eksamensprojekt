@@ -41,9 +41,9 @@ app.post("/character/get-streak", async (req, res) => {
 	//Get training sessions
 	let email = "Filipemails";
 	let user = await getUserByEmail(email);
-	console.log("Got " +user.username);
+	console.log("Got " + user.username);
 	//Send data
 	let trained = await gotStreakThisWeek(email);
-	console.log("Has user trained? " + trained)
+	console.log("Has user trained? " + trained);
 	return res.json({streak: user.streak, hasTrained: trained});
 });

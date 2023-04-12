@@ -60,12 +60,11 @@
 				})
 					.then((response) => response.json())
 					.then((data) => {
-						if (data.message == "error"){
-							throw new Error(data.message)
-						}
-						else{
-						console.log("streak : "+data);
-						this.streak = data.streak;
+						if (data.message == "error") {
+							throw new Error(data.message);
+						} else {
+							console.log("streak : " + data);
+							this.streak = data.streak;
 						}
 					})
 					.catch((error) => {

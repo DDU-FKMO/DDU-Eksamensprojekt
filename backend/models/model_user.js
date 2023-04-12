@@ -25,7 +25,8 @@ const sessionSchema = new mongoose.Schema({
 	info: [
 		{
 			nameOfExercise: String,
-			sets: Number //eller noget
+			sets: {type: Number, default: 0}, //eller noget
+			weight: {type: Number, default: 0}
 		}
 	]
 });

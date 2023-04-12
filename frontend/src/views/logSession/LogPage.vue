@@ -13,8 +13,8 @@
 		</div>
 		<div class="popup" v-if="isPopupOpen">
 			<div v-for="n in days[index].exercises">
-			<span>{{ days[index].exercises[n].name }}</span>
-			<input type="text" placeholder="number of sets..." v-bind="info[n].sets" />
+				<span>{{ days[index].exercises[n].name }}</span>
+				<input type="text" placeholder="number of sets..." v-bind="info[n].sets" />
 			</div>
 		</div>
 	</div>
