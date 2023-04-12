@@ -1,0 +1,74 @@
+<template>
+	<div class="schedule">
+		<table>
+			<tr>
+				<td v-for="day in days">{{ day }}</td>
+			</tr>
+			<tr>
+				<td v-for="day in days">
+					<div class="exercise" v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.filter((a) => a.day == day)[0].exercises">
+						<Exercise :exercise="exercise" />
+					</div>
+					<p v-else>Currently no exercises</p>
+					<button @click="startCreateExercise(day)" v-if="!createExercise">Add exercise</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="createExercise" v-if="createExercise">
+		<Exercise :day="currentDay" @done="addExercise" />
+	</div>
+</template>
+
+<script>
+	import {defineComponent} from "vue";
+	import Exercise from "./SelectExercise.vue";
+
+	export default defineComponent({
+		name: "Schedule",
+		data: () => ({
+			days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+			currentDay: null,
+			schedule: [],
+			exercises: [],
+			createExercise: false
+		}),
+		components: {Exercise},
+		mounted() {
+			console.log("Schedule mounted");
+		},
+		methods: {
+			startCreateExercise: function (day) {
+				this.createExercise = true;
+				this.currentDay = day;
+			},
+			addExercise: function (exercise, sets, day) {
+				this.createExercise = false;
+				this.currentDay = null;
+				//Add to schedule
+				if (this.schedule.filter((a) => a.day == day).length == 0) this.schedule.push({day: day, exercises: [{name: exercise.name, sets: sets}]});
+				else this.schedule.filter((a) => a.day == day)[0].exercises.push({name: exercise.name, sets: sets});
+				//Add to exercise
+				if (this.exercises.filter((a) => a.name == exercise.name).length == 0) this.exercises.push(exercise);
+				//Emit
+				console.log("Schedule", this.schedule);
+				console.log("Exercises", this.exercises);
+				this.$emit("update", this.schedule, this.exercises);
+			}
+		}
+	});
+</script>
+
+<style>
+	.schedule {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.createExercise {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+</style>

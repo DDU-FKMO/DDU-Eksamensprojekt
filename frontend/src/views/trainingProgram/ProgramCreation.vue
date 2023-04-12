@@ -83,19 +83,33 @@
 			<button @click="selectProgram(program)" v-if="program != null">Use this suggestion</button>
 		</div>
 	</div>
+	<div class="create" v-if="type == 2">
+		<h3>Create your own training program</h3>
+		<p>Program name:</p>
+		<input type="text" name="programName" id="programName" v-model="custom.programName" />
+		<p>Schedule:</p>
+		<Schedule @update="updateSchedule" />
+		<button @click="createProgram">Create program</button>
+	</div>
 </template>
 
 <script>
 	import {defineComponent} from "vue";
 	import Program from "./Program.vue";
+	import Schedule from "./custom/Schedule.vue";
 
 	export default defineComponent({
-		name: "UserSettings",
+		name: "CreateProgram",
 		data: () => ({
 			type: null,
-			suggestions: []
+			suggestions: [],
+			custom: {
+				programName: "",
+				exercises: [],
+				schedule: []
+			}
 		}),
-		components: {Program},
+		components: {Program, Schedule},
 		mounted() {
 			console.log("Settings mounted");
 		},
@@ -123,6 +137,7 @@
 						else {
 							console.log("Success:", data);
 							this.type = null;
+							this.suggestions = [];
 						}
 					})
 					.catch((error) => {
@@ -174,6 +189,40 @@
 					.catch((error) => {
 						console.error("Error:", error);
 					});
+			},
+			createProgram: function (e) {
+				console.log("Create program", this.custom);
+				//Tell backend to save program
+				fetch("/trainingProgram/select", {
+					method: "POST",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(this.custom)
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.status == "error") throw new Error(data.message);
+						else {
+							console.log("Success:", data);
+							this.type = null;
+							this.custom = {
+								programName: "",
+								exercises: [],
+								schedule: []
+							};
+						}
+					})
+					.catch((error) => {
+						console.error("Error:", error);
+					});
+			},
+			updateSchedule: function (schedule, exercises) {
+				console.log("Schedule updated", schedule);
+				console.log("Exercises updated", exercises);
+				this.custom.schedule = schedule;
+				this.custom.exercises = exercises;
 			}
 		}
 	});
