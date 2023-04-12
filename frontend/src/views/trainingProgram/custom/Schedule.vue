@@ -6,8 +6,9 @@
 			</tr>
 			<tr>
 				<td v-for="day in days">
-					<div class="exercise" v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.filter((a) => a.day == day)[0].exercises">
+					<div class="exercise" v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.find((a) => a.day == day).exercises">
 						<Exercise :exercise="exercise" />
+						<button @click="removeExercise(exercise, day)">Remove</button>
 					</div>
 					<p v-else>Currently no exercises</p>
 					<button @click="startCreateExercise(day)" v-if="!createExercise">Add exercise</button>
@@ -54,6 +55,16 @@
 				//Emit
 				console.log("Schedule", this.schedule);
 				console.log("Exercises", this.exercises);
+				this.$emit("update", this.schedule, this.exercises);
+			},
+			removeExercise: function (exercise, day) {
+				//Remove from schedule
+				this.schedule.find((a) => a.day == day).exercises = this.schedule.find((a) => a.day == day).exercises.filter((a) => a.name != exercise.name);
+				//Remove day if no more exercises
+				if (this.schedule.find((a) => a.day == day).exercises.length == 0) this.schedule = this.schedule.filter((a) => a.day != day);
+				//Remove from exercises if not used
+				if (this.schedule.filter((a) => a.exercises.filter((b) => b.name == exercise.name).length > 0).length == 0) this.exercises = this.exercises.filter((a) => a.name != exercise.name);
+				//Update
 				this.$emit("update", this.schedule, this.exercises);
 			}
 		}

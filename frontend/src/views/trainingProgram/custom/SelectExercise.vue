@@ -7,7 +7,7 @@
 		<p>Select exercise</p>
 		<div class="settings">
 			<p>Settings</p>
-			<form @submit="getAvailable">
+			<form ref="exerciseForm" @submit="getAvailable" @load="getAvailable">
 				<label for="muscleGroups">Muscle Group:</label>
 				<div>
 					<input type="checkbox" name="muscleGroups" value="abdominals" checked />
@@ -111,6 +111,7 @@
 		},
 		mounted() {
 			console.log("Schedule mounted");
+			this.getAvailable(this.$refs.exerciseForm, false);
 		},
 		watch: {
 			selectedExercise: function (newVal, oldVal) {
@@ -120,11 +121,14 @@
 			}
 		},
 		methods: {
-			getAvailable: function (e) {
+			getAvailable: function (e, prevent = true) {
+				console.log("Getting available exercises");
 				//Prevent default form action (reloading page)
-				e.preventDefault();
+				if (prevent) e.preventDefault();
 				//Get form data settings
-				const data = new FormData(e.target);
+				let data;
+				if (prevent) data = new FormData(e.target);
+				else data = new FormData(e);
 				let settings = {
 					muscleGroup: data.getAll("muscleGroups"),
 					difficulty: data.get("difficulty"),
