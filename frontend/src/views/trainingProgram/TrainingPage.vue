@@ -1,23 +1,18 @@
 <template>
 	<main>
 		<h2>Training</h2>
-		<div class="creation" v-if="createNew">
-			<button
-				@click="
-					() => {
-						createNew = false;
-					}
-				"
-			>
-				Back
-			</button>
-			<ProgramCreation />
+		<div class="creation" v-if="createNew || edit">
+			<button @click="back">Back</button>
+			<ProgramCreation :edit="edit" :program="program" />
 		</div>
 		<div class="program" v-else>
 			<button @click="createNewProgram()">Create new program</button>
-			<h3>Current Training Program</h3>
-			<Program v-if="program != null && program != {}" :key="program.id" :name="program.name" :excersises="program.excersises" :schedule="program.schedule" />
-			<p v-else>No program selected</p>
+			<div v-if="program != null && program != {}">
+				<h3>Current Training Program</h3>
+				<button @click="editProgram">Edit</button>
+				<Program :key="program._id" :name="program.programName" :exercises="program.exercises" :schedule="program.schedule.days" />
+			</div>
+			<h3 v-else>No program selected</h3>
 		</div>
 	</main>
 </template>
@@ -33,13 +28,25 @@
 		data() {
 			return {
 				program: null,
-				createNew: false
+				createNew: false,
+				edit: false
 			};
 		},
 		methods: {
+			back: function () {
+				console.log("Back");
+				this.createNew = false;
+				this.edit = false;
+			},
 			createNewProgram: function () {
 				console.log("Create new program");
 				this.createNew = true;
+				this.edit = false;
+			},
+			editProgram: function () {
+				console.log("Edit program");
+				this.createNew = false;
+				this.edit = true;
 			}
 		},
 		mounted() {

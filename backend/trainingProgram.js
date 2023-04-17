@@ -44,9 +44,10 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 			owner: "Auto-generated"
 		};
 
+		let dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 		//Add 3 exercises per training day
 		for (let day = 0; day < 3; day++) {
-			let scheduleData = {day: "Day " + day * 2, exercises: []};
+			let scheduleData = {day: dayNames[day * 2], exercises: []};
 			for (let e = 0; e < 3; e++) {
 				let exercise = availableExercises[Math.floor(Math.random() * availableExercises.length)];
 				scheduleData.exercises.push({name: exercise.name, sets: exercise.defaultSets});

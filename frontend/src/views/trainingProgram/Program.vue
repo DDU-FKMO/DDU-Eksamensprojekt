@@ -1,6 +1,6 @@
 <template>
 	<div class="program">
-		Program...
+		Program
 		<h3>{{ name }}</h3>
 		<div class="day" v-for="dayObject of schedule">
 			<h4>{{ dayObject.day }}</h4>
