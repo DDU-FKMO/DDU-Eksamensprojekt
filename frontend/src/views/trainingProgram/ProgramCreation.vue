@@ -88,7 +88,7 @@
 		<p>Program name:</p>
 		<input type="text" name="programName" id="programName" v-model="custom.programName" />
 		<p>Schedule:</p>
-		<Schedule @update="updateSchedule" />
+		<Schedule @update="updateSchedule" :program="edit ? program : null" />
 		<button @click="createProgram">Create program</button>
 	</div>
 </template>
@@ -109,9 +109,21 @@
 				schedule: []
 			}
 		}),
+		props: {
+			program: {
+				type: Object,
+				required: false
+			},
+			edit: {
+				type: Boolean,
+				required: true
+			}
+		},
 		components: {Program, Schedule},
 		mounted() {
 			console.log("Settings mounted");
+			if (this.edit) this.type = 2;
+			console.log("Program", this.program);
 		},
 		methods: {
 			onClick: function (type) {

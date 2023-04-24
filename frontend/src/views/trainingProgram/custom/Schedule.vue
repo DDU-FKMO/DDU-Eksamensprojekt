@@ -35,9 +35,21 @@
 			exercises: [],
 			createExercise: false
 		}),
+		props: {
+			program: {
+				type: Object,
+				required: false
+			}
+		},
 		components: {Exercise},
 		mounted() {
 			console.log("Schedule mounted");
+			if (this.program != null) {
+				this.schedule = this.program.schedule.days;
+				this.exercises = this.program.exercises;
+				console.log("Schedule", this.schedule);
+				console.log("Exercises", this.exercises);
+			}
 		},
 		methods: {
 			startCreateExercise: function (day) {
