@@ -6,12 +6,13 @@ const router = createRouter({
 	routes: [
 		{
 			path: "/",
-			component: HomeView,
+			name: "Character",
+			component: () => import("../views/character/CharacterPage.vue"),
 			meta: {auth: true}
 		},
 		{
 			path: "/training",
-			name: "Training Program",
+			name: "Training",
 			component: () => import("../views/trainingProgram/TrainingPage.vue"),
 			meta: {auth: true}
 		},
@@ -19,12 +20,6 @@ const router = createRouter({
 			path: "/log",
 			name: "Log Session",
 			component: () => import("../views/logSession/LogPage.vue"),
-			meta: {auth: true}
-		},
-		{
-			path: "/character",
-			name: "Character",
-			component: () => import("../views/character/CharacterPage.vue"),
 			meta: {auth: true}
 		},
 		{
