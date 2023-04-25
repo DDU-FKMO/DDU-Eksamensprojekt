@@ -50,7 +50,7 @@
 			}
 		},
 		mounted() {
-			let email = "Filipemails";
+			let email = "Filip@emails.dk";
 			fetch("/trainingProgram/import/" + email)
 				.then((response) => response.json())
 				.then((data) => {

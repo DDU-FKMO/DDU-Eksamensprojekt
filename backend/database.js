@@ -191,7 +191,7 @@ async function addSessionToUser(email, programName, sessionList) {
 		console.log("Session: no such user");
 		return false;
 	}
-	// cereata session
+	// create a session
 	let session = await Session.create({
 		info: sessionList
 	});

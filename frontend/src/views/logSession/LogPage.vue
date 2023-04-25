@@ -8,14 +8,15 @@
 						<Collapsible v-bind:summary="exercise.name + ' - ' + exercise.sets + ' sets'" v-bind:description="'Equipment: ' + exercise.equipment + '\n' + exercise.instructions"> </Collapsible>
 					</li>
 				</ul>
-				<button @click="OpenPopup(day)">Log</button>
+				<button @click="OpenPopup(day)">Open Log</button>
 			</div>
 		</div>
 		<div class="popup" v-if="isPopupOpen">
-			<div v-for="n in days[index].exercises">
-				<span>{{ days[index].exercises[n].name }}</span>
-				<input type="text" placeholder="number of sets..." v-bind="info[n].sets" />
+			<div v-for="i in info.length">
+				<span>{{ info[i - 1].name }}: </span>
+				<input type="text" placeholder="number of sets..." v-model="info[i - 1].sets" />
 			</div>
+			<button @click="SaveSession">Save Log</button>
 		</div>
 	</div>
 </template>
@@ -30,7 +31,7 @@
 				.then((data) => {
 					console.log("Success", data);
 					let program = data;
-					this.days = [];
+					this.programName = program.name;
 					for (let i = 0; i < program.schedule.days.length; i++) {
 						this.days[i] = {};
 						this.days[i].exercises = {};
@@ -54,27 +55,38 @@
 		},
 		data() {
 			return {
-				userEmail: "Filipemails",
-				days: null,
+				userEmail: "Filip@emails.dk",
+				days: [],
 				isPopupOpen: false,
-				chosenDay: null,
-				info: null
+				info: [],
+				programName: String
 			};
 		},
 		methods: {
 			OpenPopup(day) {
 				this.isPopupOpen = true;
 				this.chosenDay = day;
-				this.info = [];
 				let count = 0;
 				for (let exercise in day.exercises) {
-					this.info[count];
-					this.info[count].name = exercise.name;
+					this.info[count] = {};
+					this.info[count].name = day.exercises[exercise].name;
 					this.info[count].sets = 0;
 					count++;
-					console.log(count);
 				}
-				console.log(this.info);
+			},
+			SaveSession() {
+				let data = {};
+				data.info = this.info;
+				data.email = this.userEmail;
+				data.programName = this.programName;
+				fetch("trainingProgram/log", {
+					method: "POST",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(data)
+				});
 			}
 		},
 		components: {Collapsible}

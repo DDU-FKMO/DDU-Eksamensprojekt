@@ -6,27 +6,62 @@ const router = createRouter({
 	routes: [
 		{
 			path: "/",
-			component: HomeView
+			name: "Character",
+			component: () => import("../views/character/CharacterPage.vue"),
+			meta: {auth: true}
 		},
 		{
 			path: "/training",
-			name: "Training Program",
-			component: () => import("../views/trainingProgram/TrainingPage.vue")
+			name: "Training",
+			component: () => import("../views/trainingProgram/TrainingPage.vue"),
+			meta: {auth: true}
 		},
 		{
 			path: "/log",
 			name: "Log Session",
-			component: () => import("../views/logSession/LogPage.vue")
+			component: () => import("../views/logSession/LogPage.vue"),
+			meta: {auth: true}
 		},
 		{
-			path: "/character",
-			name: "Character",
-			component: () => import("../views/character/CharacterPage.vue")
+			path: "/login",
+			name: "Login",
+			component: () => import("../views/userAuth/Login.vue"),
+			meta: {auth: false}
 		}
 	]
 });
 
 let DEFAULT_TITLE = "DDU";
+//redirect and authentication
+import axios, {AxiosError} from "axios";
+let checkLogin = false;
+router.beforeEach(async (to, from) => {
+	if (to.meta.auth) {
+		if (checkLogin) {
+			try {
+				let token = localStorage.getItem("user");
+				const config = {
+					"x-access-token": token
+				};
+				if (!token) throw new Error("Not logged in");
+				await axios
+					.get("/node/auth", {headers: config})
+					.then((res) => console.log(res))
+					.catch((err) => {
+						console.log(err.response.data);
+						throw new Error("Invalid token");
+					});
+
+				//let decoded = VueJwtDecode.decode(token);
+				//console.log(decoded.userName, " has logged in");
+			} catch (err) {
+				console.log(err);
+				return {name: "Login"};
+			}
+		}
+	}
+});
+
 router.afterEach((to, from) => {
 	document.title = to.name ? to.name + ` | ${DEFAULT_TITLE}` : DEFAULT_TITLE;
 });
