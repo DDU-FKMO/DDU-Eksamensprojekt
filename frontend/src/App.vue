@@ -132,46 +132,62 @@
 
 	/* Mobile changes */
 	@media (max-aspect-ratio: 0.84) {
-		.nav {
-			width: 50%;
-			min-width: 12rem;
-			position: fixed;
-			margin: 0;
-			top: 7.5vh;
-			left: 7.5vh;
-			--display: none;
-			display: var(--display);
-			flex-direction: column;
-			height: 50%;
-			animation: stretch 0.5s forwards;
-			-webkit-animation: stretch 0.5s forwards;
-			overflow: hidden;
-		}
-		@keyframes stretch {
-			0% {
-				height: 0%;
-			}
-			100% {
+		@media (max-width: 1000px) {
+			.nav {
+				width: 50%;
+				min-width: 12rem;
+				position: fixed;
+				margin: 0;
+				top: 7.5vh;
+				left: 7.5vh;
+				--display: none;
+				display: var(--display);
+				flex-direction: column;
 				height: 50%;
+				animation: stretch 0.5s forwards;
+				-webkit-animation: stretch 0.5s forwards;
+				overflow: hidden;
+			}
+			@keyframes stretch {
+				0% {
+					height: 0%;
+				}
+				100% {
+					height: 50%;
+				}
+			}
+			@-webkit-keyframes stretch {
+				0% {
+					height: 0%;
+				}
+				100% {
+					height: 50%;
+				}
+			}
+			.nav .navlink {
+				width: 100%;
+				margin-right: 0;
+				clip-path: none;
+				border-width: 3px;
+				transition: background-color 0.5s, border-color 0.5s;
+			}
+			.nav .navlink p {
+				font-size: 1.5rem;
 			}
 		}
-		@-webkit-keyframes stretch {
-			0% {
-				height: 0%;
+		@media (min-width: 1000px) {
+			header {
+				height: 4vh;
 			}
-			100% {
-				height: 50%;
+			.nav {
+				margin-left: 4.5vh;
 			}
-		}
-		.nav .navlink {
-			width: 100%;
-			margin-right: 0;
-			clip-path: none;
-			border-width: 3px;
-			transition: background-color 0.5s, border-color 0.5s;
-		}
-		.nav .navlink p {
-			font-size: 1.5rem;
+			.nav .navlink {
+				margin-right: -3.5vh;
+			}
+			.nav .navlink p {
+				font-size: 1.5rem;
+			}
 		}
 	}
 </style>
