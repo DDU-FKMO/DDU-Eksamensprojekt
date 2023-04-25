@@ -6,22 +6,18 @@ const router = createRouter({
 	routes: [
 		{
 			path: "/",
-			component: HomeView
+			name: "Character",
+			component: () => import("../views/character/CharacterPage.vue")
 		},
 		{
 			path: "/training",
-			name: "Training Program",
+			name: "Training",
 			component: () => import("../views/trainingProgram/TrainingPage.vue")
 		},
 		{
 			path: "/log",
 			name: "Log Session",
 			component: () => import("../views/logSession/LogPage.vue")
-		},
-		{
-			path: "/character",
-			name: "Character",
-			component: () => import("../views/character/CharacterPage.vue")
 		}
 	]
 });
