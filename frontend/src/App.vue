@@ -6,17 +6,28 @@
 		data() {
 			return {
 				loggedIn: false,
-				routes: []
+				routes: [],
+				showSidebar: false
 			};
 		},
 		mounted() {
 			if (!(localStorage.getItem("user") === null)) {
 				this.loggedIn = true;
 			}
-			console.log("App mounted");
-			console.log("Routes", this.$router.options.routes);
 			this.routes = this.$router.options.routes;
-			console.log("Routes 2", this.routes);
+		},
+		methods: {
+			logoClick: function () {
+				let aspectRatio = window.innerWidth / window.innerHeight;
+				if (aspectRatio > 0.84) {
+					this.$router.push("/");
+				} else {
+					this.showSidebar = !this.showSidebar;
+					let el = document.querySelector("nav.nav");
+					let display = getComputedStyle(el).getPropertyValue("--display");
+					el.style.setProperty("--display", display == "flex" ? "none" : "flex");
+				}
+			}
 		}
 	};
 </script>
@@ -24,9 +35,9 @@
 <template>
 	<header>
 		<div class="background"></div>
-		<RouterLink to="/" class="logo center">
+		<div class="logo center" @click="logoClick">
 			<img src="/logo.png" alt="logo" />
-		</RouterLink>
+		</div>
 		<nav class="nav center" :key="loggedIn">
 			<RouterLink v-for="route in routes" :to="route.path" class="navlink center" :class="route.path == $router.currentRoute.value.path ? 'selected' : ''">
 				<p>{{ route.name == "Login" ? (loggedIn ? "Logout" : "Login") : route.name }}</p>
@@ -79,6 +90,9 @@
 		position: absolute;
 		z-index: 2;
 	}
+	.logo:hover {
+		cursor: pointer;
+	}
 	.logo img {
 		height: 75%;
 		width: 75%;
@@ -114,5 +128,31 @@
 	.nav .navlink:hover {
 		background-color: var(--base-color-3);
 		border-color: var(--base-color-4);
+	}
+
+	/* Mobile changes */
+	@media (max-aspect-ratio: 0.84) {
+		.nav {
+			width: 50%;
+			min-width: 12rem;
+			position: fixed;
+			margin: 0;
+			top: 7.5vh;
+			left: 7.5vh;
+			--display: none;
+			display: var(--display);
+			flex-direction: column;
+			height: 50%;
+		}
+		.nav .navlink {
+			width: 100%;
+			margin-right: 0;
+			clip-path: none;
+			border-width: 3px;
+			transition: background-color 0.5s, border-color 0.5s;
+		}
+		.nav .navlink p {
+			font-size: 1.5rem;
+		}
 	}
 </style>
