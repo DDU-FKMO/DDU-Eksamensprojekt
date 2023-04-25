@@ -1,10 +1,5 @@
 <template>
-	<div class="buttons" v-if="type == null">
-		<button @click="onClick(0)">Recomended</button>
-		<button @click="onClick(1)">Auto generated</button>
-		<button @click="onClick(2)">Custom</button>
-	</div>
-	<div class="settings" v-if="type == 1">
+	<div class="settings" v-if="type == 1 && suggestions.length == 0">
 		<h3>User Settings</h3>
 		<form @submit="getSuggestions">
 			<label for="muscleGroups">Muscle Group:</label>
@@ -88,7 +83,7 @@
 		<p>Program name:</p>
 		<input type="text" name="programName" id="programName" v-model="custom.programName" />
 		<p>Schedule:</p>
-		<Schedule @update="updateSchedule" :program="edit ? program : null" />
+		<Schedule @update="updateSchedule" :program="edit ? program : null" :edit="edit" />
 		<button @click="createProgram">Create program</button>
 	</div>
 </template>
@@ -101,7 +96,6 @@
 	export default defineComponent({
 		name: "CreateProgram",
 		data: () => ({
-			type: null,
 			suggestions: [],
 			custom: {
 				programName: "",
@@ -117,6 +111,10 @@
 			edit: {
 				type: Boolean,
 				required: true
+			},
+			type: {
+				type: Number,
+				required: false
 			}
 		},
 		components: {Program, Schedule},
@@ -124,13 +122,9 @@
 			console.log("Settings mounted");
 			if (this.edit) this.type = 2;
 			console.log("Program", this.program);
+			console.log("Type", this.type);
 		},
 		methods: {
-			onClick: function (type) {
-				console.log("Clicked on: " + type);
-				this.type = type;
-				if (type == 0) this.getRecommendations();
-			},
 			selectProgram: function (program) {
 				program.programName = "Custom program - User";
 				console.log("Selected program", program);
