@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const {app} = require("./server.js");
-const {getAllExercises, getUserByEmail, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser, getExerciseByName} = require("./database.js");
+const {getAllExercises, getUserByEmail, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser, getExerciseByName, addSessionToUser} = require("./database.js");
 
 //Program Recommendations
 app.get("/trainingProgram/recommend", async (req, res) => {
@@ -145,4 +145,13 @@ app.post("/trainingProgram/exercises", async (req, res) => {
 	});
 
 	res.json(availableExercises);
+});
+
+//Log Session
+app.post("/trainingProgram/log", async (req, res) => {
+	let data = req.body;
+	console.log(data);
+
+	addSessionToUser(data.email, data.programName, data.info);
+	return res.status(200);
 });
