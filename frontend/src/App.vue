@@ -5,13 +5,18 @@
 	export default {
 		data() {
 			return {
-				loggedIn: false
+				loggedIn: false,
+				routes: []
 			};
 		},
 		mounted() {
 			if (!(localStorage.getItem("user") === null)) {
 				this.loggedIn = true;
 			}
+			console.log("App mounted");
+			console.log("Routes", this.$router.options.routes);
+			this.routes = this.$router.options.routes;
+			console.log("Routes 2", this.routes);
 		}
 	};
 </script>
@@ -20,10 +25,10 @@
 	<header>
 		<div class="background"></div>
 		<RouterLink to="/" class="logo center">
-			<img src="logo.png" alt="logo" />
+			<img src="../public/logo.png" alt="logo" />
 		</RouterLink>
 		<nav class="nav center">
-			<RouterLink v-for="route in routes" :to="route.path" class="navlink center" :class="route.path == this.$route.path ? 'selected' : ''">
+			<RouterLink v-for="route in routes" :to="route.path" class="navlink center" :class="route.path == route.path ? 'selected' : ''">
 				<p>{{ route.name == Login ? (loggedIn ? "Logout" : "Login") : route.name }}</p>
 			</RouterLink>
 		</nav>
@@ -33,20 +38,6 @@
 	</main>
 </template>
 
-<script>
-	export default {
-		name: "App",
-		data: () => ({
-			routes: []
-		}),
-		mounted() {
-			console.log("App mounted");
-			console.log("Routes", this.$router.options.routes);
-			this.routes = this.$router.options.routes;
-			console.log("Routes 2", this.routes);
-		}
-	};
-</script>
 
 <style scoped>
 	.center {
