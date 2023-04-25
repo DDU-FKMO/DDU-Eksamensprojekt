@@ -1,6 +1,6 @@
 require("dotenv").config();
 const fetch = require("node-fetch");
-//const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 //const jwt = require("jsonwebtoken");
 
 const {User} = require("./models/model_user.js");
@@ -44,18 +44,20 @@ module.exports = {
 //Connect to database
 require("./database_connection.js").connection();
 
-//Regiser new user
+//Register new user - denne metode bruges ikke.
 async function register(username, email, password) {
-	// encrypt password
+	
 	const exists = await getUserByEmail(email);
 	if (exists) {
 		console.log("exists");
 		return false; // eller noget
 	}
+	let encPass = await bcrypt.hash(password, 10);
+
 	const user = await User.create({
 		username,
 		email,
-		password,
+		password: encPass,
 		streak: 0
 	});
 	console.log("Created user");
