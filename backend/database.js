@@ -8,6 +8,7 @@ const {Program} = require("./models/model_user.js");
 const {Exercise} = require("./models/model_user.js");
 const {Session} = require("./models/model_user.js");
 const {Schedule} = require("./models/model_user.js");
+const {Unlock} = require("./models/model_user.js");
 
 //On database connected function
 function onDatabaseConnected() {
@@ -35,7 +36,10 @@ module.exports = {
 	addScheduleToProgram,
 	streakCalculation,
 	addSessionToUser,
-	gotStreakThisWeek
+	gotStreakThisWeek,
+	addUnlockToUser,
+	createUnlock,
+	getUnlockByName
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -336,6 +340,39 @@ async function gotStreakThisWeek(email) {
 		}
 	}
 	return false;
+}
+
+async function createUnlock(name, unlockType, content){
+	const exists = await getUnlockByName(exerciseJSON.name);
+	if (exists) {
+		console.log("unlock already exists");
+		return exists;
+	}
+	const sucess = await Unlock.create({name, unlockType, content});
+	console.log("added unlock");
+	return sucess;
+}
+
+async function getUnlockByName(name) {
+	unlock = await Unlock.findOne({name: name.toLowerCase()});
+	return unlock;
+}
+
+async function addUnlockToUser(email, unlockName){
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("Unlock: no such user");
+		return false;
+	}
+	// Get unlock
+	unlock = await getUnlockByName(unlockName);
+	if (!unlock) {
+		console.log("Unlock: no such unlock");
+		return false;
+	}
+	user.unlocks.push(unlock);
+	await user.save();
+	return unlock;
 }
 
 // TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN
