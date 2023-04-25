@@ -16,19 +16,19 @@ app.get("/node/auth", auth, async (req, res) => {
 app.post("/node/register", async (req, res) => {
 	try {
 		const {username, email, password} = req.body;
-		//username = req.body.userName;
-		//email = req.body.email;
-		//password = req.body.password;
+		console.log("Attempted registration");
 
 		console.log(req.body);
 		if (!(username && password && email)) {
-			return res.status(400).send("wrong");
+			console.log("All data must be filled");
+			return res.status(400).send("All fields must be filled");
 		}
 
 		const found = await User.findOne({email});
 
 		if (found) {
-			return res.status(400).send("already exists");
+			console.log("User exists already");
+			return res.status(400).send("A user with this email already exists");
 		}
 
 		encPass = await bcrypt.hash(password, 10);
@@ -40,7 +40,7 @@ app.post("/node/register", async (req, res) => {
 		});
 
 		const token = jwt.sign({user_id: user._id, email, username}, process.env.JWT_TOKEN, {
-			expiresIn: "3h"
+			expiresIn: "24h"
 		});
 
 		user.token = token;
@@ -65,15 +65,15 @@ app.post("/node/login", async (req, res) => {
 		console.log("email: "+ email)
 		const user = await getUserByEmail(email);
 		if (user === null){
-			console.log("Not found");
-			return res.status(404).send("User not found");
+			console.log("User not found");
+			return res.status(404).send("Invalid credentials");
 		}
 		let username = user.username;
 		console.log("User found: " + username)
         let passwordCorrect = await bcrypt.compare(password, user.password);
 		if (user && passwordCorrect) {
 			const token = jwt.sign({user_id: user.__id, email, username}, process.env.JWT_TOKEN, {
-				expiresIn: "3h"
+				expiresIn: "24h"
 			});
 
 			user.token = token;
@@ -81,7 +81,7 @@ app.post("/node/login", async (req, res) => {
 			return res.status(200).json(user);
 		}
 		console.log("Invalid creds")
-		return res.status(400).send("Invalid credentials");
+		return res.status(404).send("Invalid credentials");
 	} catch (err) {
 		console.log(err);
         return res.status(500).send(err);
