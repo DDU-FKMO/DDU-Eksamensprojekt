@@ -34,27 +34,30 @@ const router = createRouter({
 let DEFAULT_TITLE = "DDU";
 //redirect and authentication
 import axios, {AxiosError} from "axios";
+let checkLogin = false;
 router.beforeEach(async (to, from) => {
 	if (to.meta.auth) {
-		try {
-			let token = localStorage.getItem("user");
-			const config = {
-				"x-access-token": token
-			};
-			if (!token) throw new Error("Not logged in");
-			await axios
-				.get("/node/auth", {headers:config})
-				.then((res) => console.log(res))
-				.catch((err) => {
-					console.log(err.response.data);
-					throw new Error("Invalid token");
-				});
+		if (checkLogin) {
+			try {
+				let token = localStorage.getItem("user");
+				const config = {
+					"x-access-token": token
+				};
+				if (!token) throw new Error("Not logged in");
+				await axios
+					.get("/node/auth", {headers: config})
+					.then((res) => console.log(res))
+					.catch((err) => {
+						console.log(err.response.data);
+						throw new Error("Invalid token");
+					});
 
-			//let decoded = VueJwtDecode.decode(token);
-			//console.log(decoded.userName, " has logged in");
-		} catch (err) {
-			console.log(err);
-			return {name: "Login"};
+				//let decoded = VueJwtDecode.decode(token);
+				//console.log(decoded.userName, " has logged in");
+			} catch (err) {
+				console.log(err);
+				return {name: "Login"};
+			}
 		}
 	}
 });

@@ -28,7 +28,7 @@
 			<img src="/logo.png" alt="logo" />
 		</RouterLink>
 		<nav class="nav center" :key="loggedIn">
-			<RouterLink v-for="route in routes" :to="route.path" class="navlink center" :class="route.path == route.path ? 'selected' : ''">
+			<RouterLink v-for="route in routes" :to="route.path" class="navlink center" :class="route.path == $router.currentRoute.value.path ? 'selected' : ''">
 				<p>{{ route.name == "Login" ? (loggedIn ? "Logout" : "Login") : route.name }}</p>
 			</RouterLink>
 		</nav>
@@ -37,7 +37,6 @@
 		<RouterView @login="loggedIn = !loggedIn" />
 	</main>
 </template>
-
 
 <style scoped>
 	.center {
@@ -48,7 +47,7 @@
 	/*Main layout*/
 	main {
 		width: 100%;
-		min-height: 95vh;
+		min-height: 92.5vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;

@@ -2,6 +2,8 @@
 
 #app {
 	width: 100vw;
+	min-height: 100%;
+	position: absolute;
 	overflow-x: hidden;
 	font-weight: normal;
 	background-color: var(--color-black-4);
