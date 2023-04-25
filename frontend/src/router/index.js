@@ -7,17 +7,26 @@ const router = createRouter({
 		{
 			path: "/",
 			name: "Character",
-			component: () => import("../views/character/CharacterPage.vue")
+			component: () => import("../views/character/CharacterPage.vue"),
+			meta: {auth: true}
 		},
 		{
 			path: "/training",
 			name: "Training",
-			component: () => import("../views/trainingProgram/TrainingPage.vue")
+			component: () => import("../views/trainingProgram/TrainingPage.vue"),
+			meta: {auth: true}
 		},
 		{
 			path: "/log",
 			name: "Log Session",
-			component: () => import("../views/logSession/LogPage.vue")
+			component: () => import("../views/logSession/LogPage.vue"),
+			meta: {auth: true}
+		},
+		{
+			path: "/login",
+			name: "Login",
+			component: () => import("../views/userAuth/Login.vue"),
+			meta: {auth: false}
 		}
 	]
 });

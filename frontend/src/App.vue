@@ -1,6 +1,20 @@
 <script setup>
 	import {RouterLink, RouterView} from "vue-router";
 </script>
+<script>
+	export default {
+		data() {
+			return {
+				loggedIn: false
+			};
+		},
+		mounted() {
+			if (!(localStorage.getItem("user") === null)) {
+				this.loggedIn = true;
+			}
+		}
+	};
+</script>
 
 <template>
 	<header>
@@ -10,12 +24,12 @@
 		</RouterLink>
 		<nav class="nav center">
 			<RouterLink v-for="route in routes" :to="route.path" class="navlink center" :class="route.path == this.$route.path ? 'selected' : ''">
-				<p>{{ route.name }}</p>
+				<p>{{ route.name == Login ? (loggedIn ? "Logout" : "Login") : route.name }}</p>
 			</RouterLink>
 		</nav>
 	</header>
 	<main>
-		<RouterView />
+		<RouterView @login="loggedIn = !loggedIn" />
 	</main>
 </template>
 

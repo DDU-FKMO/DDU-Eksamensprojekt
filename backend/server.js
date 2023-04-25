@@ -60,6 +60,7 @@ require("./database.js");
 //Load logic
 require("./trainingProgram.js");
 require("./character.js");
+require("./login.js");
 
 //Redirect everything else to index
 app.use("/*", express.static("../frontend/dist/index.html"));
