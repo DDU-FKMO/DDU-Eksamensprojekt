@@ -2,6 +2,7 @@
 	<div class="all">
 		<img src="character.webp" alt="character" />
 		<MuscleGroups />
+		{{ name }}
 	</div>
 </template>
 
@@ -9,8 +10,17 @@
 	import MuscleGroups from "./MuscleGroups.vue";
 	export default {
 		name: "Character",
+		data: () => ({
+			name: "Filip"
+		}),
 		components: {
 			MuscleGroups
+		},
+		methods: {
+			test: function () {
+				console.log("test");
+				this.name = "Filip 2";
+			}
 		}
 	};
 </script>
