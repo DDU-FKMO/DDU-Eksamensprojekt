@@ -4,11 +4,14 @@ const auth = require("./authenticate.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("./models/model_user.js");
+const {getUserByEmail} = require("./database.js");
 
 app.get("/node/auth", auth, async (req, res) => {
 	console.log("auth ok");
 	return res.status(200).send("Ok!");
 });
+
+
 
 app.post("/node/register", async (req, res) => {
 	try {
@@ -36,7 +39,7 @@ app.post("/node/register", async (req, res) => {
 			password: encPass
 		});
 
-		const token = jwt.sign({user_id: user._id, email, username}, process.env.TOKEN_KEY, {
+		const token = jwt.sign({user_id: user._id, email, username}, process.env.JWT_TOKEN, {
 			expiresIn: "3h"
 		});
 
@@ -51,19 +54,25 @@ app.post("/node/register", async (req, res) => {
 
 app.post("/node/login", async (req, res) => {
 	console.log("Attempted login:");
+	
 	try {
 		const {email, password} = req.body;
 
 		if (!(email && password)) {
-			console.log(req.body);
+			console.log("No input: request body: " + req.body.email + req.body.password);
 			return res.status(400).send("All input is required");
 		}
-
-		const user = await User.findOne({email});
-		const username = user.username;
+		console.log("email: "+ email)
+		const user = await getUserByEmail(email);
+		if (user === null){
+			console.log("Not found");
+			return res.status(404).send("User not found");
+		}
+		let username = user.username;
+		console.log("User found: " + username)
         let passwordCorrect = await bcrypt.compare(password, user.password);
 		if (user && passwordCorrect) {
-			const token = jwt.sign({user_id: user.__id, email, username}, process.env.TOKEN_KEY, {
+			const token = jwt.sign({user_id: user.__id, email, username}, process.env.JWT_TOKEN, {
 				expiresIn: "3h"
 			});
 
@@ -71,7 +80,7 @@ app.post("/node/login", async (req, res) => {
             console.log("User logged in: " + user.username)
 			return res.status(200).json(user);
 		}
-
+		console.log("Invalid creds")
 		return res.status(400).send("Invalid credentials");
 	} catch (err) {
 		console.log(err);

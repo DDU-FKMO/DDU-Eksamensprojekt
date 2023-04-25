@@ -6,8 +6,9 @@ const verifyToken = (req, res, next) => {
 	const token = req.body.token || req.query.token || req.headers["x-access-token"];
 
 	if (!token) {
-		//return res.writeHead(307, {Location: '/'}).end(); // redirect
-		return res.status(403).send("Unauthorized; Token required");
+		console.log("Unauthorized")
+		return res.writeHead(307, {Location: '/login?reason=not-logged-in'}).end(); // redirect
+		//return res.status(403).send("Unauthorized; Token required");
 	}
 
 	try {
@@ -15,7 +16,8 @@ const verifyToken = (req, res, next) => {
 
 		req.body.user = decoded;
 	} catch (err) {
-		return res.status(401).send("Invalid Token");
+		return res.writeHead(307, {Location: "/login?reason=invalid-token"}).end(); // redirect
+		//return res.status(401).send("Invalid Token");
 	}
 
 	return next();

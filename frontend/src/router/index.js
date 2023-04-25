@@ -6,22 +6,32 @@ const router = createRouter({
 	routes: [
 		{
 			path: "/",
-			component: HomeView
+			component: HomeView,
+			meta: {auth: false}
 		},
 		{
 			path: "/training",
 			name: "Training Program",
-			component: () => import("../views/trainingProgram/TrainingPage.vue")
+			component: () => import("../views/trainingProgram/TrainingPage.vue"),
+			meta: {auth: false}
 		},
 		{
 			path: "/log",
 			name: "Log Session",
-			component: () => import("../views/logSession/LogPage.vue")
+			component: () => import("../views/logSession/LogPage.vue"),
+			meta: {auth: false}
 		},
 		{
 			path: "/character",
 			name: "Character",
-			component: () => import("../views/character/CharacterPage.vue")
+			component: () => import("../views/character/CharacterPage.vue"),
+			meta: {auth: false}
+		},
+		{
+			path: "/login",
+			name: "Login",
+			component: () => import("../views/userAuth/Login.vue"),
+			meta: {auth: false}
 		}
 	]
 });

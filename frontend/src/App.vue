@@ -1,6 +1,21 @@
 <script setup>
 	import {RouterLink, RouterView} from "vue-router";
 </script>
+<script>
+export default {
+  data() {
+    return {
+      loggedIn: false
+    }
+  },
+  mounted(){
+	if (!(localStorage.getItem("user") === null)){
+		this.loggedIn = true;
+	}
+  }
+}
+</script>
+
 
 <template>
 	<header>
@@ -9,10 +24,11 @@
 			<RouterLink to="/training">Training</RouterLink>
 			<RouterLink to="/log">Log</RouterLink>
 			<RouterLink to="/character">Character</RouterLink>
+			<RouterLink to="/login" :key="loggedIn">{{ (loggedIn ? "Logout" : "Login")}}</RouterLink>
 		</nav>
 	</header>
 	<main>
-		<RouterView />
+		<RouterView @login="loggedIn = !loggedIn"/>
 	</main>
 </template>
 
