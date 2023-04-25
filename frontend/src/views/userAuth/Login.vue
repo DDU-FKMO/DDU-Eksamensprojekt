@@ -1,13 +1,13 @@
 <template>
-    
-<h2>{{this.signUp ? "Register" : "Login"}}</h2>
+   <div class="ctn"> 
+<h2 class="head">{{this.signUp ? "Register" : "Login"}}</h2>
 
-<h4 v-if="errorMsg != 'x'" style="color: red">{{ errorMsg }}</h4>
-<div class="ctn">
+<h4 class="head" v-if="errorMsg != 'x'" style="color: red">{{ errorMsg }}</h4>
+
 <form @submit.prevent="loginUser" method="post" v-if="!signUp">
    <label for="email"> email: <input type="email" id="email" name="email" v-model="info.email"></label> 
     <label for="password"> Password: <input type="password" id="password" name="password" v-model="info.password"> </label>
- <button type="submit">Sign in</button>
+ <button class="sbmt" type="submit">Sign in</button>
 </form>
 
 <form @submit.prevent="registerAcc" method="post" v-else>
@@ -38,13 +38,15 @@ form {
     border: 2px solid black;
     padding: 10px;
     margin: 10px;
+    background-color:whitesmoke;
 }
 div.ctn{
     width: 40vw;
-    
+    position: fixed; 
+    top: 10%;
 }
 .bottom{
-    position: fixed;    
+    position: fixed; 
     text-align: center;
     left: 42%;
     margin: auto;
@@ -53,10 +55,14 @@ div.ctn{
 .acc{
      text-align: center;
 }
-button{
+.sbmt{
     padding: 10px;
     width: 50%;
     left: 25%;
+    background-color:floralwhite;
+}
+.head{
+    text-align: center;
 }
 </style>
 

@@ -25,11 +25,11 @@
 	<header>
 		<div class="background"></div>
 		<RouterLink to="/" class="logo center">
-			<img src="../public/logo.png" alt="logo" />
+			<img src="/logo.png" alt="logo" />
 		</RouterLink>
-		<nav class="nav center">
+		<nav class="nav center" :key="loggedIn">
 			<RouterLink v-for="route in routes" :to="route.path" class="navlink center" :class="route.path == route.path ? 'selected' : ''">
-				<p>{{ route.name == Login ? (loggedIn ? "Logout" : "Login") : route.name }}</p>
+				<p>{{ route.name == "Login" ? (loggedIn ? "Logout" : "Login") : route.name }}</p>
 			</RouterLink>
 		</nav>
 	</header>

@@ -55,7 +55,7 @@
 		},
 		data() {
 			return {
-				userEmail: "Filipemails",
+				userEmail: "Filip@emails.dk",
 				days: [],
 				isPopupOpen: false,
 				info: [],
