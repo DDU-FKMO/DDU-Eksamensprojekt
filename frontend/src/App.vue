@@ -23,7 +23,7 @@
 					this.$router.push("/");
 				} else {
 					this.showSidebar = !this.showSidebar;
-					let el = document.querySelector("nav.nav");
+					let el = document.querySelector(".nav");
 					let display = getComputedStyle(el).getPropertyValue("--display");
 					el.style.setProperty("--display", display == "flex" ? "none" : "flex");
 				}
@@ -143,6 +143,25 @@
 			display: var(--display);
 			flex-direction: column;
 			height: 50%;
+			animation: stretch 0.5s forwards;
+			-webkit-animation: stretch 0.5s forwards;
+			overflow: hidden;
+		}
+		@keyframes stretch {
+			0% {
+				height: 0%;
+			}
+			100% {
+				height: 50%;
+			}
+		}
+		@-webkit-keyframes stretch {
+			0% {
+				height: 0%;
+			}
+			100% {
+				height: 50%;
+			}
 		}
 		.nav .navlink {
 			width: 100%;
