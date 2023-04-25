@@ -33,25 +33,25 @@
 			</RouterLink>
 		</nav>
 	</header>
-	<main>
+	<main class="page">
 		<RouterView @login="loggedIn = !loggedIn" />
 	</main>
 </template>
 
 <style scoped>
-	.center {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
 	/*Main layout*/
-	main {
+	.page {
 		width: 100%;
-		min-height: 92.5vh;
+		height: 92.5vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+	}
+
+	main {
+		width: 100%;
+		height: 100%;
 	}
 
 	/*Nav bar*/

@@ -1,5 +1,5 @@
 <template>
-	<h2>Muscle Groups</h2>
+	<h3>Muscle Groups</h3>
 	<div class="muscles">
 		<li v-for="muscle of Object.keys(muscleGroups)">
 			{{ muscle }}
