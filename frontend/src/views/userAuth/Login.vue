@@ -43,9 +43,8 @@
 		top: 10%;
 	}
 	.bottom {
-		position: fixed;
+		position: absolute;
 		text-align: center;
-		left: 42%;
 		margin: auto;
 		bottom: 5vh;
 	}
