@@ -23,11 +23,11 @@
 				<div class="stat-elements">
 					<div class="stat-element">
 						<div class="background"></div>
-						<img src="stat-1.webp" />
+						<img src="/stat-1.webp" />
 					</div>
 					<div class="stat-element">
 						<div class="background"></div>
-						<img src="stat-2.png" />
+						<img src="/stat-2.png" />
 					</div>
 				</div>
 			</div>

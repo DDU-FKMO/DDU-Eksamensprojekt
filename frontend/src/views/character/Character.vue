@@ -1,6 +1,6 @@
 <template>
 	<div class="all">
-		<img src="character.webp" alt="character" />
+		<img src="/character.webp" alt="character" />
 		<MuscleGroups />
 		{{ name }}
 	</div>
