@@ -26,9 +26,16 @@ app.post("/character/muscleGroups", async (req, res) => {
 });
 
 //Character muscle groups hit by exercises
-app.post("/character/level", async (req, res) => {
+app.post("/character/level/:email", async (req, res) => {
+	let email = req.params.email;
+
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("No such user");
+		return res.status(400).send("No such user");
+	}
 	//Get training sessions
-	let sessions = await getAllSessions("Filip@emails.dk");
+	let sessions = await getAllSessions(email);
 	console.log(sessions);
 	//Calculate level
 	let level = Math.floor(sessions.length / 5);

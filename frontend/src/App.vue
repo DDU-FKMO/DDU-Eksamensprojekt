@@ -132,7 +132,7 @@
 
 	/* Mobile changes */
 	@media (max-aspect-ratio: 0.84) {
-		@media (max-width: 1000px) {
+		@media (max-width: 999px) {
 			.nav {
 				width: 50%;
 				min-width: 12rem;
