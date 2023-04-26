@@ -60,19 +60,24 @@ const programSchema = new mongoose.Schema({
 	}
 });
 
+//types of unlocks: skins, background themes, 
+const unlockSchema = new mongoose.Schema({
+	name: {type: String, default: "Cute and funny costume"},
+	unlockType: {type: String, default: ""},
+	content: {type: String, default: ""}
+});
+
 const userSchema = new mongoose.Schema({
 	username: {type: String},
 	email: {type: String, unique: true},
 	password: {type: String},
 	level: {type: Number},
 	streak: {type: Number, default: 0},
-	/*unlocks: {
-		unlockName: {type: String},
-        exercises: {
-            type: exerciseSchema, // ???
-            default: {}
-        }
-	},*/
+	unlocks: [{
+		type: unlockSchema,
+		default: {}
+	}],
+	equipment: {type: [String], default: []},
 	programList: [
 		{
 			program: programSchema,
@@ -95,6 +100,6 @@ module.exports = {
 	Program: mongoose.model("program", programSchema),
 	Exercise: mongoose.model("exercise", exerciseSchema),
 	Session: mongoose.model("session", sessionSchema),
-	Schedule: mongoose.model("schedule", scheduleSchema)
-	//sessionLog: mongoose.model("sessionLog", sessionLogSchema)
+	Schedule: mongoose.model("schedule", scheduleSchema),
+	Unlock: mongoose.model("unlock", unlockSchema)
 };

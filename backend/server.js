@@ -61,6 +61,7 @@ require("./database.js");
 require("./trainingProgram.js");
 require("./character.js");
 require("./login.js");
+require("./unlocks.js");
 require("./statistics.js");
 
 //Redirect everything else to index

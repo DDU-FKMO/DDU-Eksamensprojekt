@@ -38,7 +38,7 @@ app.post("/node/register", async (req, res) => {
 		});
 
 		const token = jwt.sign({user_id: user._id, email, username}, process.env.JWT_TOKEN, {
-			expiresIn: "24h"
+			expiresIn: "72h"
 		});
 
 		user.token = token;
@@ -71,7 +71,7 @@ app.post("/node/login", async (req, res) => {
 		let passwordCorrect = await bcrypt.compare(password, user.password);
 		if (user && passwordCorrect) {
 			const token = jwt.sign({user_id: user.__id, email, username}, process.env.JWT_TOKEN, {
-				expiresIn: "24h"
+				expiresIn: "72h"
 			});
 
 			user.token = token;

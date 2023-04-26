@@ -1,6 +1,6 @@
 require("dotenv").config();
 const fetch = require("node-fetch");
-//const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 //const jwt = require("jsonwebtoken");
 
 const {User} = require("./models/model_user.js");
@@ -8,6 +8,7 @@ const {Program} = require("./models/model_user.js");
 const {Exercise} = require("./models/model_user.js");
 const {Session} = require("./models/model_user.js");
 const {Schedule} = require("./models/model_user.js");
+const {Unlock} = require("./models/model_user.js");
 
 //On database connected function
 function onDatabaseConnected() {
@@ -35,23 +36,29 @@ module.exports = {
 	addScheduleToProgram,
 	streakCalculation,
 	addSessionToUser,
-	gotStreakThisWeek
+	gotStreakThisWeek,
+	addUnlockToUser,
+	createUnlock,
+	getUnlockByName,
+	equipUnlock
 };
 //Connect to database
 require("./database_connection.js").connection();
 
-//Regiser new user
+//Register new user - denne metode bruges ikke.
 async function register(username, email, password) {
-	// encrypt password
+	
 	const exists = await getUserByEmail(email);
 	if (exists) {
 		console.log("exists");
 		return false; // eller noget
 	}
+	let encPass = await bcrypt.hash(password, 10);
+
 	const user = await User.create({
 		username,
 		email,
-		password,
+		password: encPass,
 		streak: 0
 	});
 	console.log("Created user");
@@ -195,12 +202,16 @@ async function addSessionToUser(email, programName, sessionList) {
 	let session = await Session.create({
 		info: sessionList
 	});
-	for (let program of user.programList) {
-		if ((program.programName = programName)) {
-			program.sessionList.push(session);
-		}
+	
+	if (!session){
+		consone.log("Session did not get created")
+		return false;
 	}
+
+	user.programList[0].sessionList.push(session);
+	
 	await user.save();
+	console.log("Successfully added session to user");
 	return session;
 }
 //Update streak
@@ -338,6 +349,74 @@ async function gotStreakThisWeek(email) {
 	return false;
 }
 
+async function createUnlock(data){
+	const {name, unlockType, content} = data;
+	const exists = await getUnlockByName(name);
+	if (exists) {
+		console.log("unlock already exists");
+		return exists;
+	}
+	const sucess = await Unlock.create({name: name.toLowerCase(), unlockType, content});
+	console.log("added unlock");
+	return sucess;
+}
+
+async function getUnlockByName(name) {
+	unlock = await Unlock.findOne({name: name.toLowerCase()});
+	return unlock;
+}
+
+async function addUnlockToUser(email, unlockName){
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("Unlock: no such user");
+		return false;
+	}
+	// Get unlock
+	unlock = await getUnlockByName(unlockName);
+	if (!unlock) {
+		console.log("Unlock: no such unlock");
+		return false;
+	}
+	for (let userUnlock of user.unlocks){
+		if (unlock.name.toLowerCase() == userUnlock.name.toLowerCase()){
+			console.log("Already added to user");
+			return false;
+		}
+	}
+
+	user.unlocks.push(unlock);
+	await user.save();
+	console.log("Added to user")
+	return unlock;
+}
+
+async function equipUnlock(email, unlockName){
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("Unlock: no such user");
+		return false;
+	}
+	
+	let status = "User does not own unlock";
+	for (userUnlock in user.unlocks){
+		if (userUnlock.name == unlockName){ // if user has unlocked 
+			let index = user.equipment.indexOf(unlockName);
+			if (index > -1) {
+				// only splice array when item is found
+				user.equipment.splice(index, 1); // 2nd parameter means remove one item only
+				status = "success";
+			}
+			else {
+				user.equipment.push(unlockName);
+				status = "success";
+			}
+		} 
+	}
+	await user.save();
+	return status;
+}
+
 // TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN
 async function asd() {
 	//user = await getUserByEmail("Filipemails");
@@ -346,6 +425,16 @@ async function asd() {
 	//await addSessionToUser("Filipemails", "program1", {"sets": 3, "nameOfExercise":"ArmCurls"});
 	//await streakCalculation("Filipemails");
 	//await addProgramToUser("Custom program - User", "Filipemails");
+	
+	
+	// let data = {};
+	// data.content = "background-color: red;";
+	// data.name = "red background";
+	// data.unlockType = "background";
+	// createUnlock(data);
+
+	// await addUnlockToUser("filip@emails.dk", "supercool crown");
+	// await addUnlockToUser("filip@emails.dk", "red background");
 }
 asd();
 
