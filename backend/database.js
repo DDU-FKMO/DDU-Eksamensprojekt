@@ -323,13 +323,13 @@ async function createUnlock(data) {
 		console.log("unlock already exists");
 		return exists;
 	}
-	const sucess = await Unlock.create({name: name.toLowerCase(), unlockType, content});
+	const sucess = await Unlock.create({name, unlockType, content});
 	console.log("added unlock");
 	return sucess;
 }
 
 async function getUnlockByName(name) {
-	unlock = await Unlock.findOne({name: name.toLowerCase()});
+	unlock = await Unlock.findOne({name});
 	return unlock;
 }
 
@@ -346,7 +346,7 @@ async function addUnlockToUser(email, unlockName) {
 		return false;
 	}
 	for (let userUnlock of user.unlocks) {
-		if (unlock.name.toLowerCase() == userUnlock.name.toLowerCase()) {
+		if (unlock.name == userUnlock.name) {
 			console.log("Already added to user");
 			return false;
 		}
