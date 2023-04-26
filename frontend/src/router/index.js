@@ -39,19 +39,24 @@ const router = createRouter({
 
 let DEFAULT_TITLE = "DDU";
 //redirect and authentication
-import axios, {AxiosError} from "axios";
+import axios from "axios";
 let checkLogin = true;
 router.beforeEach(async (to, from) => {
 	if (to.meta.auth) {
 		if (checkLogin) {
 			try {
-				let token = localStorage.getItem("user");
-				const config = {
-					"x-access-token": token
-				};
+				let token;
+				if (document.cookie.length > 0){
+				let user_c = document.cookie.split(";")[0]
+				token = user_c.substring(document.cookie.indexOf("=") + 1);
+				//console.log(token);
+				}
+				// const config = {
+				// 	"x-access-token": token
+				// };
 				if (!token) throw new Error("Not logged in");
 				await axios
-					.get("/node/auth", {headers: config})
+					.get("/node/auth") // {headers: config}
 					.then((res) => console.log(res))
 					.catch((err) => {
 						console.log(err.response.data);

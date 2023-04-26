@@ -51,8 +51,8 @@
 			}
 		},
 		mounted() {
-			let email = "Filip@emails.dk";
-			fetch("/trainingProgram/import/" + email)
+			//let email = "Filip@emails.dk";
+			fetch("/trainingProgram/import/")
 				.then((response) => response.json())
 				.then((data) => {
 					if (data.status == "error") throw new Error(data.message);

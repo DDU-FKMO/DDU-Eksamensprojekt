@@ -11,7 +11,7 @@
 		}),
 		components: {RouterLink, RouterView, Settings},
 		mounted() {
-			if (!(localStorage.getItem("user") === null)) {
+			if (!(document.cookie.length > 0)) {
 				this.loggedIn = true;
 			}
 			this.routes = this.$router.options.routes;

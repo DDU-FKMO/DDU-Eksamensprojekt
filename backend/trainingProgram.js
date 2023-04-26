@@ -1,6 +1,7 @@
 const fetch = require("node-fetch");
 const {app} = require("./server.js");
 const {getAllExercises, getUserByEmail, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser, getExerciseByName, addSessionToUser} = require("./database.js");
+const auth = require("./authenticate.js");
 
 //Program Recommendations
 app.get("/trainingProgram/recommend", async (req, res) => {
@@ -83,8 +84,9 @@ app.post("/trainingProgram/select", async (req, res) => {
 });
 
 //Import user programs
-app.get("/trainingProgram/import/:email", async (req, res) => {
-	let email = req.params.email;
+app.get("/trainingProgram/import/", auth, async (req, res) => {
+	const email = req.body.user.email;
+	//let email = req.params.email;
 	console.log(email);
 
 	let user = await getUserByEmail(email);
@@ -148,10 +150,11 @@ app.post("/trainingProgram/exercises", async (req, res) => {
 });
 
 //Log Session
-app.post("/trainingProgram/log", async (req, res) => {
+app.post("/trainingProgram/log", auth, async (req, res) => {
+	const email = req.body.user.email;
 	let data = req.body;
 	console.log(data);
 
-	addSessionToUser(data.email, data.programName, data.info);
+	addSessionToUser(email, data.programName, data.info);
 	return res.status(200);
 });
