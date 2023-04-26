@@ -5,14 +5,14 @@ const {getUserByEmail, equipUnlock} = require("./database.js");
 
 app.post("/node/equip", auth, async (req, res) => {
 	console.log("Trying to equip");
-	const unlockName = req.body.unlockName;
+	const unlockName = req.body.name;
 	const email = req.body.user.email;
 
 	if (!unlockName) {
 		console.log("Please include unlock name");
 		return res.status(404).send("No name included");
 	}
-
+	console.log(unlockName);
 	let status = await equipUnlock(email, unlockName);
 
 	if (status != "success") {

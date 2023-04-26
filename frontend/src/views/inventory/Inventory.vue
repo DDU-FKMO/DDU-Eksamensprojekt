@@ -1,11 +1,29 @@
 <template>
-	<h1>Inventory</h1>
+	<h1 class="title">Inventory</h1>
+	<div class="unlocks">
 	<div v-for="unlock in data.unlocks">
-		<UnlockProp v-bind="unlock" :key="unlock.equipped" @equip="(n) => equip(n)"></UnlockProp>
+		<UnlockProp v-bind="unlock" :key="data" @equip="getUnlocks"></UnlockProp>
+	</div>
 	</div>
 </template>
 
-<style></style>
+<style>
+.unlocks{
+	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: space-around;
+
+}
+.title{
+	position:static;
+	top: 1vh;
+	padding-bottom: 0.1vmin;
+}
+</style>
 
 <script>
 	import UnlockProp from "./UnlockProp.vue";
@@ -28,8 +46,8 @@
 							this.data = res.data;
 
 							for (let unlock of this.data.unlocks) {
-								console.log(unlock.content);
-								if (unlock.name in this.data.equipment) {
+								//console.log(unlock.content);
+								if (this.data.equipment.includes(unlock.name)) {
 									unlock.equipped = true;
 								} else {
 									unlock.equipped = false;
@@ -44,7 +62,8 @@
 				}
 			},
 			equip(changeName) {
-				for (let unlock in this.data.unlocks) {
+				console.log("equip status changed for: " + changeName)
+				for (let unlock of this.data.unlocks) {
 					if (unlock.name == changeName) {
 						unlock.equipped = !unlock.equipped;
 					}

@@ -366,20 +366,38 @@ async function equipUnlock(email, unlockName) {
 	}
 
 	let status = "User does not own unlock";
-	for (userUnlock in user.unlocks) {
+	for (userUnlock of user.unlocks) {
+		 
 		if (userUnlock.name == unlockName) {
 			// if user has unlocked
 			let index = user.equipment.indexOf(unlockName);
 			if (index > -1) {
 				// only splice array when item is found
+				console.log("Removing: " + unlockName)
 				user.equipment.splice(index, 1); // 2nd parameter means remove one item only
 				status = "success";
+				break;
 			} else {
+				console.log("Adding: " + unlockName);
 				user.equipment.push(unlockName);
 				status = "success";
+
+				for (item of user.unlocks) { // deequip
+					// only one of item type can be equipped
+					let index = user.equipment.indexOf(item.name);
+					if (item.name != unlockName && userUnlock.unlockType == item.unlockType && index > -1) {
+						console.log("Removing: " + item.name);
+						user.equipment.splice(index, 1); // 2nd parameter means remove one item only
+						status = "success";
+					}
+				}
+				break;
 			}
 		}
 	}
+
+
+
 	await user.save();
 	return status;
 }
@@ -392,12 +410,12 @@ async function asd() {
 	//await addSessionToUser("Filipemails", "program1", {"sets": 3, "nameOfExercise":"ArmCurls"});
 	//await streakCalculation("Filipemails");
 	//await addProgramToUser("Custom program - User", "Filipemails");
-	// let data = {};
-	// data.content = "background-color: red;";
-	// data.name = "red background";
+	//  let data = {};
+	// data.content = "background-color: blue;";
+	// data.name = "blue background";
 	// data.unlockType = "background";
-	// createUnlock(data);
-	// await addUnlockToUser("filip@emails.dk", "supercool crown");
+	// await createUnlock(data);
+	// await addUnlockToUser("filip@emails.dk", "blue background");
 	// await addUnlockToUser("filip@emails.dk", "red background");
 }
 asd();
