@@ -21,7 +21,7 @@
 				natureGreen: "#65a603",
 				yellow: "#ffea2a",
 				purple: "#8850bf",
-				pink: "#bf1564"
+				pink: "#bf1564" 
 			}
 		}),
 		methods: {

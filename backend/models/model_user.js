@@ -69,7 +69,7 @@ const unlockSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
 	username: {type: String},
-	email: {type: String, unique: true},
+	email: {type: String, unique: true}, 
 	password: {type: String},
 	level: {type: Number},
 	streak: {type: Number, default: 0},

@@ -441,6 +441,7 @@ async function asd() {
 	//await user.save();
 	//await addSessionToUser("Filipemails", "program1", {"sets": 3, "nameOfExercise":"ArmCurls"});
 	//await streakCalculation("Filipemails");
+	//await Unlock.deleteMany({unlockType: "background"});
 	//await addProgramToUser("Custom program - User", "Filipemails");
 	//  let data = {};
 	// data.content = "background-color: blue;";
@@ -449,6 +450,29 @@ async function asd() {
 	// await createUnlock(data);
 	// await addUnlockToUser("filip@emails.dk", "blue background");
 	// await addUnlockToUser("filip@emails.dk", "red background");
+
+	// let colors = {
+	// 	red: "#ff0000",
+	// 	blue: "#0e4c73",
+	// 	icyBlue: "#398cbf",
+	// 	green: "#0abf04",
+	// 	natureGreen: "#65a603",
+	// 	yellow: "#ffea2a",
+	// 	purple: "#8850bf",
+	// 	pink: "#bf1564"
+	// };
+
+	// let data = {};
+	
+	
+	// 
+	// await addUnlockToUser("filip@emails.dk", "red background");
+
+	// for (let theme of Object.keys(colors)){
+	// await addUnlockToUser("filip@emails.dk", theme);
+		
+	// }
+
 }
 asd();
 
