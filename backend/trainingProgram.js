@@ -84,10 +84,8 @@ app.post("/trainingProgram/select", async (req, res) => {
 });
 
 //Import user programs
-app.get("/trainingProgram/import/", auth, async (req, res) => {
+app.get("/trainingProgram/import", auth, async (req, res) => {
 	const email = req.body.user.email;
-	//let email = req.params.email;
-	console.log(email);
 
 	let user = await getUserByEmail(email);
 	if (!user) {

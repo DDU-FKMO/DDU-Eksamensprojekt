@@ -18,25 +18,14 @@
 				<p v-if="gotStreakThisWeek">User has completed their training this week! Good Job!</p>
 				<p v-else>You still have time to complete your training this week!</p>
 			</div>
-			<div class="stats">
-				<h2>Statistics</h2>
-				<div class="stat-elements">
-					<div class="stat-element">
-						<div class="background"></div>
-						<img src="/stat-1.webp" />
-					</div>
-					<div class="stat-element">
-						<div class="background"></div>
-						<img src="/stat-2.png" />
-					</div>
-				</div>
-			</div>
+			<Statistics />
 		</div>
 	</main>
 </template>
 
 <script>
 	import Character from "./Character.vue";
+	import Statistics from "./Statistics.vue";
 
 	export default {
 		name: "CharacterPage",
@@ -47,7 +36,8 @@
 			username: "Filip"
 		}),
 		components: {
-			Character
+			Character,
+			Statistics
 		},
 		methods: {
 			getLevel: function () {
@@ -153,7 +143,6 @@
 		flex-direction: column;
 		justify-content: space-evenly;
 	}
-
 	.statistics .streak {
 		width: 50%;
 		min-width: 10rem;
@@ -165,46 +154,6 @@
 		background: linear-gradient(to right, var(--color-gold-2), var(--color-gold-1), var(--color-gold-2));
 		font-size: 2rem;
 		clip-path: polygon(100% 0, 80% 50%, 100% 100%, 0 100%, 20% 50%, 0 0);
-	}
-
-	.statistics .stats {
-		width: 100%;
-		height: 70%;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-	}
-
-	.statistics .stat-elements {
-		width: 100%;
-		height: 80%;
-		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-		flex-wrap: wrap;
-	}
-
-	.statistics .stat-elements .stat-element {
-		justify-self: center;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 40%;
-		aspect-ratio: 1/1;
-	}
-	.statistics .stat-elements .stat-element .background {
-		background-color: var(--base-color-2);
-		opacity: 0.5;
-		width: 100%;
-		height: 100%;
-		position: absolute;
-	}
-
-	.statistics .stat-elements .stat-element img {
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
 	}
 
 	/* Mobile changes */

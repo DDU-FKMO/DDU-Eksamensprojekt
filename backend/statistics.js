@@ -1,10 +1,13 @@
 const fetch = require("node-fetch");
 const {app} = require("./server.js");
 const {getAllSessions, getUserByEmail} = require("./database.js");
+const auth = require("./authenticate.js");
+
+let amount = 5;
 
 //Get Latest Session Statistics
-app.get("/statistics/latest/:email", async (req, res) => {
-	let email = req.params.email;
+app.get("/statistics/latest", auth, async (req, res) => {
+	const email = req.body.user.email;
 
 	let user = await getUserByEmail(email);
 	if (!user) {
@@ -15,7 +18,7 @@ app.get("/statistics/latest/:email", async (req, res) => {
 	let sessions = await getAllSessions(email);
 	let session = sessions[sessions.length - 1];
 
-	let average = getAverage(sessions, 5);
+	let average = getAverage(sessions, amount);
 
 	let difference = {};
 	session.info.forEach((element) => {
@@ -36,10 +39,9 @@ app.get("/statistics/latest/:email", async (req, res) => {
 	return res.json(data);
 });
 
-//Get Overview Statistics
-app.get("/statistics/overview/:email", async (req, res) => {
-	console.log("Getting overview statistics");
-	let email = req.params.email;
+//Get all statistics
+app.get("/statistics/all", auth, async (req, res) => {
+	const email = req.body.user.email;
 
 	let user = await getUserByEmail(email);
 	if (!user) {
@@ -51,12 +53,44 @@ app.get("/statistics/overview/:email", async (req, res) => {
 	let sessions = await getAllSessions(email);
 
 	let data = {
-		average: getAverage(sessions, 5),
-		setsOverTime: getSetsOverTime(sessions, 5),
-		weightOverTime: getWeightOverTime(sessions, 5),
+		average: getAverage(sessions, amount),
+		setsOverTime: getSetsOverTime(sessions, amount),
+		weightOverTime: getWeightOverTime(sessions, amount),
 		sessions: sessions
 	};
 	return res.json(data);
+});
+
+//Get combined average
+app.get("/statistics/average", auth, async (req, res) => {
+	const email = req.body.user.email;
+
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("No such user");
+		return res.status(400).send("No such user");
+	}
+
+	console.log("Got user: " + user.username);
+	let sessions = await getAllSessions(email);
+
+	let setSum = 0;
+	let weightSum = 0;
+	let number = 0;
+	if (sessions.length < amount) amount = sessions.length;
+	for (let i = sessions.length - amount; i < sessions.length; i++) {
+		sessions[i].info.forEach((element) => {
+			setSum += element.sets;
+			weightSum += element.weight;
+			number++;
+		});
+	}
+	let average = {
+		sets: setSum / number,
+		weight: weightSum / number
+	};
+
+	return res.json(average);
 });
 
 function getSetsOverTime(sessions, amount) {
