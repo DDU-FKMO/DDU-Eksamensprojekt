@@ -10,7 +10,7 @@ const rateLimit = require("express-rate-limit");
 //Setup server settings
 const limiter = rateLimit({
 	windowMs: 1 * 60 * 1000, // 1 minutes
-	max: 100 // limit each IP to 100 requests per windowMs
+	max: 1000 // limit each IP to 100 requests per windowMs
 });
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(helmet());
@@ -45,7 +45,7 @@ const httpServer = http.createServer(app);
     console.log('listening on *:443');
 });*/
 
-httpServer.listen(5000, () => {
+httpServer.listen(5100, () => {
 	console.log("listening on *:5000");
 });
 
