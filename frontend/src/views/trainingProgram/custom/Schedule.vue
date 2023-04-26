@@ -8,16 +8,16 @@
 				<td v-for="day in days">
 					<div class="exercise" v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.find((a) => a.day == day).exercises">
 						<Exercise :exercise="exercise" />
-						<button @click="removeExercise(exercise, day)">Remove</button>
+						<button @click="removeExercise(exercise, day)" v-if="edit">Remove</button>
 					</div>
 					<p v-else>Currently no exercises</p>
-					<button @click="startCreateExercise(day)" v-if="!createExercise">Add exercise</button>
+					<button @click="startCreateExercise(day)" v-if="!createExercise && edit">Add exercise</button>
 				</td>
 			</tr>
 		</table>
 	</div>
 
-	<div class="createExercise" v-if="createExercise">
+	<div class="createExercise" v-if="createExercise && edit">
 		<Exercise :day="currentDay" @done="addExercise" />
 	</div>
 </template>
@@ -38,6 +38,10 @@
 		props: {
 			program: {
 				type: Object,
+				required: false
+			},
+			edit: {
+				type: Boolean,
 				required: false
 			}
 		},

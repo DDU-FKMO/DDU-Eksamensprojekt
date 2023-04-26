@@ -3,7 +3,9 @@ const jwt = require("jsonwebtoken");
 const config = process.env;
 
 const verifyToken = (req, res, next) => {
-	const token = req.body.token || req.query.token || req.headers["x-access-token"];
+	//const token = req.body.token || req.query.token || req.headers["x-access-token"];
+	let token;
+	token = req.cookies.user ?? false;
 
 	if (!token) {
 		console.log("Unauthorized");
@@ -15,6 +17,8 @@ const verifyToken = (req, res, next) => {
 		const decoded = jwt.verify(token, config.JWT_TOKEN);
 
 		req.body.user = decoded;
+
+		console.log("Authentication success by: " + decoded.email);
 	} catch (err) {
 		console.log("Invalid Token, probably because it expired");
 		return res.writeHead(307, {Location: "/login"}).end(); // redirect
@@ -23,5 +27,7 @@ const verifyToken = (req, res, next) => {
 
 	return next();
 };
+
+
 
 module.exports = verifyToken;
