@@ -104,7 +104,7 @@
 	};
 </script>
 
-<style>
+<style scoped>
 	/* Main */
 	main {
 		width: 100%;
@@ -155,8 +155,9 @@
 	}
 
 	.statistics .streak {
-		width: 33%;
+		width: 50%;
 		min-width: 10rem;
+		max-width: 20rem;
 		height: 10%;
 		display: flex;
 		justify-content: center;
@@ -204,5 +205,18 @@
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
+	}
+
+	/* Mobile changes */
+	@media (max-aspect-ratio: 0.84) {
+		main {
+			flex-direction: column;
+			justify-content: space-between;
+		}
+		.character,
+		.statistics {
+			width: 90%;
+			margin-bottom: 5%;
+		}
 	}
 </style>

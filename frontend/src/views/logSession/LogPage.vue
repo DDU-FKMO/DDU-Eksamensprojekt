@@ -70,7 +70,7 @@
 	};
 </script>
 
-<style>
+<style scoped>
 	.sessionBlock {
 		display: inline-block;
 		background-color: var(--color-black-3);
