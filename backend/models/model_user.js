@@ -77,6 +77,7 @@ const userSchema = new mongoose.Schema({
 		type: unlockSchema,
 		default: {}
 	}],
+	equipment: {type: [String], default: []},
 	programList: [
 		{
 			program: programSchema,

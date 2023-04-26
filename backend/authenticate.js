@@ -15,6 +15,8 @@ const verifyToken = (req, res, next) => {
 		const decoded = jwt.verify(token, config.JWT_TOKEN);
 
 		req.body.user = decoded;
+
+		console.log("Authentication success by: " + decoded.email);
 	} catch (err) {
 		console.log("Invalid Token, probably because it expired")
 		return res.writeHead(307, {Location: "/login"}).end(); // redirect
