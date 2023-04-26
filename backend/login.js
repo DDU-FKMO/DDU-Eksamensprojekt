@@ -11,8 +11,6 @@ app.get("/node/auth", auth, async (req, res) => {
 	return res.status(200).send("Ok!");
 });
 
-
-
 app.post("/node/register", async (req, res) => {
 	try {
 		const {username, email, password} = req.body;
@@ -48,13 +46,13 @@ app.post("/node/register", async (req, res) => {
 		return res.status(201).json(user);
 	} catch (err) {
 		console.log(err);
-        return res.status(500).send(err);
+		return res.status(500).send(err);
 	}
 });
 
 app.post("/node/login", async (req, res) => {
 	console.log("Attempted login:");
-	
+
 	try {
 		const {email, password} = req.body;
 
@@ -62,28 +60,28 @@ app.post("/node/login", async (req, res) => {
 			console.log("No input: request body: " + req.body.email + req.body.password);
 			return res.status(400).send("All input is required");
 		}
-		console.log("email: "+ email)
+		console.log("email: " + email);
 		const user = await getUserByEmail(email);
-		if (user === null){
+		if (user === null) {
 			console.log("User not found");
 			return res.status(404).send("Invalid credentials");
 		}
 		let username = user.username;
-		console.log("User found: " + username)
-        let passwordCorrect = await bcrypt.compare(password, user.password);
+		console.log("User found: " + username);
+		let passwordCorrect = await bcrypt.compare(password, user.password);
 		if (user && passwordCorrect) {
 			const token = jwt.sign({user_id: user.__id, email, username}, process.env.JWT_TOKEN, {
 				expiresIn: "72h"
 			});
 
 			user.token = token;
-            console.log("User logged in: " + user.username)
+			console.log("User logged in: " + user.username);
 			return res.status(200).json(user);
 		}
-		console.log("Invalid creds")
+		console.log("Invalid creds");
 		return res.status(404).send("Invalid credentials");
 	} catch (err) {
 		console.log(err);
-        return res.status(500).send(err);
+		return res.status(500).send(err);
 	}
 });

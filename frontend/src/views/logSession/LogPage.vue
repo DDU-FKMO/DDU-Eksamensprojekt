@@ -1,13 +1,11 @@
 <template>
-	<div v-if="days">
-		<div class="overview" v-for="day in days">
+	<div v-if="days" class="overview">
+		<div v-for="day in days">
 			<div class="sessionBlock">
 				<h3>{{ day.day }}</h3>
-				<ul v-for="exercise in day.exercises">
-					<li>
-						<Collapsible v-bind:summary="exercise.name + ' - ' + exercise.sets + ' sets'" v-bind:description="'Equipment: ' + exercise.equipment + '\n' + exercise.instructions"> </Collapsible>
-					</li>
-				</ul>
+				<div v-for="exercise in day.exercises">
+					<ExerciseInfo v-bind:name="exercise.name" v-bind:sets="exercise.sets" v-bind:equipment="exercise.equipment" v-bind:instructions="exercise.instructions"> </ExerciseInfo>
+				</div>
 				<button @click="OpenPopup(day)">Open Log</button>
 			</div>
 		</div>
@@ -22,7 +20,7 @@
 </template>
 
 <script>
-	import Collapsible from "./Collapsible.vue";
+	import ExerciseInfo from "./ExerciseInfo.vue";
 
 	export default {
 		mounted() {
@@ -89,17 +87,20 @@
 				});
 			}
 		},
-		components: {Collapsible}
+		components: {ExerciseInfo}
 	};
 </script>
 
 <style>
 	.sessionBlock {
 		display: inline-block;
-		align-self: baseline;
+		background-color: var(--color-black-3);
+		border-color: var(--color-blac-4);
 	}
 	.overview {
-		display: inline;
-		align-items: baseline;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		flex-wrap: wrap;
 	}
 </style>

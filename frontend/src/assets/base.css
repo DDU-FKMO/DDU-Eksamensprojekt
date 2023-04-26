@@ -1,10 +1,10 @@
 /* Red Theme */
 :root {
-	--color-red-1: #fff5f5;
-	--color-red-2: #fed7d7;
-	--color-red-3: #feb2b2;
-	--color-red-4: #fc8181;
-	--color-red-5: #f56565;
+	--color-red-1: #ffaeae;
+	--color-red-2: #ff9797;
+	--color-red-3: #ff8484;
+	--color-red-4: #ff5e5e;
+	--color-red-5: #ff4343;
 }
 
 /* Black */
@@ -13,6 +13,13 @@
 	--color-black-2: #313131;
 	--color-black-3: #6e6e6e;
 	--color-black-4: #a0a0a0;
+}
+
+/* Gold */
+:root {
+	--color-gold-1: #ffcd8b;
+	--color-gold-2: #ffb656;
+	--color-gold-3: #ff9e2f;
 }
 
 /* semantic colour variables for this project */
@@ -37,12 +44,9 @@
 
 body {
 	min-height: 100vh;
-	color: var(--color-text);
-	background: var(--color-background);
-	transition: color 0.5s, background-color 0.5s;
-	line-height: 1.6;
+	max-width: 100vw;
+	overflow-x: hidden;
 	font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-	font-size: 15px;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

@@ -6,8 +6,8 @@ const verifyToken = (req, res, next) => {
 	const token = req.body.token || req.query.token || req.headers["x-access-token"];
 
 	if (!token) {
-		console.log("Unauthorized")
-		return res.writeHead(307, {Location: '/login'}).end(); // redirect
+		console.log("Unauthorized");
+		return res.writeHead(307, {Location: "/login"}).end(); // redirect
 		//return res.status(403).send("Unauthorized; Token required");
 	}
 
@@ -18,7 +18,7 @@ const verifyToken = (req, res, next) => {
 
 		console.log("Authentication success by: " + decoded.email);
 	} catch (err) {
-		console.log("Invalid Token, probably because it expired")
+		console.log("Invalid Token, probably because it expired");
 		return res.writeHead(307, {Location: "/login"}).end(); // redirect
 		//return res.status(401).send("Invalid Token");
 	}

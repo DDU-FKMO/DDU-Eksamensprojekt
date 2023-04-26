@@ -1,12 +1,18 @@
 <template>
 	<main>
 		<h2>Training</h2>
-		<div class="creation" v-if="createNew || edit">
-			<button @click="back">Back</button>
-			<ProgramCreation :edit="edit" :program="program" />
+		<div class="creation">
+			<div v-if="type != null">
+				<button @click="back">Back</button>
+				<ProgramCreation :edit="edit" :type="type" :program="program" />
+			</div>
+			<div v-else>
+				<button @click="() => (type = 0)">Recomended</button>
+				<button @click="() => (type = 1)">Auto generated</button>
+				<button @click="() => (type = 2)">Custom</button>
+			</div>
 		</div>
-		<div class="program" v-else>
-			<button @click="createNewProgram()">Create new program</button>
+		<div class="program" v-if="type == null">
 			<div v-if="program != null && program != {}">
 				<h3>Current Training Program</h3>
 				<button @click="editProgram">Edit</button>
@@ -28,25 +34,20 @@
 		data() {
 			return {
 				program: null,
-				createNew: false,
-				edit: false
+				edit: false,
+				type: null
 			};
 		},
 		methods: {
 			back: function () {
 				console.log("Back");
-				this.createNew = false;
 				this.edit = false;
-			},
-			createNewProgram: function () {
-				console.log("Create new program");
-				this.createNew = true;
-				this.edit = false;
+				this.type = null;
 			},
 			editProgram: function () {
 				console.log("Edit program");
-				this.createNew = false;
 				this.edit = true;
+				this.type = 2;
 			}
 		},
 		mounted() {
@@ -66,3 +67,28 @@
 		}
 	});
 </script>
+
+<style>
+	main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+
+	.creation {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.program {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	h2 {
+		text-align: center;
+		width: 10rem;
+		font-size: 2rem;
+	}
+</style>

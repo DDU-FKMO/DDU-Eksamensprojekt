@@ -1,18 +1,14 @@
 <template>
 	<div class="program">
-		Program
+		Current Program
 		<h3>{{ name }}</h3>
-		<div class="day" v-for="dayObject of schedule">
-			<h4>{{ dayObject.day }}</h4>
-			<div class="exercise" v-for="exercise of dayObject.exercises">
-				<p>{{ exercise.sets }} sets of {{ exercise.name }}</p>
-			</div>
-		</div>
+		<Schedule :program="{schedule: {days: schedule}, exercises: exercises}" :edit="false" />
 	</div>
 </template>
 
 <script>
 	import {defineComponent} from "vue";
+	import Schedule from "./custom/Schedule.vue";
 	export default defineComponent({
 		name: "Program",
 		props: {
@@ -29,11 +25,7 @@
 				required: true
 			}
 		},
-		data() {
-			return {
-				program: {}
-			};
-		},
+		components: {Schedule},
 		mounted() {
 			console.log("Program mounted", this.name, this.exercises, this.schedule);
 		}
