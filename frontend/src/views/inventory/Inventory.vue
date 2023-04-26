@@ -13,19 +13,17 @@
 	export default {
 		data() {
 			return {
-				jwt: String,
 				data: {}
 			};
 		},
 		mounted() {
-			this.jwt = localStorage.getItem("user");
 			this.getUnlocks();
 		},
 		methods: {
 			async getUnlocks() {
 				try {
 					await axios
-						.get("/node/get-unlocks", {headers: {"x-access-token": this.jwt}})
+						.get("/node/get-unlocks")
 						.then((res) => {
 							this.data = res.data;
 

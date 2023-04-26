@@ -46,7 +46,7 @@
 			async equip() {
 				try {
 					await axios
-						.post("/node/equip", {name: this.name, token: this.jwt})
+						.post("/node/equip", {name: this.name})
 						.then((res) => {
 							console.log("Equip sucess: " + res.data);
 							this.equipped = !this.equipped;
