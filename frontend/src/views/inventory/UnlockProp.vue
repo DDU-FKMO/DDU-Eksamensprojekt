@@ -1,31 +1,56 @@
 <template>
 	<div class="unlock">
-		<h4>{{ name }}</h4>
+		<h2 style="font-size: max(2.5vmin,20px);">{{ name }}</h2>
 		<p>Type: {{ unlockType }}</p>
+		<p>Status: <u :style="[ equipped ? {'font-weight': 'bold', 'color': 'lime'} : '' ]"> {{ equipped ? "Equipped" : "Not equipped" }}</u></p>
 		<div class="item">
-			<img class="imgUnlock" :src="content" v-if="unlockType == 'skin'" />
+			<!-- <img class="imgUnlock" :src="content" v-if="unlockType == 'skin'" /> -->
+			<div class="imgUnlock" :style="'background: url(' + content +');'" v-if="unlockType == 'skin'" ></div>
 			<div class="color" :style="content" v-else></div>
 		</div>
-		<button @click="equip">{{ equipped ? "Unequip" : "Equip" }}</button>
+		<button @click="equip" class="eqbtn">{{ equipped ? "Unequip" : "Equip" }}</button>
 	</div>
 </template>
 
 <style>
 	.unlock {
-		padding: 20vmin;
+		padding: 1vmin;
+		width: 30vmin;
+		height: 35vmin;
 		border: 2px solid black;
+		margin: 10px;
+		min-width: 200px;
+		min-height: 260px;
+		font-size: max(1em, 12px);
+		
+
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+		align-items: center;
+		align-content: stretch;
 	}
 	.item {
-		height: 10vmin;
-		width: 10vmin;
+		aspect-ratio: 1 / 1;
+		height: 60%;
+		/* width: 60%; */
+		margin:  max(7px,0.5vmin);
+		
 	}
-	.imgUnlock {
+	 .imgUnlock, .color {
 		height: 100%;
 		width: 100%;
+		aspect-ratio: 1 / 1; 
+		/* background-size: auto; */
+		background-size: contain !IMPORTANT;
 	}
-	.color {
-		height: 100%;
-		width: 100%;
+	.imgUnlock{
+		
+	}
+	.eqbtn{
+		min-width: 60px;
+		min-height: 30px;
 	}
 </style>
 
@@ -49,8 +74,8 @@
 						.post("/node/equip", {name: this.name})
 						.then((res) => {
 							console.log("Equip sucess: " + res.data);
-							this.equipped = !this.equipped;
-							this.$emit("equip", this.name);
+							//this.equipped = !this.equipped;
+							this.$emit("equip");//, this.name);
 						})
 						.catch((err) => {
 							console.log("error:" + err);
