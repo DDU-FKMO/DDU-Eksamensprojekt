@@ -89,7 +89,7 @@
 		height: 200%;
 		aspect-ratio: 1/1;
 		float: left;
-		background-color: var(--base-color-5);
+		background-color: var(--base-color-4);
 		clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 		position: absolute;
 		z-index: 2;
@@ -126,18 +126,19 @@
 		font-size: 2.5vh;
 	}
 	.nav .navlink.selected {
-		background-color: var(--base-color-4);
+		background-color: var(--base-color-3);
 		border-color: var(--base-color-5);
 	}
 	.nav .navlink:hover {
-		background-color: var(--base-color-3);
+		background-color: var(--base-color-1);
 		border-color: var(--base-color-4);
 	}
 
 	.footer {
 		justify-content: space-between;
-		padding: 0 5%;
+		padding: 5px 5%;
 		max-height: 2.5vh;
+		height: 100%;
 		overflow: hidden;
 	}
 

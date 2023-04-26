@@ -72,7 +72,8 @@
 		border: 5px solid var(--base-color-5);
 	}
 	form button[type="submit"]:hover {
-		background-color: var(--base-color-4);
+		background-color: var(--base-color-2);
+		border-color: var(--base-color-4);
 		cursor: pointer;
 	}
 
