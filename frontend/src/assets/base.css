@@ -1,37 +1,89 @@
-/* Red Theme */
+/* Red Theme
+https://color.adobe.com/Blood-Reds-color-theme-9e005592-901b-4dfe-9436-7e5d11af4b0b
+*/
 :root[data-theme="red"] {
-	--base-color-1: #ffaeae;
-	--base-color-2: #ff9797;
-	--base-color-3: #ff8484;
-	--base-color-4: #ff5e5e;
-	--base-color-5: #ff4343;
+	--base-color-1: #ff0000;
+	--base-color-2: #d60000;
+	--base-color-3: #c20000;
+	--base-color-4: #9c0000;
+	--base-color-5: #7d0000;
 }
 
-/* Blue Theme */
+/* Blue Theme
+https://color.adobe.com/Glowing-circuit-wallpaper-color-theme-9780b8d2-f290-4efb-9f73-29792add6833
+*/
 :root[data-theme="blue"] {
-	--base-color-1: #a3d8ff;
-	--base-color-2: #7cc2ff;
-	--base-color-3: #5aaaff;
-	--base-color-4: #2e8eff;
-	--base-color-5: #0070f3;
+	--base-color-1: #4bf2f2;
+	--base-color-2: #49e1f2;
+	--base-color-3: #2aa4bf;
+	--base-color-4: #0e4c73;
+	--base-color-5: #062a40;
 }
 
-/* Green Theme */
+/* Icy Blue Theme
+https://color.adobe.com/Blue-frozen-ice-color-theme-b09ccd6b-58a1-402c-9dc8-b7329c2096bf
+*/
+:root[data-theme="icyBlue"] {
+	--base-color-1: #96c6d9;
+	--base-color-2: #50a0bf;
+	--base-color-3: #398cbf;
+	--base-color-4: #03588c;
+	--base-color-5: #044d8c;
+}
+
+/* Green Theme
+https://color.adobe.com/Hacker-Green-color-theme-af6a0fd4-c884-4d46-a71f-6db9c7f3faef
+*/
 :root[data-theme="green"] {
-	--base-color-1: #a3ffb3;
-	--base-color-2: #7cff9a;
-	--base-color-3: #5aff7d;
-	--base-color-4: #2eff5a;
-	--base-color-5: #00ff29;
+	--base-color-1: #0df205;
+	--base-color-2: #0abf04;
+	--base-color-3: #078c03;
+	--base-color-4: #055902;
+	--base-color-5: #022601;
 }
 
-/* Purple Theme */
+/* Nature Green 
+https://color.adobe.com/Nature-of-green-color-theme-f6c4ffe3-d202-4c3f-89ad-df682a4f91bf
+*/
+:root[data-theme="natureGreen"] {
+	--base-color-1: #e9f2a7;
+	--base-color-2: #9bbf65;
+	--base-color-3: #65a603;
+	--base-color-4: #3b7302;
+	--base-color-5: #1b4001;
+}
+
+/* Yellow Theme
+https://color.adobe.com/Piss-yellow-color-theme-657427ff-38f8-436b-8000-e1e27e581ba4
+*/
+:root[data-theme="yellow"] {
+	--base-color-1: #f2ff1f;
+	--base-color-2: #e8e01b;
+	--base-color-3: #ffea2a;
+	--base-color-4: #e8c81b;
+	--base-color-5: #ffcf1e;
+}
+
+/* Purple Theme
+https://color.adobe.com/Purple-neon-light-color-theme-cbb3f604-feda-41c0-bd3b-27324b25a83b
+*/
 :root[data-theme="purple"] {
-	--base-color-1: #d8a3ff;
-	--base-color-2: #c27cff;
-	--base-color-3: #aa5aff;
-	--base-color-4: #8e2eff;
-	--base-color-5: #7000ff;
+	--base-color-1: #d6acf2;
+	--base-color-2: #8850bf;
+	--base-color-3: #5a378c;
+	--base-color-4: #392259;
+	--base-color-5: #190f26;
+}
+
+/* Pink Theme
+https://color.adobe.com/Pink-color-theme-2b7abb70-d81c-4efb-8b20-ec299cfdd538
+*/
+:root[data-theme="pink"] {
+	--base-color-1: #f2b6d7;
+	--base-color-2: #caa7c5;
+	--base-color-3: #b18f9f;
+	--base-color-4: #bf1564;
+	--base-color-5: #8c2e5a;
 }
 
 /* Black */
