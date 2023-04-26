@@ -49,14 +49,16 @@ app.get("/statistics/all", auth, async (req, res) => {
 		return res.status(400).send("No such user");
 	}
 
-	console.log("Got user: " + user.username);
 	let sessions = await getAllSessions(email);
 
 	let data = {
 		average: getAverage(sessions, amount),
 		setsOverTime: getSetsOverTime(sessions, amount),
 		weightOverTime: getWeightOverTime(sessions, amount),
-		sessions: sessions
+		sessions: sessions,
+		dates: sessions.map((session, i) => {
+			if (i >= sessions.length - amount) return session.date;
+		})
 	};
 	return res.json(data);
 });
@@ -71,7 +73,6 @@ app.get("/statistics/average", auth, async (req, res) => {
 		return res.status(400).send("No such user");
 	}
 
-	console.log("Got user: " + user.username);
 	let sessions = await getAllSessions(email);
 
 	let setSum = 0;
