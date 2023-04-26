@@ -11,6 +11,7 @@
 		<div class="popupcontent">
 			<p class="contentheader">Equipment: {{ equipment }}</p>
 			<p>{{ instructions }}</p>
+			<iframe v-if="video" title="Instruction video" width="420" height="315" :src="video + '?origin=localhost'" crossorigin> </iframe>
 		</div>
 	</div>
 	<div class="shroud" v-if="open"></div>
@@ -20,7 +21,8 @@
 	export default {
 		data() {
 			return {
-				open: this.isOpen
+				open: this.isOpen,
+				video: null
 			};
 		},
 		props: {
@@ -44,6 +46,20 @@
 				type: Boolean,
 				default: false
 			}
+		},
+		mounted() {
+			console.log("Name:", this.name);
+			fetch("/exercise/video/" + this.name)
+				.then((response) => response.text())
+				.then((data) => {
+					if (data.status == "error") throw new Error(data.message);
+					else {
+						this.video = data;
+					}
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+				});
 		},
 		methods: {
 			update() {

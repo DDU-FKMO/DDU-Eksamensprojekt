@@ -35,8 +35,9 @@ app.post("/character/level", auth, async (req, res) => {
 		console.log("No such user");
 		return res.status(400).send("No such user");
 	}
-	
-	
+
+	let sessions = await getAllSessions(email);
+
 	//Calculate level
 	let level = Math.floor(sessions.length / 5);
 	console.log(level);

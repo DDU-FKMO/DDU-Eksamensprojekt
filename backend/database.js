@@ -227,38 +227,6 @@ async function updateStreak(email) {
 	//return User.updateOne({"email": email}, {"$inc": {streak: 1}})
 }
 
-//Refresh exercise list
-let updateExercises = false;
-async function refreshExerciseList() {
-	if (!updateExercises) return;
-	console.log("Fetching exercises from API");
-	for (let i = 0; i < 30; i++) {
-		fetch("https://api.api-ninjas.com/v1/exercises?offset=" + i * 10, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				"X-Api-Key": process.env.NINJA_API
-			}
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				data.forEach(async (exercise) => {
-					const exists = await getExerciseByName(exercise.name);
-					if (exists) return;
-					exercise.defaultSets = 3;
-					exercise.weighted = false;
-					if (exercise.type == "strength" || exercise.type == "powerlifting" || exercise.type == "olympic_weightlifting") {
-						exercise.weighted = true;
-					}
-					createExercise(exercise);
-				});
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-			});
-	}
-}
-
 async function addScheduleToProgram(programName, scheduleData) {
 	const program = await getProgramByName(programName);
 	if (!program) {
@@ -452,3 +420,35 @@ asd();
 //addExerciseToProgram("program1", data);
 //addProgramToUser("program1", "Filipemails");
 //updateStreak("Filipemails");
+
+//Refresh exercise list
+let updateExercises = false;
+async function refreshExerciseList() {
+	if (!updateExercises) return;
+	console.log("Fetching exercises from API");
+	for (let i = 0; i < 30; i++) {
+		fetch("https://api.api-ninjas.com/v1/exercises?offset=" + i * 10, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"X-Api-Key": process.env.NINJA_API
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				data.forEach(async (exercise) => {
+					const exists = await getExerciseByName(exercise.name);
+					if (exists) return;
+					exercise.defaultSets = 3;
+					exercise.weighted = false;
+					if (exercise.type == "strength" || exercise.type == "powerlifting" || exercise.type == "olympic_weightlifting") {
+						exercise.weighted = true;
+					}
+					createExercise(exercise);
+				});
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
+	}
+}

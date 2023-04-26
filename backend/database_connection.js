@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const {onDatabaseConnected} = require("./database.js");
- 
+
 const {MONGO_URI} = process.env;
 mongoose.set("strictQuery", false);
 exports.connection = () => {
