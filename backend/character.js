@@ -22,7 +22,7 @@ app.post("/character/muscleGroups", async (req, res) => {
 		data[allMuscleGroups[i]] = muscleGroups.includes(allMuscleGroups[i]);
 	}
 	//Send data
-	console.log(data);
+	//console.log(data);
 	return res.json(data);
 });
 

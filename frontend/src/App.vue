@@ -3,6 +3,7 @@
 	import Settings from "./components/Settings.vue";
 </script>
 <script>
+import axios from "axios";
 	export default {
 		data: () => ({
 			loggedIn: false,
@@ -11,10 +12,13 @@
 		}),
 		components: {RouterLink, RouterView, Settings},
 		mounted() {
-			if (!(document.cookie.length > 0)) {
+			if ((document.cookie.length > 0)) {
 				this.loggedIn = true;
+				console.log("logged in")
 			}
 			this.routes = this.$router.options.routes;
+			
+			this.color();
 		},
 		methods: {
 			logoClick: function () {
@@ -26,6 +30,23 @@
 					let el = document.querySelector(".nav");
 					let display = getComputedStyle(el).getPropertyValue("--display");
 					el.style.setProperty("--display", display == "flex" ? "none" : "flex");
+				}
+			},
+			async color(){
+				
+				if(this.loggedIn){
+					await axios
+						.get("/node/color")
+						.then((res) => {
+							
+							document.documentElement.setAttribute("data-theme", res.data);
+						})
+						.catch((err) => {
+							console.log("error: " + err);
+							document.documentElement.setAttribute("data-theme", "red");
+						});
+				} else{
+					document.documentElement.setAttribute("data-theme", "red");
 				}
 			}
 		}
@@ -49,7 +70,7 @@
 	</main>
 	<footer class="center footer">
 		<p>©DDU 2023</p>
-		<Settings />
+		<!-- <Settings /> -->
 	</footer>
 </template>
 

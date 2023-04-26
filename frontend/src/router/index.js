@@ -57,7 +57,7 @@ router.beforeEach(async (to, from) => {
 				if (!token) throw new Error("Not logged in");
 				await axios
 					.get("/node/auth") // {headers: config}
-					.then((res) => console.log(res))
+					.then((res) => console.log("auth ok"))
 					.catch((err) => {
 						console.log(err.response.data);
 						throw new Error("Invalid token");

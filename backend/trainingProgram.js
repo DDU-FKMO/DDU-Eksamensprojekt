@@ -7,14 +7,14 @@ const auth = require("./authenticate.js");
 app.get("/trainingProgram/recommend", async (req, res) => {
 	let allPrograms = await getAllPrograms();
 	let programs = allPrograms.filter((program) => program.programName.includes("Default-") && program.owner == "Global");
-	console.log(programs);
+	//console.log(programs);
 	res.json(programs);
 });
 
 //Program Suggestions
 app.post("/trainingProgram/suggest", async (req, res) => {
 	let settings = req.body;
-	console.log(settings);
+	//console.log(settings);
 
 	let allExercises = await getAllExercises();
 
@@ -65,7 +65,7 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 //Select program
 app.post("/trainingProgram/select", async (req, res) => {
 	let program = req.body;
-	console.log(program);
+	//console.log(program);
 	let createdProgram = await createProgram(program.programName);
 	if (createdProgram == false) return res.json({status: "error", message: "Program already exists."});
 
@@ -129,7 +129,7 @@ app.get("/trainingProgram/import/", auth, async (req, res) => {
 //Available Exercises
 app.post("/trainingProgram/exercises", async (req, res) => {
 	let settings = req.body;
-	console.log(settings);
+	//console.log(settings);
 
 	let allExercises = await getAllExercises();
 
@@ -153,7 +153,7 @@ app.post("/trainingProgram/exercises", async (req, res) => {
 app.post("/trainingProgram/log", auth, async (req, res) => {
 	const email = req.body.user.email;
 	let data = req.body;
-	console.log(data);
+	//console.log(data);
 
 	addSessionToUser(email, data.programName, data.info);
 	return res.status(200);

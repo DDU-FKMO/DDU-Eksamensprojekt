@@ -38,3 +38,21 @@ app.get("/node/get-unlocks", auth, async (req, res) => {
 	console.log("unlock fetched");
 	return res.status(200).json(data);
 });
+
+app.get("/node/color", auth, async (req, res) => {
+	const email = req.body.user.email;
+	
+	let user = await getUserByEmail(email);
+	if (user){
+		
+		for (let unlock of user.unlocks){
+			console.log(unlock.name in user.equipment);
+			if (user.equipment.includes(unlock.name) && unlock.unlockType == "background") {
+				console.log("Color theme: " + unlock.name);
+				return res.status(200).send(unlock.name);
+			}
+		}
+	}
+
+	return res.status(200).send("red");
+});
