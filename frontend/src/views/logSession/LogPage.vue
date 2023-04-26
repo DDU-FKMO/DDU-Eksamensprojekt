@@ -24,7 +24,7 @@
 
 	export default {
 		mounted() {
-			fetch("/trainingProgram/import/" + this.userEmail)
+			fetch("/trainingProgram/import/")
 				.then((response) => response.json())
 				.then((data) => {
 					console.log("Success", data);
@@ -53,7 +53,7 @@
 		},
 		data() {
 			return {
-				userEmail: "Filip@emails.dk",
+				//userEmail: "Filip@emails.dk",
 				days: [],
 				isPopupOpen: false,
 				info: [],
@@ -75,7 +75,7 @@
 			SaveSession() {
 				let data = {};
 				data.info = this.info;
-				data.email = this.userEmail;
+				//data.email = this.userEmail;
 				data.programName = this.programName;
 				fetch("trainingProgram/log", {
 					method: "POST",

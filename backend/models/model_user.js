@@ -60,7 +60,7 @@ const programSchema = new mongoose.Schema({
 	}
 });
 
-//types of unlocks: skins, background themes, 
+//types of unlocks: skins, background themes,
 const unlockSchema = new mongoose.Schema({
 	name: {type: String, default: "Cute and funny costume"},
 	unlockType: {type: String, default: ""},
@@ -73,10 +73,12 @@ const userSchema = new mongoose.Schema({
 	password: {type: String},
 	level: {type: Number},
 	streak: {type: Number, default: 0},
-	unlocks: [{
-		type: unlockSchema,
-		default: {}
-	}],
+	unlocks: [
+		{
+			type: unlockSchema,
+			default: {}
+		}
+	],
 	equipment: {type: [String], default: []},
 	programList: [
 		{

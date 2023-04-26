@@ -7,7 +7,7 @@ const {User} = require("./models/model_user.js");
 const {getUserByEmail} = require("./database.js");
 
 app.get("/node/auth", auth, async (req, res) => {
-	console.log("auth ok");
+	console.log("auth ok by user: " + req.body.user.email);
 	return res.status(200).send("Ok!");
 });
 

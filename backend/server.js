@@ -6,6 +6,10 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+var cookieParser = require("cookie-parser");
+
+
+
 
 //Setup server settings
 const limiter = rateLimit({
@@ -15,6 +19,7 @@ const limiter = rateLimit({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(helmet());
 app.use(limiter);
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("../frontend/dist"));
 
