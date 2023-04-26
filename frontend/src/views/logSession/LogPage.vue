@@ -18,7 +18,7 @@
 </template>
 
 <script>
-	import ExerciseInfo from "../trainingProgram/custom/ExerciseInfo.vue";
+	import ExerciseInfo from "./ExerciseInfo.vue";
 
 	export default {
 		mounted() {
@@ -37,7 +37,7 @@
 				userEmail: "Filip@emails.dk",
 				program: Object,
 				isPopupOpen: false,
-				info: [],
+				info: []
 			};
 		},
 		methods: {

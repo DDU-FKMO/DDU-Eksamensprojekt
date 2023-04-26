@@ -40,7 +40,7 @@ const router = createRouter({
 let DEFAULT_TITLE = "DDU";
 //redirect and authentication
 import axios, {AxiosError} from "axios";
-let checkLogin = false;
+let checkLogin = true;
 router.beforeEach(async (to, from) => {
 	if (to.meta.auth) {
 		if (checkLogin) {
