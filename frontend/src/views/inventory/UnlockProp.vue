@@ -1,8 +1,10 @@
 <template>
 	<div class="unlock">
-		<h2 style="font-size: max(2.5vmin,20px);">{{ name }}</h2>
+		<h2 style="font-size: max(2.5vmin, 20px)">{{ name }}</h2>
 		<p>Type: {{ unlockType }}</p>
-		<p>Status: <u :style="[ equipped ? {'font-weight': 'bold', 'color': 'lime'} : '' ]"> {{ equipped ? "Equipped" : "Not equipped" }}</u></p>
+		<p>
+			Status: <u :style="[equipped ? {'font-weight': 'bold', color: 'lime'} : '']"> {{ equipped ? "Equipped" : "Not equipped" }}</u>
+		</p>
 		<div class="item">
 			<!-- <img class="imgUnlock" :src="content" v-if="unlockType == 'skin'" /> -->
 			<div class="imgUnlock" :style="'background: url(' + content +');'" v-if="unlockType == 'skin'" ></div>
@@ -12,7 +14,7 @@
 	</div>
 </template>
 
-<style>
+<style scoped>
 	.unlock {
 		padding: 1vmin;
 		width: 30vmin;
@@ -22,7 +24,6 @@
 		min-width: 200px;
 		min-height: 260px;
 		font-size: max(1em, 12px);
-		
 
 		display: flex;
 		flex-direction: column;
@@ -35,20 +36,19 @@
 		aspect-ratio: 1 / 1;
 		height: 60%;
 		/* width: 60%; */
-		margin:  max(7px,0.5vmin);
-		
+		margin: max(7px, 0.5vmin);
 	}
-	 .imgUnlock, .color {
+	.imgUnlock,
+	.color {
 		height: 100%;
 		width: 100%;
-		aspect-ratio: 1 / 1; 
+		aspect-ratio: 1 / 1;
 		/* background-size: auto; */
-		background-size: contain !IMPORTANT;
+		background-size: contain !important;
 	}
-	.imgUnlock{
-		
+	.imgUnlock {
 	}
-	.eqbtn{
+	.eqbtn {
 		min-width: 60px;
 		min-height: 30px;
 	}

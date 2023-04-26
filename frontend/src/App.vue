@@ -78,7 +78,7 @@ import axios from "axios";
 	/*Main layout*/
 	.page {
 		width: 100%;
-		height: 90vh;
+		min-height: 80vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -87,7 +87,7 @@ import axios from "axios";
 
 	main {
 		width: 100%;
-		height: 100%;
+		min-height: 100%;
 	}
 
 	/*Nav bar*/
@@ -97,6 +97,7 @@ import axios from "axios";
 		display: flex;
 		flex-direction: row;
 		z-index: 100;
+		margin-bottom: 7.5vh;
 	}
 	header .background {
 		background-color: var(--color-black-3);
@@ -211,6 +212,7 @@ import axios from "axios";
 		@media (min-width: 1000px) {
 			header {
 				height: 4vh;
+				margin-bottom: 4vh;
 			}
 			.nav {
 				margin-left: 4.5vh;

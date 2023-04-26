@@ -6,22 +6,28 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const cors = require("cors");
 var cookieParser = require("cookie-parser");
-
-
-
 
 //Setup server settings
 const limiter = rateLimit({
 	windowMs: 1 * 60 * 1000, // 1 minutes
-	max: 100 // limit each IP to 100 requests per windowMs
+	max: 1000 // limit each IP to 100 requests per windowMs
 });
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(helmet());
 app.use(limiter);
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors());
+
 app.use(express.static("../frontend/dist"));
+
+//CSP
+app.use(function (req, res, next) {
+	res.setHeader("Content-Security-Policy", "default-src 'self'; frame-src *");
+	next();
+});
 
 //Index page
 app.get("/", (req, res) => {
@@ -68,6 +74,7 @@ require("./character.js");
 require("./login.js");
 require("./unlocks.js");
 require("./statistics.js");
+require("./youtubeapi.js");
 
 //Redirect everything else to index
 app.use("/*", express.static("../frontend/dist/index.html"));

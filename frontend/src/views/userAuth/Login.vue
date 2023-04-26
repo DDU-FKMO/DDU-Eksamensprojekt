@@ -143,7 +143,9 @@
 			if (document.cookie.length > 0) {
 				// logged in
 				// cookie remove one-liner:
-				document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+				document.cookie.split(";").forEach(function (c) {
+					document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+				});
 				this.$emit("login");
 			}
 		},
@@ -156,8 +158,8 @@
 							let token = res.data.token;
 							//console.log(token);
 							//localStorage.setItem("user", token);
-							let c_time = 60*60*1000*24*3; // 3 dage
-							document.cookie = "user=" + token + "; expires=" + new Date(new Date().getTime()+c_time).toGMTString()+";path=/";
+							let c_time = 60 * 60 * 1000 * 24 * 3; // 3 dage
+							document.cookie = "user=" + token + "; expires=" + new Date(new Date().getTime() + c_time).toGMTString() + ";path=/";
 							console.log(document.cookie);
 							this.$emit("login");
 							this.$router.push("/");
@@ -179,8 +181,8 @@
 							let token = res.data.token;
 
 							//localStorage.setItem("user", token);
-							let c_time = 60*60*1000*24*3; // 3 dage
-							document.cookie = "user=" + token + "; expires=" + new Date(new Date().getTime()+c_time).toGMTString()+";path=/";
+							let c_time = 60 * 60 * 1000 * 24 * 3; // 3 dage
+							document.cookie = "user=" + token + "; expires=" + new Date(new Date().getTime() + c_time).toGMTString() + ";path=/";
 							this.$emit("login");
 							this.$router.push("/");
 						})

@@ -46,10 +46,10 @@ router.beforeEach(async (to, from) => {
 		if (checkLogin) {
 			try {
 				let token;
-				if (document.cookie.length > 0){
-				let user_c = document.cookie.split(";")[0]
-				token = user_c.substring(document.cookie.indexOf("=") + 1);
-				//console.log(token);
+				if (document.cookie.length > 0) {
+					let user_c = document.cookie.split(";")[0];
+					token = user_c.substring(document.cookie.indexOf("=") + 1);
+					//console.log(token);
 				}
 				// const config = {
 				// 	"x-access-token": token

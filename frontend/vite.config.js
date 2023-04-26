@@ -10,5 +10,8 @@ export default defineConfig({
 		alias: {
 			"@": fileURLToPath(new URL("./src", import.meta.url))
 		}
+	},
+	headers: {
+		"Access-Control-Allow-Origin": "*"
 	}
 });

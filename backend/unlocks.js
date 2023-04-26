@@ -8,7 +8,7 @@ app.post("/node/equip", auth, async (req, res) => {
 	const unlockName = req.body.name;
 	const email = req.body.user.email;
 
-	if (!unlockName){
+	if (!unlockName) {
 		console.log("Please include unlock name");
 		return res.status(404).send("No name included");
 	}
