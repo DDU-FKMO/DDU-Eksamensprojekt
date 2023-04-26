@@ -203,6 +203,11 @@ async function addSessionToUser(email, programName, sessionList) {
 		info: sessionList
 	});
 	
+	if (!session){
+		consone.log("Session did not get created")
+		return false;
+	}
+
 	user.programList[0].sessionList.push(session);
 	
 	await user.save();
