@@ -1,15 +1,15 @@
 <script setup>
 	import {RouterLink, RouterView} from "vue-router";
+	import Settings from "./components/Settings.vue";
 </script>
 <script>
 	export default {
-		data() {
-			return {
-				loggedIn: false,
-				routes: [],
-				showSidebar: false
-			};
-		},
+		data: () => ({
+			loggedIn: false,
+			routes: [],
+			showSidebar: false
+		}),
+		components: {RouterLink, RouterView, Settings},
 		mounted() {
 			if (!(document.cookie.length > 0)) {
 				this.loggedIn = true;
@@ -47,13 +47,17 @@
 	<main class="page">
 		<RouterView @login="loggedIn = !loggedIn" />
 	</main>
+	<footer class="center footer">
+		<p>©DDU 2023</p>
+		<Settings />
+	</footer>
 </template>
 
 <style scoped>
 	/*Main layout*/
 	.page {
 		width: 100%;
-		height: 92.5vh;
+		height: 90vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -130,9 +134,16 @@
 		border-color: var(--base-color-4);
 	}
 
+	.footer {
+		justify-content: space-between;
+		padding: 0 5%;
+		max-height: 2.5vh;
+		overflow: hidden;
+	}
+
 	/* Mobile changes */
 	@media (max-aspect-ratio: 0.84) {
-		@media (max-width: 1000px) {
+		@media (max-width: 999px) {
 			.nav {
 				width: 50%;
 				min-width: 12rem;

@@ -1,10 +1,37 @@
 /* Red Theme */
-:root {
-	--color-red-1: #ffaeae;
-	--color-red-2: #ff9797;
-	--color-red-3: #ff8484;
-	--color-red-4: #ff5e5e;
-	--color-red-5: #ff4343;
+:root[data-theme="red"] {
+	--base-color-1: #ffaeae;
+	--base-color-2: #ff9797;
+	--base-color-3: #ff8484;
+	--base-color-4: #ff5e5e;
+	--base-color-5: #ff4343;
+}
+
+/* Blue Theme */
+:root[data-theme="blue"] {
+	--base-color-1: #a3d8ff;
+	--base-color-2: #7cc2ff;
+	--base-color-3: #5aaaff;
+	--base-color-4: #2e8eff;
+	--base-color-5: #0070f3;
+}
+
+/* Green Theme */
+:root[data-theme="green"] {
+	--base-color-1: #a3ffb3;
+	--base-color-2: #7cff9a;
+	--base-color-3: #5aff7d;
+	--base-color-4: #2eff5a;
+	--base-color-5: #00ff29;
+}
+
+/* Purple Theme */
+:root[data-theme="purple"] {
+	--base-color-1: #d8a3ff;
+	--base-color-2: #c27cff;
+	--base-color-3: #aa5aff;
+	--base-color-4: #8e2eff;
+	--base-color-5: #7000ff;
 }
 
 /* Black */
@@ -22,16 +49,12 @@
 	--color-gold-3: #ff9e2f;
 }
 
-/* semantic colour variables for this project */
+/* White */
 :root {
 	--color-white: #ffffff;
-	/**Lowest number = lightest colour*/
-	--base-color-1: var(--color-red-1);
-	--base-color-2: var(--color-red-2);
-	--base-color-3: var(--color-red-3);
-	--base-color-4: var(--color-red-4);
-	--base-color-5: var(--color-red-5);
 }
+
+/* Semantic colour variables for this project */
 
 *,
 *::before,

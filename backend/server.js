@@ -67,6 +67,7 @@ require("./trainingProgram.js");
 require("./character.js");
 require("./login.js");
 require("./unlocks.js");
+require("./statistics.js");
 
 //Redirect everything else to index
 app.use("/*", express.static("../frontend/dist/index.html"));
