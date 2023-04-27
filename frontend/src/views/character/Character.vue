@@ -32,15 +32,7 @@
 				this.name = "Filip 2";
 			},
 			getMuscleGroups() {
-				fetch("/character/muscleGroups", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({
-						username: null
-					})
-				})
+				fetch("/character/muscleGroups")
 					.then((response) => response.json())
 					.then((data) => {
 						if (data.status == "error") throw new Error(data.message);

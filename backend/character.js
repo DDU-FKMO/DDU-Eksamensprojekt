@@ -3,9 +3,15 @@ const {getAllExercises, getAllPrograms, gotStreakThisWeek, createProgram, addExe
 const auth = require("./authenticate.js");
 
 //Character muscle groups hit by exercises
-app.post("/character/muscleGroups", async (req, res) => {
+app.get("/character/muscleGroups", auth, async (req, res) => {
+	const email = req.body.user.email;
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("No such user");
+		return res.status(400).send("No such user");
+	}
 	//User hit muscle groups
-	let userProgram = (await getAllPrograms()).find((program) => program.owner == req.body.username);
+	let userProgram = user.programList[0].program;
 	let muscleGroups = [];
 	for (let i = 0; i < userProgram.exercises.length; i++) {
 		if (muscleGroups.includes(userProgram.exercises[i].muscle) == false) muscleGroups.push(userProgram.exercises[i].muscle);
@@ -27,9 +33,9 @@ app.post("/character/muscleGroups", async (req, res) => {
 });
 
 //Character muscle groups hit by exercises
-app.post("/character/level", auth, async (req, res) => {
+app.get("/character/level", auth, async (req, res) => {
 	//Get training sessions
-	let email = req.body.user.email;
+	const email = req.body.user.email;
 	let user = await getUserByEmail(email);
 	if (!user) {
 		console.log("No such user");
@@ -44,9 +50,9 @@ app.post("/character/level", auth, async (req, res) => {
 	return res.json(level);
 });
 
-app.post("/character/get-streak", auth, async (req, res) => {
+app.get("/character/get-streak", auth, async (req, res) => {
 	//Get training sessions
-	let email = req.body.user.email;
+	const email = req.body.user.email;
 	let user = await getUserByEmail(email);
 	console.log("Got " + user.username);
 	//Send data
