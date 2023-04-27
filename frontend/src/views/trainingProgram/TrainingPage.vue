@@ -16,7 +16,7 @@
 			<div v-if="program != null && program != {}">
 				<h3>Current Training Program</h3>
 				<button @click="editProgram">Edit</button>
-				<Program :key="program._id" :name="program.programName" :exercises="program.exercises" :schedule="program.schedule.days" />
+				<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises, name: program.programName}" :edit="false"></Schedule>
 			</div>
 			<h3 v-else>No program selected</h3>
 		</div>
@@ -26,11 +26,11 @@
 <script>
 	import {defineComponent} from "vue";
 	import ProgramCreation from "./ProgramCreation.vue";
-	import Program from "./Program.vue";
+	import Schedule from "./custom/Schedule.vue";
 
 	export default defineComponent({
 		name: "TrainingPage",
-		components: {ProgramCreation, Program},
+		components: {ProgramCreation, Schedule},
 		data() {
 			return {
 				program: null,

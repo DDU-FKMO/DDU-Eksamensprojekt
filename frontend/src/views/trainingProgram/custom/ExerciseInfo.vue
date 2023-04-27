@@ -18,13 +18,16 @@
 </template>
 
 <script>
-	export default {
+	import { defineComponent } from 'vue';
+
+	export default defineComponent({
 		data() {
 			return {
 				open: this.isOpen,
 				video: null
 			};
 		},
+		name: "ExerciseInfo",
 		props: {
 			name: {
 				type: String,
@@ -70,7 +73,7 @@
 				}
 			}
 		}
-	};
+	});
 </script>
 
 <style>
