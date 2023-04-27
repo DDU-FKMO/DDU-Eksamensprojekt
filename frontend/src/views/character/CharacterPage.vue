@@ -41,15 +41,7 @@
 		},
 		methods: {
 			getLevel: function () {
-				fetch("/character/level", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({
-						email: null
-					})
-				})
+				fetch("/character/level")
 					.then((response) => response.json())
 					.then((data) => {
 						if (data.status == "error") throw new Error(data.message);
@@ -63,15 +55,7 @@
 					});
 			},
 			getStreak: function () {
-				fetch("/character/get-streak", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({
-						email: null
-					})
-				})
+				fetch("/character/get-streak")
 					.then((response) => response.json())
 					.then((data) => {
 						if (data.message == "error") {

@@ -22,6 +22,7 @@ module.exports = {
 	onDatabaseConnected,
 	register,
 	createProgram,
+	deleteProgram,
 	addExerciseToProgram,
 	createProgramMakeExercise,
 	createExercise,
@@ -68,7 +69,7 @@ async function register(username, email, password) {
 async function createProgram(programName, owner) {
 	const exists = await getProgramByName(programName);
 	if (exists) {
-		console.log("program already exists");
+		console.log("program with name '" + programName + "' already exists");
 		return false; // eller noget
 	}
 	const program = await Program.create({
@@ -77,6 +78,17 @@ async function createProgram(programName, owner) {
 	});
 	console.log("created program: " + programName);
 	return program;
+}
+
+//Delete program
+async function deleteProgram(programName, owner) {
+	const exists = await getProgramByName(programName);
+	if (!exists) {
+		console.log("program with name '" + programName + "' doesn't exist");
+		return false; // eller noget
+	}
+	await Program.findOneAndRemove({programName: programName, owner: owner});
+	return true;
 }
 
 //Add exercise to program
@@ -132,8 +144,11 @@ async function addProgramToUser(programName, email) {
 		console.log("user does not exist");
 		return false; // eller noget
 	}
-	data = {program: program};
-	userExists.programList.push({program: program});
+	if (userExists.programList[0] == {program: program, sessionList: [], weekStreaks: []}) {
+		userExists.programList[0] = data;
+	} else {
+		userExists.programList[0].program = program;
+	}
 	await userExists.save();
 	console.log("added to user");
 	return true;

@@ -79,15 +79,15 @@
 		}),
 		props: {
 			program: {
-				type: Object,
+				type: Object | null,
 				required: false
 			},
 			edit: {
-				type: Boolean,
+				type: Boolean | null,
 				required: true
 			},
 			type: {
-				type: Number,
+				type: Number | null,
 				required: false
 			}
 		},
@@ -100,8 +100,6 @@
 		},
 		methods: {
 			selectProgram: function (program) {
-				program.programName = "Custom program - User";
-				console.log("Selected program", program);
 				//Tell backend to save program
 				fetch("/trainingProgram/select", {
 					method: "POST",
@@ -116,8 +114,7 @@
 						if (data.status == "error") throw new Error(data.message);
 						else {
 							console.log("Success:", data);
-							this.type = null;
-							this.suggestions = [];
+							window.location.reload(true);
 						}
 					})
 					.catch((error) => {
@@ -186,12 +183,12 @@
 						if (data.status == "error") throw new Error(data.message);
 						else {
 							console.log("Success:", data);
-							this.type = null;
 							this.custom = {
 								programName: "",
 								exercises: [],
 								schedule: []
 							};
+							window.location.reload(true);
 						}
 					})
 					.catch((error) => {

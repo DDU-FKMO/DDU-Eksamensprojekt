@@ -43,6 +43,7 @@ app.post("/node/register", async (req, res) => {
 
 		user.token = token;
 		console.log("Succesfully registered user: " + user.username);
+		await addUnlockToUser(email, "red background");
 		return res.status(201).json(user);
 	} catch (err) {
 		console.log(err);
