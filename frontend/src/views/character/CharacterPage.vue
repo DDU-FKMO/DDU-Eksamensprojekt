@@ -56,7 +56,7 @@
 						else {
 							console.log("Level success:", data);
 							this.level = data;
-							this.gotStreakThisWeek = data.hasTrained;
+							
 						}
 					})
 					.catch((error) => {
@@ -80,6 +80,7 @@
 						} else {
 							console.log("streak : " + data);
 							this.streak = data.streak;
+							this.gotStreakThisWeek = data.hasTrained;
 						}
 					})
 					.catch((error) => {

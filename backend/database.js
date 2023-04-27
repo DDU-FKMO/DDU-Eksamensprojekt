@@ -210,7 +210,8 @@ async function addSessionToUser(email, sessionList) {
 	user.programList[0].sessionList.push(session);
 
 	await user.save();
-	console.log("Successfully added session to user");
+	console.log("Successfully added session to user; Checking streak:");
+	await streakCalculation(email);
 	return session;
 }
 //Update streak

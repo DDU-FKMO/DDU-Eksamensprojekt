@@ -74,7 +74,7 @@
 	<div class="suggestions" v-if="type == 0 || type == 1">
 		<h3>Program suggestions</h3>
 		<div v-for="program in suggestions">
-			<Program :name="program.programName" :exercises="program.exercises" :schedule="program.schedule" v-if="program != null" />
+			<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises, name: program.programName}" :edit="false" :log="false" :user="userEmail" v-if="program != null"></Schedule>
 			<button @click="selectProgram(program)" v-if="program != null">Use this suggestion</button>
 		</div>
 	</div>
@@ -90,7 +90,6 @@
 
 <script>
 	import {defineComponent} from "vue";
-	import Program from "./Program.vue";
 	import Schedule from "./custom/Schedule.vue";
 
 	export default defineComponent({
@@ -117,7 +116,7 @@
 				required: false
 			}
 		},
-		components: {Program, Schedule},
+		components: {Schedule},
 		mounted() {
 			console.log("Settings mounted");
 			if (this.edit) this.type = 2;

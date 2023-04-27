@@ -7,7 +7,7 @@
 		</p>
 		<div class="item">
 			<!-- <img class="imgUnlock" :src="content" v-if="unlockType == 'skin'" /> -->
-			<div class="imgUnlock" :style="'background: url(' + content + ');'" v-if="unlockType == 'skin'"></div>
+			<div class="imgUnlock" :style="'background: url(' + content + ');'" v-if="unlockType != 'background'"></div>
 			<div class="color" :style="'background-color: ' + content + ';'" v-else></div>
 		</div>
 		<button @click="equip" class="eqbtn">{{ equipped ? "Unequip" : "Equip" }}</button>
@@ -24,6 +24,7 @@
 		min-width: 200px;
 		min-height: 260px;
 		font-size: max(1em, 12px);
+		background-color: #9c9c9c;
 
 		display: flex;
 		flex-direction: column;
