@@ -14,6 +14,7 @@
 				<h4>{{ selectedExercise }}</h4>
 				<div class="text">
 					<p>Average sets: {{ average[selectedExercise].sets }}</p>
+					<p>Average reps: {{ average[selectedExercise].reps }}</p>
 					<p>Average weight: {{ average[selectedExercise].weight }}</p>
 				</div>
 			</div>
@@ -30,6 +31,7 @@
 				<h4>Overview</h4>
 				<div class="text">
 					<p>Average sets: {{ combinedAverage.sets }}</p>
+					<p>Average reps: {{ combinedAverage.reps }}</p>
 					<p>Average weight: {{ combinedAverage.weight }}</p>
 				</div>
 			</div>
@@ -62,10 +64,10 @@
 					else {
 						console.log("Statistics:", data);
 						this.setsOverTime = data.setsOverTime;
+						this.repsOverTime = data.repsOverTime;
 						this.weightOverTime = data.weightOverTime;
 						this.average = data.average;
 						this.sessions = data.sessions;
-						this.dates = data.dates;
 					}
 				})
 				.catch((error) => {
@@ -91,10 +93,11 @@
 						"chart",
 						newVal + " Chart",
 						[
-							{name: "Sets", data: this.setsOverTime[newVal]},
-							{name: "Weight", data: this.weightOverTime[newVal]}
+							{name: "Sets", data: Object.values(this.setsOverTime[newVal])},
+							{name: "Reps", data: Object.values(this.repsOverTime[newVal])},
+							{name: "Weight", data: Object.values(this.weightOverTime[newVal])}
 						],
-						this.dates.map((date) => date.slice(0, 10))
+						Object.keys(this.setsOverTime[newVal]).map((date) => new Date(date).toLocaleDateString())
 					);
 				}
 			}
@@ -220,7 +223,7 @@
 	}
 	.stat-elements .stat-element .text {
 		justify-self: center;
-		flex-direction: row;
+		flex-direction: column;
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
