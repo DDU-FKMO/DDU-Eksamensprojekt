@@ -1,19 +1,29 @@
 <template>
-	<div class="logpopup">
-		<button class="button" @click="OpenPopup">Log</button>
-		<div v-if="popupOpen">
-			<h3>{{ day }}</h3>
-			<div v-for="i in exercises.length">
-				<p>{{ exercises[i - 1].name }}</p>
-				<div class="previous">
-					<p v-if="stats[i - 1]">Previous session: <p>{{ stats[i - 1].sets }} sets of {{ stats[i - 1].reps }} reps with a weight of {{ stats[i - 1].weight }}</p></p>
-				</div>
-				<input type="number" v-model="info[i - 1].sets" />
-				<input type="number" v-model="info[i - 1].weight" />
-			</div>
-			<button @click="SaveSession">Save</button>
-		</div>
-	</div>
+    <div class="logpopup">
+        <button @click="OpenPopup" class="basebutton">Log</button>
+        <div v-if="popupOpen" class="popupform">
+            <div class="popupheader">
+                <p class="popuptitle">{{ day }}</p>
+                <button @click="() => (popupOpen = false)" class="basebutton popupbutton">x</button>
+            </div>
+            <div class="previous">
+                <p v-if="stats[i - 1]">Previous session: <p>{{ stats[i - 1].sets }} sets of {{ stats[i - 1].reps }} reps with a weight of {{ stats[i - 1].weight }}</p></p>
+            </div>
+            <div v-for="i in exercises.length">
+                <p class="popupsubtitle">{{ info[i - 1].nameOfExercise }}</p>
+                <div class="popupcontent">
+                    <label for="reps" class="popuplabel">Reps: </label>
+                    <input type="number" name="reps" v-model="info[i - 1].reps">
+                    <label for="sets" class="popuplabel">Sets: </label>
+                    <input type="number" name="sets" v-model="info[i - 1].sets">
+                    <label for="weight" class="popuplabel">Weight: </label>
+                    <input type="number" name="weight" v-model="info[i - 1].weight">
+                </div>
+            </div>
+            <button @click="SaveSession" class="basebutton">Save</button>
+        </div>
+    </div>
+    <div class="shroud" v-if="popupOpen"></div>
 </template>
 
 <script>
@@ -53,7 +63,8 @@
 					this.info[count] = {};
 					this.info[count].nameOfExercise = this.exercises[exercise].name;
 					this.info[count].sets = 0;
-					this.info[count].weight = 0;
+                    this.info[count].weight = 0;
+                    this.info[count].reps = 0;
 					count++;
 				}
 			},
@@ -79,9 +90,3 @@
 		}
 	});
 </script>
-
-<style scoped>
-	.button {
-		background-color: var(--color-black-2);
-	}
-</style>

@@ -2,7 +2,9 @@
 	<div class="all center">
 		<div class="schedule">
 			<div class="scheduleBlock" v-for="day in days">
-				<p>{{ day }}</p>
+				<div class="scheduleheader">
+				    <p class="scheduletitle">{{ day }}</p>
+                </div>
 				<div v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.find((a) => a.day == day).exercises">
 					<ExerciseInfo @remove="removeExercise(exercise, day)" :name="exercise.name" :sets="exercise.sets" :equipment="exercises.find((a) => a.name == exercise.name).equipment" :instructions="exercises.find((a) => a.name == exercise.name).instructions" />
 				</div>
@@ -117,9 +119,7 @@
 	.schedule {
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-start;
-		align-items: center;
-		align-content: flex-start;
+		justify-content: space-around;
 		flex-wrap: wrap;
 		min-height: 50%;
 	}
@@ -129,12 +129,22 @@
 		align-items: center;
 		justify-content: space-evenly;
 		background-color: var(--color-black-3);
-		padding: 0.5em;
 		border: 0.2em solid var(--color-blac-4);
-		min-width: 12.5em;
-		width: 20%;
-		margin: 2.5%;
-		min-height: 15em;
+	}
+	.scheduleheader {
+		padding: 0.3em;
+		background-color: var(--color-black-2);
+		display: flex;
+	}
+	.scheduletitle {
+		margin: auto;
+		color: white;
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+	.schedulebutton {
+		margin-left: 0.5em;
+		margin-bottom: 0.5em;
 	}
 	.createExercise {
 		display: flex;
