@@ -41,7 +41,7 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 		let program = {
 			programName: "Suggestion " + (i + 1),
 			exercises: [],
-			schedule: [],
+			schedule: {days: []},
 			owner: "Auto-generated"
 		};
 
@@ -54,7 +54,7 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 				scheduleData.exercises.push({name: exercise.name, sets: exercise.defaultSets});
 				if (program.exercises.includes(exercise) == false) program.exercises.push(exercise);
 			}
-			program.schedule.push(scheduleData);
+			program.schedule.days.push(scheduleData);
 		}
 		programs.push(program);
 	}
