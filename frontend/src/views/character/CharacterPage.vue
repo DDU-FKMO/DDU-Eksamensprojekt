@@ -56,7 +56,6 @@
 						else {
 							console.log("Level success:", data);
 							this.level = data;
-							
 						}
 					})
 					.catch((error) => {

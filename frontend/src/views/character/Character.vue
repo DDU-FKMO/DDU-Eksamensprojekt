@@ -10,9 +10,17 @@
 				<feGaussianBlur in="displacement" stdDeviation="0.8" />
 			</filter>
 
-			<use style="fill: #000000" href="/skin_male.svg#silhouette"></use>
-			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill:#DE032A' : 'fill:#282828'" :href="'/skin_male.svg#' + muscle"></use>
+			<use style="fill: var(--color-black-1)" :href="'/skin_female_' + view + '.svg#silhouette'"></use>
+			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_female_' + view +'.svg#' + muscle"></use>
 		</svg>
+	</div>
+
+	<div class="select">
+			<select v-model="view">>
+				<option disabled value="">Please select view</option>
+				<option value="front">Front</option>
+				<option value="back">Back</option>
+			</select>
 	</div>
 </template>
 
@@ -21,7 +29,8 @@
 		name: "Character",
 		data: () => ({
 			name: "Filip",
-			muscleGroups: {}
+			muscleGroups: {},
+			view: "front"
 		}),
 		mounted() {
 			this.getMuscleGroups();
