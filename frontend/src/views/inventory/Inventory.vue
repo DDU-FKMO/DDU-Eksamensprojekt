@@ -1,7 +1,6 @@
 <template>
-	
 	<h1 class="title">Inventory</h1>
-	
+
 	<div class="unlocks">
 		<div v-for="unlock in data.unlocks">
 			<UnlockProp v-bind="unlock" :key="data" @equip="getUnlocks"></UnlockProp>
@@ -60,7 +59,7 @@
 				} catch (err) {
 					console.log("Something went wrong... " + err);
 				}
-			},
+			}
 			// equip(changeName) {
 			// 	console.log("equip status changed for: " + changeName)
 			// 	for (let unlock of this.data.unlocks) {

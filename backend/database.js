@@ -367,13 +367,12 @@ async function equipUnlock(email, unlockName) {
 
 	let status = "User does not own unlock";
 	for (userUnlock of user.unlocks) {
-		 
 		if (userUnlock.name == unlockName) {
 			// if user has unlocked
 			let index = user.equipment.indexOf(unlockName);
 			if (index > -1) {
 				// only splice array when item is found
-				console.log("Removing: " + unlockName)
+				console.log("Removing: " + unlockName);
 				user.equipment.splice(index, 1); // 2nd parameter means remove one item only
 				status = "success";
 				break;
@@ -382,7 +381,8 @@ async function equipUnlock(email, unlockName) {
 				user.equipment.push(unlockName);
 				status = "success";
 
-				for (item of user.unlocks) { // deequip
+				for (item of user.unlocks) {
+					// deequip
 					// only one of item type can be equipped
 					let index = user.equipment.indexOf(item.name);
 					if (item.name != unlockName && userUnlock.unlockType == item.unlockType && index > -1) {
@@ -395,8 +395,6 @@ async function equipUnlock(email, unlockName) {
 			}
 		}
 	}
-
-
 
 	await user.save();
 	return status;
@@ -418,7 +416,6 @@ async function asd() {
 	// await createUnlock(data);
 	// await addUnlockToUser("filip@emails.dk", "blue background");
 	// await addUnlockToUser("filip@emails.dk", "red background");
-
 	// let colors = {
 	// 	red: "#ff0000",
 	// 	blue: "#0e4c73",
@@ -429,18 +426,12 @@ async function asd() {
 	// 	purple: "#8850bf",
 	// 	pink: "#bf1564"
 	// };
-
 	// let data = {};
-	
-	
-	// 
+	//
 	// await addUnlockToUser("filip@emails.dk", "red background");
-
 	// for (let theme of Object.keys(colors)){
 	// await addUnlockToUser("filip@emails.dk", theme);
-		
 	// }
-
 }
 asd();
 

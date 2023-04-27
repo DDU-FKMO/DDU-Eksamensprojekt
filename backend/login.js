@@ -70,7 +70,7 @@ app.post("/node/login", async (req, res) => {
 		console.log("User found: " + username);
 		let passwordCorrect = await bcrypt.compare(password, user.password);
 		if (user && passwordCorrect) {
-			const token = jwt.sign({user_id: user.__id, email, username}, process.env.JWT_TOKEN, { 
+			const token = jwt.sign({user_id: user.__id, email, username}, process.env.JWT_TOKEN, {
 				expiresIn: "72h"
 			});
 

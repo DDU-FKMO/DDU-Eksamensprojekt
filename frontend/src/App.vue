@@ -3,7 +3,7 @@
 	import Settings from "./components/Settings.vue";
 </script>
 <script>
-import axios from "axios";
+	import axios from "axios";
 	export default {
 		data: () => ({
 			loggedIn: false,
@@ -12,12 +12,12 @@ import axios from "axios";
 		}),
 		components: {RouterLink, RouterView, Settings},
 		mounted() {
-			if ((document.cookie.length > 0)) {
+			if (document.cookie.length > 0) {
 				this.loggedIn = true;
-				console.log("logged in")
+				console.log("logged in");
 			}
 			this.routes = this.$router.options.routes;
-			
+
 			this.color();
 		},
 		methods: {
@@ -32,20 +32,18 @@ import axios from "axios";
 					el.style.setProperty("--display", display == "flex" ? "none" : "flex");
 				}
 			},
-			async color(){
-				
-				if(this.loggedIn){
+			async color() {
+				if (this.loggedIn) {
 					await axios
 						.get("/node/color")
 						.then((res) => {
-							
 							document.documentElement.setAttribute("data-theme", res.data);
 						})
 						.catch((err) => {
 							console.log("error: " + err);
 							document.documentElement.setAttribute("data-theme", "red");
 						});
-				} else{
+				} else {
 					document.documentElement.setAttribute("data-theme", "red");
 				}
 			}

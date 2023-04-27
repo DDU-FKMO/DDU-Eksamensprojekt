@@ -7,8 +7,8 @@
 		</p>
 		<div class="item">
 			<!-- <img class="imgUnlock" :src="content" v-if="unlockType == 'skin'" /> -->
-			<div class="imgUnlock" :style="'background: url(' + content +');'" v-if="unlockType == 'skin'" ></div>
-			<div class="color" :style="'background-color: ' + content +';'" v-else></div>
+			<div class="imgUnlock" :style="'background: url(' + content + ');'" v-if="unlockType == 'skin'"></div>
+			<div class="color" :style="'background-color: ' + content + ';'" v-else></div>
 		</div>
 		<button @click="equip" class="eqbtn">{{ equipped ? "Unequip" : "Equip" }}</button>
 	</div>
@@ -75,10 +75,10 @@
 						.then((res) => {
 							console.log("Equip sucess: " + res.data);
 							//this.equipped = !this.equipped;
-							if (!this.equipped && this.unlockType == "background"){
+							if (!this.equipped && this.unlockType == "background") {
 								document.documentElement.setAttribute("data-theme", this.name);
 							}
-							this.$emit("equip");//, this.name);
+							this.$emit("equip"); //, this.name);
 						})
 						.catch((err) => {
 							console.log("error:" + err);
