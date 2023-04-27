@@ -12,7 +12,7 @@
 			<p class="contentheader">Equipment: {{ equipment }}</p>
 			<p>{{ instructions }}</p>
 			<iframe class="video" v-if="video" title="Instruction video" width="420" height="315" :src="video + '?origin=localhost'" crossorigin> </iframe>
-			<button class="button" @click="remove">Remove</button>
+			<button v-if="edit" class="button" @click="remove">Remove</button>
 		</div>
 	</div>
 	<div class="shroud" v-if="open"></div>

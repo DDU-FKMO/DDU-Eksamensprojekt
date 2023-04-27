@@ -3,10 +3,10 @@
 		<div class="schedule">
 			<div class="scheduleBlock" v-for="day in days">
 				<div class="scheduleheader">
-				    <p class="scheduletitle">{{ day }}</p>
-                </div>
+					<p class="scheduletitle">{{ day }}</p>
+				</div>
 				<div v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.find((a) => a.day == day).exercises">
-					<ExerciseInfo @remove="removeExercise(exercise, day)" :name="exercise.name" :sets="exercise.sets" :equipment="exercises.find((a) => a.name == exercise.name).equipment" :instructions="exercises.find((a) => a.name == exercise.name).instructions" />
+					<ExerciseInfo @remove="removeExercise(exercise, day)" :edit="edit" :name="exercise.name" :sets="exercise.sets" :equipment="exercises.find((a) => a.name == exercise.name).equipment" :instructions="exercises.find((a) => a.name == exercise.name).instructions" />
 				</div>
 				<div style="height: 100%" v-else>No exercises</div>
 				<button class="button" @click="startCreateExercise(day)" v-if="!createExercise && (edit || newProgram)">Add exercise</button>
@@ -119,7 +119,7 @@
 	.schedule {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-around;
+		justify-content: flex-start;
 		flex-wrap: wrap;
 		min-height: 50%;
 	}
@@ -130,6 +130,11 @@
 		justify-content: space-evenly;
 		background-color: var(--color-black-3);
 		border: 0.2em solid var(--color-blac-4);
+		padding: 0.5em;
+		min-width: 12.5em;
+		width: 20%;
+		margin: 2.5%;
+		min-height: 15em;
 	}
 	.scheduleheader {
 		padding: 0.3em;
@@ -160,16 +165,5 @@
 	.button {
 		font-size: 0.8em;
 		width: 80%;
-	}
-
-	.removeBtn {
-		width: 1.5em;
-		height: 1.5em;
-		background-color: var(--color-red-1);
-		border-radius: 50%;
-		border: none;
-		color: var(--color-white-1);
-		font-size: 0.5em;
-		cursor: pointer;
 	}
 </style>
