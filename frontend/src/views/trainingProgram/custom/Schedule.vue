@@ -1,14 +1,16 @@
 <template>
 	<div class="schedule">
 		<div class="scheduleBlock" v-for="day in days">
-			<p>{{ day }}</p>
+			<div class="scheduleheader">
+				<p class="scheduletitle">{{ day }}</p>
+			</div>
 			<div v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.find((a) => a.day == day).exercises">
 				<ExerciseInfo :name="exercise.name" :sets="exercise.sets" :equipment="exercises.find((a) => a.name == exercise.name).equipment" :instructions="exercises.find((a) => a.name == exercise.name).instructions"> </ExerciseInfo>
-					<button @click="removeExercise(exercise, day)" v-if="edit">Remove</button>
+				<button @click="removeExercise(exercise, day)" v-if="edit">Remove</button>
 			</div>
 			<p v-else>No exercises</p>
-				<button @click="startCreateExercise(day)" v-if="!createExercise && edit">Add exercise</button>
-			<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises" :user="user" :program-name="program.name"></Logpopup>
+			<button @click="startCreateExercise(day)" v-if="!createExercise && edit" class="schedulebutton">Add exercise</button>
+			<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises" :user="user" :program-name="program.name" class="schedulebutton"></Logpopup>
 		</div>
 	</div>
 	<div class="createExercise" v-if="createExercise && edit">
@@ -103,13 +105,28 @@
 	.schedule {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-around;
+		justify-content: flex-start;
 		flex-wrap: wrap;
 	}
 	.scheduleBlock {
 		display: inline-block;
 		background-color: var(--color-black-3);
-		border: 0.2em solid var(--color-blac-4);
+		margin: 1em 2em;
+	}
+	.scheduleheader {
+		padding: 0.3em;
+		background-color: var(--color-black-2);
+		display: flex;
+	}
+	.scheduletitle {
+		margin: auto;
+		color: white;
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+	.schedulebutton {
+		margin-left: 0.5em;
+		margin-bottom: 0.5em;
 	}
 	.createExercise {
 		display: flex;
