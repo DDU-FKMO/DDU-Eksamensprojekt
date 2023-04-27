@@ -8,10 +8,12 @@
 				<div v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.find((a) => a.day == day).exercises">
 					<ExerciseInfo @remove="removeExercise(exercise, day)" :edit="edit" :name="exercise.name" :sets="exercise.sets" :equipment="exercises.find((a) => a.name == exercise.name).equipment" :instructions="exercises.find((a) => a.name == exercise.name).instructions" />
 				</div>
-				<div style="height: 100%" v-else>No exercises</div>
+				<div v-else class="fill">No exercises</div>
 				<button class="button" @click="startCreateExercise(day)" v-if="!createExercise && (edit || newProgram)">Add exercise</button>
 				<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises" :user="user" :program-name="program.name"></Logpopup>
 			</div>
+			<button @click="startCreateExercise(day)" v-if="!createExercise && edit" class="schedulebutton">Add exercise</button>
+			<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises" :user="user" :program-name="program.name"></Logpopup>
 		</div>
 		<div class="createExercise" v-if="createExercise && (edit || newProgram)">
 			<h2>Select exercise</h2>
@@ -129,7 +131,7 @@
 		align-items: center;
 		justify-content: space-evenly;
 		background-color: var(--color-black-3);
-		border: 0.2em solid var(--color-blac-4);
+		border: 0.2em solid var(--color-black-4);
 		padding: 0.5em;
 		min-width: 12.5em;
 		width: 20%;
@@ -150,6 +152,10 @@
 	.schedulebutton {
 		margin-left: 0.5em;
 		margin-bottom: 0.5em;
+	}
+	.fill {
+		width: 269.325px;
+		height: 100%;
 	}
 	.createExercise {
 		display: flex;
