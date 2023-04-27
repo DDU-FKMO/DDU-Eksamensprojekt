@@ -1,6 +1,6 @@
 <template>
 	<div class="logpopup">
-		<button @click="OpenPopup">Log</button>
+		<button class="button" @click="OpenPopup">Log</button>
 		<div v-if="popupOpen">
 			<h3>{{ day }}</h3>
 			<div v-for="i in exercises.length">
@@ -79,3 +79,9 @@
 		}
 	});
 </script>
+
+<style scoped>
+	.button {
+		background-color: var(--color-black-2);
+	}
+</style>

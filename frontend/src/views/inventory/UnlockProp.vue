@@ -10,7 +10,7 @@
 			<div class="imgUnlock" :style="'background: url(' + content + ');'" v-if="unlockType != 'background'"></div>
 			<div class="color" :style="'background-color: ' + content + ';'" v-else></div>
 		</div>
-		<button @click="equip" class="eqbtn">{{ equipped ? "Unequip" : "Equip" }}</button>
+		<button @click="equip" class="eqbtn button">{{ equipped ? "Unequip" : "Equip" }}</button>
 	</div>
 </template>
 

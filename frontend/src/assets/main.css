@@ -22,3 +22,93 @@
 	justify-content: center;
 	align-items: center;
 }
+
+/* Button */
+.button {
+	aspect-ratio: 5/1;
+	background-color: var(--color-black-3);
+	clip-path: polygon(0 0, 80% 0, 100% 100%, 20% 100%);
+	text-decoration: none;
+	border: 3px solid var(--color-black-2);
+	transition: background-color 0.5s, border-color 0.5s;
+	color: var(--color-white);
+	font-weight: bold;
+	padding: 0 2em;
+}
+
+.button:hover {
+	cursor: pointer;
+	background-color: var(--base-color-1);
+}
+
+/* Select */
+.select select {
+	width: 100%;
+	height: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--color-black-2);
+	margin: 1em 0;
+	text-decoration: none;
+	border: 3px solid var(--color-black-2);
+	transition: background-color 0.5s, border-color 0.5s;
+	color: var(--color-white);
+	font-weight: bold;
+	padding: 0 2em;
+}
+
+.select select option {
+	background-color: var(--color-black-2);
+	color: var(--color-white);
+}
+
+.select select:hover {
+	border-color: var(--base-color-4);
+	cursor: pointer;
+}
+
+.select select:focus {
+	outline: none;
+}
+
+.select select:focus-visible {
+	outline: none;
+}
+
+/* Check box */
+input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	width: 1.5em;
+	height: 1.5em;
+	border: 3px solid var(--color-black-2);
+	border-radius: 0.25em;
+	background-color: var(--color-black-2);
+	transition: background-color 0.5s, border-color 0.5s;
+	margin: 0 2px -4px 2px;
+	cursor: pointer;
+}
+input[type="checkbox"]::after {
+	content: "\2713";
+	color: var(--color-white);
+	text-align: center;
+	opacity: 0;
+	position: absolute;
+	bottom: -25%;
+	left: 7.5%;
+	transform: rotate(45deg);
+	font-weight: bold;
+	font-size: 125%;
+	transition: transform 0.25s, opacity 0.25s;
+}
+input[type="checkbox"]:checked {
+	background-color: var(--base-color-1);
+}
+input[type="checkbox"]:checked::after {
+	opacity: 1;
+	transform: rotate(0deg);
+	/* Testing purpose */
+	cursor: pointer;
+}

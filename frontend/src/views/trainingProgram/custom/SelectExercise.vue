@@ -3,88 +3,62 @@
 		<p>{{ exercise.name }}</p>
 		<p>{{ exercise.sets }} sets</p>
 	</div>
-	<div class="create" v-else>
-		<p>Select exercise</p>
+	<div class="create center" v-else>
 		<div class="settings">
-			<p>Settings</p>
 			<form ref="exerciseForm" @submit="getAvailable" @load="getAvailable">
-				<label for="muscleGroups">Muscle Group:</label>
-				<div>
-					<input type="checkbox" name="muscleGroups" value="abdominals" checked />
-					<label>Abdominals</label>
-					<input type="checkbox" name="muscleGroups" value="abductors" checked />
-					<label>Abductors</label>
-					<input type="checkbox" name="muscleGroups" value="adductors" checked />
-					<label>Adductors</label>
-					<input type="checkbox" name="muscleGroups" value="biceps" checked />
-					<label>Biceps</label>
-					<input type="checkbox" name="muscleGroups" value="calves" checked />
-					<label>Calves</label>
-					<input type="checkbox" name="muscleGroups" value="chest" checked />
-					<label>Chest</label>
-					<input type="checkbox" name="muscleGroups" value="forearms" checked />
-					<label>Forearms</label>
-					<input type="checkbox" name="muscleGroups" value="glutes" checked />
-					<label>Glutes</label>
-					<input type="checkbox" name="muscleGroups" value="hamstrings" checked />
-					<label>Hamstrings</label>
-					<input type="checkbox" name="muscleGroups" value="lats" checked />
-					<label>Lats</label>
-					<input type="checkbox" name="muscleGroups" value="lower_back" checked />
-					<label>Lower back</label>
-					<input type="checkbox" name="muscleGroups" value="middle_back" checked />
-					<label>Middle back</label>
-					<input type="checkbox" name="muscleGroups" value="neck" checked />
-					<label>Neck</label>
-					<input type="checkbox" name="muscleGroups" value="quadriceps" checked />
-					<label>Quadriceps</label>
-					<input type="checkbox" name="muscleGroups" value="traps" checked />
-					<label>Traps</label>
-					<input type="checkbox" name="muscleGroups" value="triceps" checked />
-					<label>Triceps</label>
+				<h4>Difficulty:</h4>
+				<div class="select">
+					<select name="difficulty" id="difficulty">
+						<option value="beginner">Beginner</option>
+						<option value="intermediate">Intermediate</option>
+						<option value="expert">Expert</option>
+					</select>
 				</div>
-				<label for="difficulty">Difficulty:</label>
-				<select name="difficulty" id="difficulty">
-					<option value="beginner">Beginner</option>
-					<option value="intermediate">Intermediate</option>
-					<option value="expert">Expert</option>
-				</select>
-				<label for="equipment">Equipment:</label>
-				<div>
-					<input type="checkbox" name="equipment" value="body_only" checked />
-					<label>Body</label>
-					<input type="checkbox" name="equipment" value="barbell" checked />
-					<label>Barbell</label>
-					<input type="checkbox" name="equipment" value="dumbbell" checked />
-					<label>Dumbbell</label>
-					<input type="checkbox" name="equipment" value="e-z_curl_bar" checked />
-					<label>E-Z Curl bar</label>
-					<input type="checkbox" name="equipment" value="other" checked />
-					<label>Other</label>
-					<input type="checkbox" name="equipment" value="machine" checked />
-					<label>Machine</label>
-					<input type="checkbox" name="equipment" value="cable" checked />
-					<label>Cable</label>
-					<input type="checkbox" name="equipment" value="kettlebells" checked />
-					<label>Kettlebells</label>
-					<input type="checkbox" name="equipment" value="exercise_ball" checked />
-					<label>Exercise ball</label>
-					<input type="checkbox" name="equipment" value="medicine_ball" checked />
-					<label>Medicine ball</label>
-					<input type="checkbox" name="equipment" value="bands" checked />
-					<label>Bands</label>
+				<h4>Muscle Group:</h4>
+				<div class="checkbox-list">
+					<label>Abdominals(<input type="checkbox" name="muscleGroups" value="abdominals" checked />)</label>
+					<label>Abductors(<input type="checkbox" name="muscleGroups" value="abductors" checked />)</label>
+					<label>Adductors(<input type="checkbox" name="muscleGroups" value="adductors" checked />)</label>
+					<label>Biceps(<input type="checkbox" name="muscleGroups" value="biceps" checked />)</label>
+					<label>Calves(<input type="checkbox" name="muscleGroups" value="calves" checked />)</label>
+					<label>Chest(<input type="checkbox" name="muscleGroups" value="chest" checked />)</label>
+					<label>Forearms(<input type="checkbox" name="muscleGroups" value="forearms" checked />)</label>
+					<label>Glutes(<input type="checkbox" name="muscleGroups" value="glutes" checked />)</label>
+					<label>Hamstrings(<input type="checkbox" name="muscleGroups" value="hamstrings" checked />)</label>
+					<label>Lats(<input type="checkbox" name="muscleGroups" value="lats" checked />)</label>
+					<label>Lower back(<input type="checkbox" name="muscleGroups" value="lower_back" checked />)</label>
+					<label>Middle back(<input type="checkbox" name="muscleGroups" value="middle_back" checked />)</label>
+					<label>Neck(<input type="checkbox" name="muscleGroups" value="neck" checked />)</label>
+					<label>Quadriceps(<input type="checkbox" name="muscleGroups" value="quadriceps" checked />)</label>
+					<label>Traps(<input type="checkbox" name="muscleGroups" value="traps" checked />)</label>
+					<label>Triceps(<input type="checkbox" name="muscleGroups" value="triceps" checked />)</label>
 				</div>
-				<input type="submit" value="Get available exercises" />
+				<h4>Equipment:</h4>
+				<div class="checkbox-list">
+					<label>Body(<input type="checkbox" name="equipment" value="body_only" checked />)</label>
+					<label>Barbell(<input type="checkbox" name="equipment" value="barbell" checked />)</label>
+					<label>Dumbbell(<input type="checkbox" name="equipment" value="dumbbell" checked />)</label>
+					<label>E-Z Curl bar(<input type="checkbox" name="equipment" value="e-z_curl_bar" checked />)</label>
+					<label>Other(<input type="checkbox" name="equipment" value="other" checked />)</label>
+					<label>Machine(<input type="checkbox" name="equipment" value="machine" checked />)</label>
+					<label>Cable(<input type="checkbox" name="equipment" value="cable" checked />)</label>
+					<label>Kettlebells(<input type="checkbox" name="equipment" value="kettlebells" checked />)</label>
+					<label>Exercise ball(<input type="checkbox" name="equipment" value="exercise_ball" checked />)</label>
+					<label>Medicine ball(<input type="checkbox" name="equipment" value="medicine_ball" checked />)</label>
+					<label>Bands(<input type="checkbox" name="equipment" value="bands" checked />)</label>
+				</div>
+				<input class="button" type="submit" value="Get available exercises" />
 			</form>
 		</div>
-		<div class="select">
-			<label>Available exercises:</label>
-			<select v-model="selectedExercise" v-if="availableExercises.length > 0">
-				<option v-for="exercise of availableExercises" :value="exercise">{{ exercise.name }}</option>
-			</select>
-			<label>Number of sets:</label>
-			<input type="number" v-model="sets" />
-			<button @click="addExercise">Add exercise</button>
+		<div class="selectExercise center" v-if="availableExercises.length > 0">
+			<h3>Available exercises:</h3>
+			<div class="select">
+				<select v-model="selectedExercise">
+					<option v-for="exercise of availableExercises" :value="exercise">{{ exercise.name }}</option>
+				</select>
+			</div>
+			<label>Number of sets: <input type="number" v-model="sets" /></label>
+			<button class="button" @click="addExercise">Add exercise</button>
 		</div>
 	</div>
 </template>
@@ -163,3 +137,66 @@
 		}
 	});
 </script>
+
+<style scoped>
+	.create,
+	.selectExercise {
+		flex-direction: column;
+	}
+	h3 {
+		font-size: 2em;
+		font-weight: bold;
+	}
+	h4 {
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+	.settings form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.settings form div {
+		margin: 1em 0;
+	}
+
+	input[type="text"] {
+		width: 25%;
+		max-width: 20em;
+		height: 2em;
+		font-size: 1em;
+		padding: 15px 15px;
+		box-sizing: border-box;
+	}
+	input[type="text"]:focus {
+		outline: none;
+	}
+	input[type="text"]:focus-visible {
+		outline: none;
+	}
+
+	.settings .checkbox-list {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	.settings .checkbox-list label {
+		margin: 0 0.5rem;
+		font-size: 1.25em;
+	}
+
+	.selectExercise label {
+		font-size: 1.25em;
+		margin-bottom: 0.75em;
+	}
+	.selectExercise label input {
+		width: 5em;
+		margin: 0 0.5rem;
+		background-color: var(--color-black-3);
+		outline-color: var(--color-black-2);
+	}
+</style>
