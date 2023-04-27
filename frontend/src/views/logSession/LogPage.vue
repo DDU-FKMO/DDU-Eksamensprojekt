@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import Schedule from '../trainingProgram/custom/Schedule.vue';
+	import Schedule from "../trainingProgram/custom/Schedule.vue";
 
 	export default {
 		mounted() {
@@ -28,6 +28,6 @@
 				program: null
 			};
 		},
-		components: { Schedule }
+		components: {Schedule}
 	};
 </script>
