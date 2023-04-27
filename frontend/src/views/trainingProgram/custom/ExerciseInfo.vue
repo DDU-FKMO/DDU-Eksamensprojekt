@@ -11,14 +11,15 @@
 		<div class="popupcontent">
 			<p class="contentheader">Equipment: {{ equipment }}</p>
 			<p>{{ instructions }}</p>
-			<iframe v-if="video" title="Instruction video" width="420" height="315" :src="video + '?origin=localhost'" crossorigin> </iframe>
+			<iframe class="video" v-if="video" title="Instruction video" width="420" height="315" :src="video + '?origin=localhost'" crossorigin> </iframe>
+			<button v-if="edit" class="button" @click="remove">Remove</button>
 		</div>
 	</div>
 	<div class="shroud" v-if="open"></div>
 </template>
 
 <script>
-	import { defineComponent } from 'vue';
+	import {defineComponent} from "vue";
 
 	export default defineComponent({
 		data() {
@@ -48,6 +49,10 @@
 			isOpen: {
 				type: Boolean,
 				default: false
+			},
+			edit: {
+				type: Boolean,
+				default: false
 			}
 		},
 		mounted() {
@@ -71,12 +76,15 @@
 				} else {
 					this.open = true;
 				}
+			},
+			remove() {
+				this.$emit("remove");
 			}
 		}
 	});
 </script>
 
-<style>
+<style scoped>
 	.popupform {
 		position: fixed;
 		border: 3px solid rgba(0, 0, 0, 0.3);
@@ -84,12 +92,13 @@
 		z-index: 3;
 		width: 50%;
 		left: 25%;
-		top: 25%;
+		top: 10%;
 	}
 	.chevrons {
 		display: flex;
 		justify-content: baseline;
 		margin: 0.5em;
+		height: 100%;
 	}
 	.basebutton {
 		color: white;
@@ -101,17 +110,18 @@
 		background: var(--color-black-2);
 		border-bottom: 7px solid var(--color-black-1);
 		font-weight: bold;
+		font-size: 0.75em;
 	}
 	.setsbutton {
 		clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-		width: 5em;
+		width: 4em;
 		height: 3em;
 		text-align: left;
-		margin-right: -1em;
+		margin-right: -0.75em;
 	}
 	.namebutton {
 		clip-path: polygon(92% 0, 100% 50%, 92% 100%, 0% 100%, 8% 50%, 0% 0%);
-		width: 15em;
+		width: 13em;
 		height: 3em;
 		text-align: center;
 	}
@@ -141,6 +151,12 @@
 	}
 	.popupcontent {
 		margin: 5px;
+	}
+	.popupcontent .video {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		height: 25%;
 	}
 	.contentheader {
 		font-size: 1.5em;

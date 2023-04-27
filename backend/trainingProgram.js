@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const {app} = require("./server.js");
-const {getAllExercises, getUserByEmail, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser, getExerciseByName, addSessionToUser} = require("./database.js");
+const {getAllExercises, getUserByEmail, getAllPrograms, createProgram, addExerciseToProgram, addScheduleToProgram, addProgramToUser, getExerciseByName, addSessionToUser, deleteProgram} = require("./database.js");
 const auth = require("./authenticate.js");
 
 //Program Recommendations
@@ -37,7 +37,7 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 
 	let programs = [];
 
-	for (let i = 0; i < 3; i++) {
+	for (let i = 0; i < 2; i++) {
 		let program = {
 			programName: "Suggestion " + (i + 1),
 			exercises: [],
@@ -46,11 +46,23 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 		};
 
 		let dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-		//Add 3 exercises per training day
+		//Add 4 exercises per training day
 		for (let day = 0; day < 3; day++) {
 			let scheduleData = {day: dayNames[day * 2], exercises: []};
 			for (let e = 0; e < 3; e++) {
-				let exercise = availableExercises[Math.floor(Math.random() * availableExercises.length)];
+				let exercise;
+				let tries = 0;
+				while (exercise == null) {
+					tries++;
+					let testExercise = availableExercises[Math.floor(Math.random() * availableExercises.length)];
+					if (tries > 50) {
+						exercise = testExercise;
+					}
+					if (!program.exercises.includes(testExercise) && !program.exercises.map((a) => a.muscle).includes(testExercise.muscle)) {
+						exercise = testExercise;
+					}
+				}
+
 				scheduleData.exercises.push({name: exercise.name, sets: exercise.defaultSets});
 				if (program.exercises.includes(exercise) == false) program.exercises.push(exercise);
 			}
@@ -63,22 +75,32 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 });
 
 //Select program
-app.post("/trainingProgram/select", async (req, res) => {
+app.post("/trainingProgram/select", auth, async (req, res) => {
 	let program = req.body;
-	//console.log(program);
-	let createdProgram = await createProgram(program.programName);
-	if (createdProgram == false) return res.json({status: "error", message: "Program already exists."});
+	const email = req.body.user.email;
+
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("No such user");
+		return res.status(400).send("No such user");
+	}
+	program.programName = "Custom program - " + email;
+	console.log(program);
+	await deleteProgram(program.programName, email);
+	let createdProgram = await createProgram(program.programName, email);
+	if (createdProgram == false) {
+		return res.json({status: "error", message: "Program already exists."});
+	}
 
 	for (let exercise of program.exercises) {
 		console.log("Adding exercise: " + exercise.name);
 		await addExerciseToProgram(program.programName, exercise);
 	}
-	for (let day of program.schedule) {
-		console.log("Adding schedule day");
+	for (let day of program.schedule.days) {
+		console.log("Adding schedule day", day);
 		await addScheduleToProgram(program.programName, day);
 	}
-
-	///addProgramToUser(program.programName, "Email");
+	await addProgramToUser(program.programName, email);
 
 	res.json({status: "success"});
 });
