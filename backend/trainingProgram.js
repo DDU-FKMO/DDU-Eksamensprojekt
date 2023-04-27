@@ -5,9 +5,10 @@ const auth = require("./authenticate.js");
 
 //Program Recommendations
 app.get("/trainingProgram/recommend", async (req, res) => {
+	console.log("Getting recommendations");
 	let allPrograms = await getAllPrograms();
-	let programs = allPrograms.filter((program) => program.programName.includes("Default-") && program.owner == "Global");
-	//console.log(programs);
+	let programs = allPrograms.filter((program) => program.programName.includes("Default-") && program.owner == "global");
+	console.log(programs);
 	res.json(programs);
 });
 

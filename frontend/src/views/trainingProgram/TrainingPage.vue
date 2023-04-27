@@ -6,9 +6,9 @@
 				<ProgramCreation :edit="edit" :type="type" :program="program" />
 			</div>
 			<div class="buttons" v-else>
-				<button class="button" @click="() => (type = 0)">Recomended</button>
-				<button class="button" @click="() => (type = 1)">Auto generated</button>
-				<button class="button" @click="() => (type = 2)">Custom</button>
+				<button class="button" @click="changeType(0)">Recommended</button>
+				<button class="button" @click="changeType(1)">Auto generated</button>
+				<button class="button" @click="changeType(2)">Custom</button>
 			</div>
 		</div>
 		<div class="program" v-if="type == null">
@@ -38,6 +38,9 @@
 			};
 		},
 		methods: {
+			changeType: function (newType) {
+				this.type = newType;
+			},
 			back: function () {
 				console.log("Back");
 				this.edit = false;
@@ -45,8 +48,8 @@
 			},
 			editProgram: function () {
 				console.log("Edit program");
-				this.edit = true;
 				this.type = 2;
+				this.edit = true;
 			}
 		},
 		mounted() {

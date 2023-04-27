@@ -46,7 +46,7 @@
 			<input type="submit" class="button" value="Get suggestions" />
 		</form>
 	</div>
-	<div class="suggestions" v-if="type == 0 || type == 1">
+	<div class="suggestions" v-if="type == 0 || type == 1" @load="getRecommendations()">
 		<h3>Program suggestions</h3>
 		<div v-for="program in suggestions">
 			<button class="button" @click="selectProgram(program)" v-if="program != null">Use this suggestion</button>
@@ -94,10 +94,11 @@
 		components: {Schedule},
 		mounted() {
 			console.log("Settings mounted");
-			if (this.edit) this.type = 2;
-			console.log("Program", this.program);
-			console.log("Type", this.type);
+			if (this.type == 0) {
+				this.getRecommendations();
+			}
 		},
+
 		methods: {
 			selectProgram: function (program) {
 				//Tell backend to save program
@@ -122,6 +123,8 @@
 					});
 			},
 			getRecommendations: function () {
+				console.log("Getting recommendations");
+				if (this.type != 0) return;
 				fetch("/trainingProgram/recommend")
 					.then((response) => response.json())
 					.then((data) => {
