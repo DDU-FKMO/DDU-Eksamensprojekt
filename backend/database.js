@@ -63,6 +63,7 @@ async function register(username, email, password) {
 		password: encPass,
 		streak: 0
 	});
+
 	console.log("Created user");
 	return user;
 }
@@ -337,7 +338,7 @@ async function createUnlock(data) {
 }
 
 async function getUnlockByName(name) {
-	unlock = await Unlock.findOne({name});
+	let unlock = await Unlock.findOne({name});
 	return unlock;
 }
 
@@ -348,7 +349,7 @@ async function addUnlockToUser(email, unlockName) {
 		return false;
 	}
 	// Get unlock
-	unlock = await getUnlockByName(unlockName);
+	let unlock = await getUnlockByName(unlockName);
 	if (!unlock) {
 		console.log("Unlock: no such unlock");
 		return false;
