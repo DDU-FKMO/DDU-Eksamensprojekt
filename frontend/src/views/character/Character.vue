@@ -11,16 +11,17 @@
 			</filter>
 
 			<use style="fill: var(--color-black-1)" :href="'/skin_female_' + view + '.svg#silhouette'"></use>
-			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_female_' + view +'.svg#' + muscle"></use>
+			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_female_' + view + '.svg#' + muscle"></use>
 		</svg>
 	</div>
 
 	<div class="select">
-			<select v-model="view">>
-				<option disabled value="">Please select view</option>
-				<option value="front">Front</option>
-				<option value="back">Back</option>
-			</select>
+		<select v-model="view">
+			>
+			<option disabled value="">Please select view</option>
+			<option value="front">Front</option>
+			<option value="back">Back</option>
+		</select>
 	</div>
 </template>
 
@@ -41,7 +42,15 @@
 				this.name = "Filip 2";
 			},
 			getMuscleGroups() {
-				fetch("/character/muscleGroups")
+				fetch("/character/muscleGroups", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						username: null
+					})
+				})
 					.then((response) => response.json())
 					.then((data) => {
 						if (data.status == "error") throw new Error(data.message);
