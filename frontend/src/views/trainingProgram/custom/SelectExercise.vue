@@ -118,16 +118,19 @@
 					},
 					body: JSON.stringify(settings)
 				})
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.availableExercises = data;
-						}
+						console.log("Success:", data);
+						this.availableExercises = data;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			addExercise() {

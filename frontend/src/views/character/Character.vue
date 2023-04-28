@@ -29,38 +29,35 @@
 	export default {
 		name: "Character",
 		data: () => ({
-			name: "Filip",
 			muscleGroups: {},
 			view: "front"
 		}),
+		props: {
+			name: {
+				type: String,
+				default: "",
+				required: true
+			}
+		},
 		mounted() {
 			this.getMuscleGroups();
 		},
 		methods: {
-			test: function () {
-				console.log("test");
-				this.name = "Filip 2";
-			},
 			getMuscleGroups() {
-				fetch("/character/muscleGroups", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({
-						username: null
+				fetch("/character/muscleGroups")
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
 					})
-				})
-					.then((response) => response.json())
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.muscleGroups = data;
-						}
+						console.log("Musclegroups:", data);
+						this.muscleGroups = data;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			}
 		}

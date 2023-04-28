@@ -1,6 +1,7 @@
 require("dotenv").config();
 const fetch = require("node-fetch");
 const bcrypt = require("bcryptjs");
+const fs = require("fs");
 //const jwt = require("jsonwebtoken");
 
 const {User} = require("./models/model_user.js");
@@ -13,8 +14,9 @@ const {Unlock} = require("./models/model_user.js");
 //On database connected function
 function onDatabaseConnected() {
 	console.log("Database connected!");
-	refreshExerciseList();
-	///addDefaultPrograms();
+	///refreshExerciseList();
+	///createExerciseList();
+	addDefaultPrograms();
 }
 
 //Export
@@ -121,15 +123,21 @@ async function createProgramMakeExercise(programName, exerciseJSON) {
 }
 
 //Create new exercise
-async function createExercise(exerciseJSON) {
+async function createExercise(exerciseJSON, replace) {
 	const exists = await getExerciseByName(exerciseJSON.name);
 	if (exists) {
-		console.log("exercise already exists");
+		if (replace) {
+			console.log("exercise already exists, replacing it");
+			const success = await Exercise.findOneAndReplace({name: exerciseJSON.name}, exerciseJSON);
+			return success;
+		}
+		console.log("Exercise already exists");
 		return exists;
+	} else {
+		console.log("Creating new exercise");
+		const sucess = await Exercise.create({name: exerciseJSON.name, type: exerciseJSON.type, muscle: exerciseJSON.muscle, equipment: exerciseJSON.equipment, difficulty: exerciseJSON.difficulty, instructions: exerciseJSON.instructions, weighted: exerciseJSON.weighted, defaultSets: exerciseJSON.defaultSets});
+		return sucess;
 	}
-	const sucess = await Exercise.create({name: exerciseJSON.name, type: exerciseJSON.type, muscle: exerciseJSON.muscle, equipment: exerciseJSON.equipment, difficulty: exerciseJSON.difficulty, instructions: exerciseJSON.instructions, weighted: exerciseJSON.weighted, defaultSets: exerciseJSON.defaultSets});
-	console.log("added exercise");
-	return sucess;
 }
 
 //Add program to user
@@ -144,8 +152,8 @@ async function addProgramToUser(programName, email) {
 		console.log("user does not exist");
 		return false; // eller noget
 	}
-	if (userExists.programList[0] == {program: program, sessionList: [], weekStreaks: []}) {
-		userExists.programList[0] = data;
+	if (userExists.programList[0] == null) {
+		userExists.programList[0] = {program: program, sessionList: [], weekStreaks: []};
 	} else {
 		userExists.programList[0].program = program;
 	}
@@ -254,24 +262,6 @@ async function addScheduleToProgram(programName, scheduleData) {
 	return program;
 }
 
-//Add default programs
-async function addDefaultPrograms() {
-	for (let i = 1; i < 4; i++) {
-		const exists = await getProgramByName("Default-" + i);
-		if (exists) return;
-		const program = await createProgram("Default-" + i);
-		//Default exercise names
-		let exercises = [];
-		if (i == 1) exercises = [];
-		else if (i == 2) exercises = [];
-		else if (i == 3) exercises = [];
-		//Add exercises to program
-		exercises.forEach((exercise) => {
-			addExerciseToProgram("Default-" + i, getExerciseByName(exercise));
-		});
-	}
-}
-
 async function streakCalculation(email) {
 	let user = await getUserByEmail(email);
 	if (!user) {
@@ -322,6 +312,8 @@ async function gotStreakThisWeek(email) {
 	let user = await getUserByEmail(email);
 	let prevMonday = new Date();
 	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
+
+	if (user.programList.length == 0) return false;
 
 	if (user.programList[0].weekStreaks.length > 0) {
 		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) {
@@ -474,6 +466,7 @@ asd();
 let updateExercises = false;
 async function refreshExerciseList() {
 	if (!updateExercises) return;
+	//Add new ones
 	console.log("Fetching exercises from API");
 	for (let i = 0; i < 30; i++) {
 		fetch("https://api.api-ninjas.com/v1/exercises?offset=" + i * 10, {
@@ -486,9 +479,7 @@ async function refreshExerciseList() {
 			.then((response) => response.json())
 			.then((data) => {
 				data.forEach(async (exercise) => {
-					const exists = await getExerciseByName(exercise.name);
-					if (exists) return;
-					exercise.defaultSets = 3;
+					exercise.defaultSets = Math.floor(Math.random() * 10) + 4;
 					exercise.weighted = false;
 					if (exercise.type == "strength" || exercise.type == "powerlifting" || exercise.type == "olympic_weightlifting") {
 						exercise.weighted = true;
@@ -497,7 +488,64 @@ async function refreshExerciseList() {
 				});
 			})
 			.catch((error) => {
-				console.error("Error:", error);
+				console.error(error);
 			});
+	}
+}
+
+async function createExerciseList() {
+	let exerciseList = await Exercise.find({});
+	let exerciseListNames = [];
+	exerciseList.forEach((exercise) => {
+		exerciseListNames.push(exercise.name);
+	});
+
+	fs.writeFileSync("exerciseList.json", JSON.stringify(exerciseListNames));
+}
+
+//Add default programs
+async function addDefaultPrograms() {
+	for (let i = 1; i <= 2; i++) {
+		const exists = await getProgramByName("Default-" + i, "global");
+		if (exists) continue;
+
+		const program = await createProgram("Default-" + i, "global");
+
+		//Default exercise names
+		let exercises = [];
+		if (i == 1)
+			exercises = [
+				["Decline barbell bench press", "Barbell Bench Press - Medium Grip", "Dumbbell Bench Press", "Seated triceps press", "Kneeling cable crunch"],
+				["Barbell Deadlift", "One-Arm Dumbbell Row", "Close-Grip Front Lat Pulldown", "Barbell Curl", "Calf Press On The Leg Press Machine"],
+				["Barbell back squat to box", "Leg Press", "Lying Leg Curls", "Seated Calf Raise"]
+			];
+		else if (i == 2)
+			exercises = [
+				["Barbell Bench Press - Medium Grip", "Dumbbell Bench Press", "Kneeling cable crunch"],
+				["Barbell Deadlift", "One-Arm Dumbbell Row", "Close-Grip Front Lat Pulldown", "Calf Press On The Leg Press Machine"],
+				["Close-grip bench press", "Side Lateral Raise", "Dumbbell front raise to lateral raise", "Hanging leg raise"],
+				["Barbell back squat to box", "Leg Press", "Lying Leg Curls", "Seated Calf Raise"]
+			];
+		//Add exercises to program
+		let days = ["Monday", "Wednesday", "Friday", "Thursday"];
+		for (let j = 0; j < exercises.length; j++) {
+			let scheduleData = {
+				day: days[j],
+				exercises: []
+			};
+
+			for (let h = 0; h < exercises[j].length; h++) {
+				const exercise = await getExerciseByName(exercises[j][h]);
+				if (exercise) {
+					await addExerciseToProgram(program.programName, exercise);
+					scheduleData.exercises.push({
+						name: exercise.name,
+						sets: exercise.defaultSets
+					});
+				}
+			}
+
+			await addScheduleToProgram(program.programName, scheduleData);
+		}
 	}
 }

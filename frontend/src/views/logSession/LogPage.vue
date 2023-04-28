@@ -1,6 +1,6 @@
 <template>
 	<div v-if="program != null && program != {}">
-		<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises, name: program.programName}" :log="true" :user="userEmail"></Schedule>
+		<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises, name: program.programName}" :log="true"></Schedule>
 	</div>
 </template>
 
@@ -10,16 +10,19 @@
 	export default {
 		mounted() {
 			fetch("/trainingProgram/import/")
-				.then((response) => response.json())
+				.then(async (response) => {
+					if (response.status == 400)
+						await response.text().then((t) => {
+							throw new Error(t);
+						});
+					else return response.json();
+				})
 				.then((data) => {
-					if (data.status == "error") throw new Error(data.message);
-					else {
-						console.log("Success:", data);
-						this.program = data;
-					}
+					console.log("Success:", data);
+					this.program = data;
 				})
 				.catch((error) => {
-					console.error("Error:", error);
+					console.error(error);
 				});
 		},
 		data() {

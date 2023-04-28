@@ -46,7 +46,7 @@
 			<input type="submit" class="button" value="Get suggestions" />
 		</form>
 	</div>
-	<div class="suggestions" v-if="type == 0 || type == 1">
+	<div class="suggestions" v-if="type == 0 || type == 1" @load="getRecommendations()">
 		<h3>Program suggestions</h3>
 		<div v-for="program in suggestions">
 			<button class="button" @click="selectProgram(program)" v-if="program != null">Use this suggestion</button>
@@ -94,10 +94,11 @@
 		components: {Schedule},
 		mounted() {
 			console.log("Settings mounted");
-			if (this.edit) this.type = 2;
-			console.log("Program", this.program);
-			console.log("Type", this.type);
+			if (this.type == 0) {
+				this.getRecommendations();
+			}
 		},
+
 		methods: {
 			selectProgram: function (program) {
 				//Tell backend to save program
@@ -109,30 +110,38 @@
 					},
 					body: JSON.stringify(program)
 				})
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							window.location.reload(true);
-						}
+						console.log("Success:", data);
+						window.location.reload(true);
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			getRecommendations: function () {
+				console.log("Getting recommendations");
+				if (this.type != 0) return;
 				fetch("/trainingProgram/recommend")
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.suggestions = data;
-						}
+						console.log("Success:", data);
+						this.suggestions = data;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			getSuggestions: function (e) {
@@ -155,16 +164,19 @@
 					},
 					body: JSON.stringify(settings)
 				})
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.suggestions = data;
-						}
+						console.log("Success:", data);
+						this.suggestions = data;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			createProgram: function (e) {
@@ -178,21 +190,24 @@
 					},
 					body: JSON.stringify(this.custom)
 				})
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.custom = {
-								programName: "",
-								exercises: [],
-								schedule: []
-							};
-							window.location.reload(true);
-						}
+						console.log("Success:", data);
+						this.custom = {
+							programName: "",
+							exercises: [],
+							schedule: []
+						};
+						window.location.reload(true);
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			updateSchedule: function (schedule, exercises) {

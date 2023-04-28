@@ -5,9 +5,10 @@ const auth = require("./authenticate.js");
 
 //Program Recommendations
 app.get("/trainingProgram/recommend", async (req, res) => {
+	console.log("Getting recommendations");
 	let allPrograms = await getAllPrograms();
-	let programs = allPrograms.filter((program) => program.programName.includes("Default-") && program.owner == "Global");
-	//console.log(programs);
+	let programs = allPrograms.filter((program) => program.programName.includes("Default-") && program.owner == "global");
+	console.log(programs);
 	res.json(programs);
 });
 
@@ -114,6 +115,8 @@ app.get("/trainingProgram/import", auth, async (req, res) => {
 		console.log("No such user");
 		return res.status(400).send("No such user");
 	}
+	if (user.programList.length == 0) return res.status(400).send("User has no program");
+
 	let userProgram = user.programList[0].program;
 	userProgram = Object.create(userProgram);
 	// equipment: String,
@@ -139,7 +142,7 @@ app.get("/trainingProgram/import", auth, async (req, res) => {
 		}
 	} catch (error) {
 		console.log("no schedule: ", error);
-		return res.status(404).json(userProgram); //
+		return res.status(400).json(userProgram); //
 	}
 	//console.log("Schedule days: " + userProgram.schedule.days[0].exercises);
 	console.log("Success, sending user program");

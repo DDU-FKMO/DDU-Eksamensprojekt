@@ -58,32 +58,38 @@
 		},
 		mounted() {
 			fetch("/statistics/all")
-				.then((response) => response.json())
+				.then(async (response) => {
+					if (response.status == 400)
+						await response.text().then((t) => {
+							throw new Error(t);
+						});
+					else return response.json();
+				})
 				.then((data) => {
-					if (data.status == "error") throw new Error(data.message);
-					else {
-						console.log("Statistics:", data);
-						this.setsOverTime = data.setsOverTime;
-						this.repsOverTime = data.repsOverTime;
-						this.weightOverTime = data.weightOverTime;
-						this.average = data.average;
-						this.sessions = data.sessions;
-					}
+					console.log("Statistics:", data);
+					this.setsOverTime = data.setsOverTime;
+					this.repsOverTime = data.repsOverTime;
+					this.weightOverTime = data.weightOverTime;
+					this.average = data.average;
+					this.sessions = data.sessions;
 				})
 				.catch((error) => {
-					console.error("Error:", error);
+					console.error(error);
 				});
 			fetch("/statistics/average")
-				.then((response) => response.json())
+				.then(async (response) => {
+					if (response.status == 400)
+						await response.text().then((t) => {
+							throw new Error(t);
+						});
+					else return response.json();
+				})
 				.then((data) => {
-					if (data.status == "error") throw new Error(data.message);
-					else {
-						console.log("Combined average:", data);
-						this.combinedAverage = data;
-					}
+					console.log("Combined average:", data);
+					this.combinedAverage = data;
 				})
 				.catch((error) => {
-					console.error("Error:", error);
+					console.error(error);
 				});
 		},
 		watch: {
