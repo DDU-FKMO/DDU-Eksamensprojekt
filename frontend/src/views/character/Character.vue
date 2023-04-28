@@ -10,17 +10,22 @@
 				<feGaussianBlur in="displacement" stdDeviation="0.8" />
 			</filter>
 
-			<use style="fill: var(--color-black-1)" :href="'/skin_female_' + view + '.svg#silhouette'"></use>
-			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_female_' + view + '.svg#' + muscle"></use>
+			<use style="fill: var(--color-black-1)" :href="'/skin_' + gender + '_' + view + '.svg#silhouette'"></use>
+			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_' + gender + '_' + view + '.svg#' + muscle"></use>
 		</svg>
 	</div>
 
 	<div class="select">
 		<select v-model="view">
-			>
 			<option disabled value="">Please select view</option>
 			<option value="front">Front</option>
 			<option value="back">Back</option>
+		</select>
+
+		<select v-model="gender">
+			<option disabled value="">Please select gender</option>
+			<option value="male">Male</option>
+			<option value="female">Female</option>
 		</select>
 	</div>
 </template>
@@ -30,7 +35,8 @@
 		name: "Character",
 		data: () => ({
 			muscleGroups: {},
-			view: "front"
+			view: "front",
+			gender: "male"
 		}),
 		props: {
 			name: {

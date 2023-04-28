@@ -55,7 +55,7 @@
 	<header>
 		<div class="background"></div>
 		<div class="logo center" @click="logoClick">
-			<img src="/logo.png" alt="logo" />
+			<img src="/logo_1.png" alt="logo" />
 		</div>
 		<nav class="nav center" :key="loggedIn">
 			<RouterLink v-for="route in routes" :to="route.path" class="navlink center" :class="route.path == $router.currentRoute.value.path ? 'selected' : ''">
