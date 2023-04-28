@@ -313,6 +313,8 @@ async function gotStreakThisWeek(email) {
 	let prevMonday = new Date();
 	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
 
+	if (user.programList.length == 0) return false;
+
 	if (user.programList[0].weekStreaks.length > 0) {
 		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) {
 			console.log("User has already fulfilled their streak this week.");
@@ -486,7 +488,7 @@ async function refreshExerciseList() {
 				});
 			})
 			.catch((error) => {
-				console.error("Error:", error);
+				console.error(error);
 			});
 	}
 }

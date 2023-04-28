@@ -110,32 +110,38 @@
 					},
 					body: JSON.stringify(program)
 				})
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							window.location.reload(true);
-						}
+						console.log("Success:", data);
+						window.location.reload(true);
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			getRecommendations: function () {
 				console.log("Getting recommendations");
 				if (this.type != 0) return;
 				fetch("/trainingProgram/recommend")
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.suggestions = data;
-						}
+						console.log("Success:", data);
+						this.suggestions = data;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			getSuggestions: function (e) {
@@ -158,16 +164,19 @@
 					},
 					body: JSON.stringify(settings)
 				})
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.suggestions = data;
-						}
+						console.log("Success:", data);
+						this.suggestions = data;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			createProgram: function (e) {
@@ -181,21 +190,24 @@
 					},
 					body: JSON.stringify(this.custom)
 				})
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.custom = {
-								programName: "",
-								exercises: [],
-								schedule: []
-							};
-							window.location.reload(true);
-						}
+						console.log("Success:", data);
+						this.custom = {
+							programName: "",
+							exercises: [],
+							schedule: []
+						};
+						window.location.reload(true);
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			updateSchedule: function (schedule, exercises) {

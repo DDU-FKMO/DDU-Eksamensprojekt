@@ -5,7 +5,7 @@
 			<div class="name">
 				<h2>{{ username }}</h2>
 			</div>
-			<Character />
+			<Character :name="username" />
 			<div class="level">
 				<p>Level {{ level }}</p>
 			</div>
@@ -30,10 +30,10 @@
 	export default {
 		name: "CharacterPage",
 		data: () => ({
-			level: null,
+			level: 0,
 			streak: 0,
 			gotStreakThisWeek: false,
-			username: "Filip"
+			username: ""
 		}),
 		components: {
 			Character,
@@ -42,38 +42,55 @@
 		methods: {
 			getLevel: function () {
 				fetch("/character/level")
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Level success:", data);
-							this.level = data;
-						}
+						console.log("Level success:", data);
+						this.level = data;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			},
 			getStreak: function () {
 				fetch("/character/get-streak")
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.message == "error") {
-							throw new Error(data.message);
-						} else {
-							console.log("streak : " + data);
-							this.streak = data.streak;
-							this.gotStreakThisWeek = data.hasTrained;
-						}
+						console.log("streak : " + data);
+						this.streak = data.streak;
+						this.gotStreakThisWeek = data.hasTrained;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			}
 		},
 		mounted() {
 			this.getLevel();
 			this.getStreak();
+			fetch("/character/name")
+				.then(async (response) => {
+					if (response.status == 400)
+						await response.text().then((t) => {
+							throw new Error(t);
+						});
+					else return response.json();
+				})
+				.then((data) => {
+					console.log("Name:", data);
+					this.username = data.name;
+				});
 		}
 	};
 </script>

@@ -58,15 +58,18 @@
 		mounted() {
 			console.log("Name:", this.name);
 			fetch("/exercise/video/" + this.name)
-				.then((response) => response.text())
+				.then(async (response) => {
+					if (response.status == 400)
+						await response.text().then((t) => {
+							throw new Error(t);
+						});
+					else return response.text();
+				})
 				.then((data) => {
-					if (data.status == "error") throw new Error(data.message);
-					else {
-						this.video = data;
-					}
+					this.video = data;
 				})
 				.catch((error) => {
-					console.error("Error:", error);
+					console.error(error);
 				});
 		},
 		methods: {

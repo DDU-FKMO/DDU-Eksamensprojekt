@@ -11,16 +11,17 @@
 			</filter>
 
 			<use style="fill: var(--color-black-1)" :href="'/skin_female_' + view + '.svg#silhouette'"></use>
-			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_female_' + view +'.svg#' + muscle"></use>
+			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_female_' + view + '.svg#' + muscle"></use>
 		</svg>
 	</div>
 
 	<div class="select">
-			<select v-model="view">>
-				<option disabled value="">Please select view</option>
-				<option value="front">Front</option>
-				<option value="back">Back</option>
-			</select>
+		<select v-model="view">
+			>
+			<option disabled value="">Please select view</option>
+			<option value="front">Front</option>
+			<option value="back">Back</option>
+		</select>
 	</div>
 </template>
 
@@ -28,30 +29,35 @@
 	export default {
 		name: "Character",
 		data: () => ({
-			name: "Filip",
 			muscleGroups: {},
 			view: "front"
 		}),
+		props: {
+			name: {
+				type: String,
+				default: "",
+				required: true
+			}
+		},
 		mounted() {
 			this.getMuscleGroups();
 		},
 		methods: {
-			test: function () {
-				console.log("test");
-				this.name = "Filip 2";
-			},
 			getMuscleGroups() {
 				fetch("/character/muscleGroups")
-					.then((response) => response.json())
+					.then(async (response) => {
+						if (response.status == 400) {
+							await response.text().then((t) => {
+								throw new Error(t);
+							});
+						} else return response.json();
+					})
 					.then((data) => {
-						if (data.status == "error") throw new Error(data.message);
-						else {
-							console.log("Success:", data);
-							this.muscleGroups = data;
-						}
+						console.log("Musclegroups:", data);
+						this.muscleGroups = data;
 					})
 					.catch((error) => {
-						console.error("Error:", error);
+						console.error(error);
 					});
 			}
 		}
