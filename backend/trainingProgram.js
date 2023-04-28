@@ -174,10 +174,16 @@ app.post("/trainingProgram/exercises", async (req, res) => {
 
 //Log Session
 app.post("/trainingProgram/log", auth, async (req, res) => {
-	const email = req.body.user.email;
 	let data = req.body;
-	//console.log(data);
+	const email = req.body.user.email;
 
-	addSessionToUser(email, data.programName, data.info);
+	let user = await getUserByEmail(email);
+	if (!user) {
+		console.log("No such user");
+		return res.status(400).send("No such user");
+	}
+	if (user.programList.length == 0) return res.status(400).send("User has no program");
+
+	addSessionToUser(email, data.info);
 	return res.status(200);
 });

@@ -15,7 +15,7 @@
 			<div class="program" v-if="program != null && program != {}">
 				<h3>Current Training Program</h3>
 				<button class="button" @click="editProgram">Edit</button>
-				<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises, name: program.programName}" :edit="false"></Schedule>
+				<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises}" :edit="false"></Schedule>
 			</div>
 			<h3 v-else>No program selected</h3>
 		</div>

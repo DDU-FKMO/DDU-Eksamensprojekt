@@ -6,8 +6,8 @@
 				<p class="popuptitle">{{ day }}</p>
 				<button @click="() => (popupOpen = false)" class="basebutton popupbutton">x</button>
 			</div>
-			<div class="previous">
-				<p v-if="stats[i - 1]">Previous session:</p>
+			<div v-if="stats[i - 1]" class="previous">
+				<p>Previous session:</p>
 				<p>{{ stats[i - 1].sets }} sets of {{ stats[i - 1].reps }} reps with a weight of {{ stats[i - 1].weight }}</p>
 			</div>
 			<div v-for="i in exercises.length">
@@ -53,10 +53,6 @@
 			day: {
 				type: String,
 				required: true
-			},
-			programName: {
-				type: String,
-				required: true
 			}
 		},
 		methods: {
@@ -76,7 +72,6 @@
 			SaveSession() {
 				let data = {};
 				data.info = this.info;
-				data.programName = this.programName;
 				fetch("trainingProgram/log", {
 					method: "POST",
 					headers: {
