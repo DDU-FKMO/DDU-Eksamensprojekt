@@ -80,6 +80,7 @@
 					},
 					body: JSON.stringify(data)
 				});
+                this.popupOpen = false;
 			},
 			async GetPreviousInfo() {
 				for (let exercise in this.exercises) {
