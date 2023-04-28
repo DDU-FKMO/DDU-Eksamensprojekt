@@ -4,7 +4,7 @@ const auth = require("./authenticate.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("./models/model_user.js");
-const {getUserByEmail} = require("./database.js");
+const {getUserByEmail, addUnlockToUser} = require("./database.js");
 
 app.get("/node/auth", auth, async (req, res) => {
 	console.log("auth ok by user: " + req.body.user.email);
@@ -43,7 +43,11 @@ app.post("/node/register", async (req, res) => {
 
 		user.token = token;
 		console.log("Succesfully registered user: " + user.username);
-		await addUnlockToUser(email, "red background");
+		let defaultUnlocks = ["red", "blue", "green", "purple"];
+		for (let i = 0; i < defaultUnlocks.length; i++) {
+			console.log("adding unlock: " + defaultUnlocks[i]);
+			await addUnlockToUser(user.email, defaultUnlocks[i]);
+		}
 		return res.status(201).json(user);
 	} catch (err) {
 		console.log(err);
