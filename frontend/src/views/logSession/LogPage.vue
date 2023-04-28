@@ -1,6 +1,6 @@
 <template>
 	<div v-if="program != null && program != {}">
-		<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises, name: program.programName}" :log="true" :user="userEmail"></Schedule>
+		<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises, name: program.programName}" :log="true"></Schedule>
 	</div>
 </template>
 

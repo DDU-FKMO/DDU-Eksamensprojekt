@@ -54,10 +54,6 @@
 				type: String,
 				required: true
 			},
-			user: {
-				type: String,
-				required: true
-			},
 			programName: {
 				type: String,
 				required: true
@@ -80,7 +76,6 @@
 			SaveSession() {
 				let data = {};
 				data.info = this.info;
-				data.email = this.user;
 				data.programName = this.programName;
 				fetch("trainingProgram/log", {
 					method: "POST",
@@ -108,7 +103,7 @@
 		z-index: 3;
 		width: 50%;
 		left: 25%;
-		top: 25%;
+		top: 10%;
 	}
 	.popupheader {
 		display: flex;

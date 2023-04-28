@@ -8,12 +8,11 @@
 				<div v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.find((a) => a.day == day).exercises">
 					<ExerciseInfo @remove="removeExercise(exercise, day)" :edit="edit" :name="exercise.name" :sets="exercise.sets" :equipment="exercises.find((a) => a.name == exercise.name).equipment" :instructions="exercises.find((a) => a.name == exercise.name).instructions" />
 				</div>
-				<div v-else class="fill">No exercises</div>
+				<div v-else style="height: 100%;">No exercises</div>
 				<button class="button" @click="startCreateExercise(day)" v-if="!createExercise && (edit || newProgram)">Add exercise</button>
-				<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises" :user="user" :program-name="program.name"></Logpopup>
+				<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises" :program-name="program.name"></Logpopup>
 			</div>
 			<button @click="startCreateExercise(day)" v-if="!createExercise && edit" class="schedulebutton">Add exercise</button>
-			<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises" :user="user" :program-name="program.name"></Logpopup>
 		</div>
 		<div class="createExercise" v-if="createExercise && (edit || newProgram)">
 			<h2>Select exercise</h2>
@@ -53,10 +52,6 @@
 			},
 			log: {
 				type: Boolean,
-				required: false
-			},
-			user: {
-				type: String,
 				required: false
 			}
 		},
@@ -152,10 +147,6 @@
 	.schedulebutton {
 		margin-left: 0.5em;
 		margin-bottom: 0.5em;
-	}
-	.fill {
-		width: 269.325px;
-		height: 100%;
 	}
 	.createExercise {
 		display: flex;
