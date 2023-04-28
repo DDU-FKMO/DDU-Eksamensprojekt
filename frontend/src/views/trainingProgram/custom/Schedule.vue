@@ -10,7 +10,7 @@
 				</div>
 				<div v-else style="height: 100%;">No exercises</div>
 				<button class="button" @click="startCreateExercise(day)" v-if="!createExercise && (edit || newProgram)">Add exercise</button>
-				<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises" :program-name="program.name"></Logpopup>
+				<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises"></Logpopup>
 			</div>
 			<button @click="startCreateExercise(day)" v-if="!createExercise && edit" class="schedulebutton">Add exercise</button>
 		</div>

@@ -50,7 +50,7 @@
 		<h3>Program suggestions</h3>
 		<div v-for="program in suggestions">
 			<button class="button" @click="selectProgram(program)" v-if="program != null">Use this suggestion</button>
-			<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises, name: program.programName}" :edit="false" :log="false" :user="userEmail" v-if="program != null"></Schedule>
+			<Schedule :program="{schedule: {days: program.schedule.days}, exercises: program.exercises}" :edit="false" :log="false" v-if="program != null"></Schedule>
 		</div>
 	</div>
 	<div class="create" v-if="type == 2">
