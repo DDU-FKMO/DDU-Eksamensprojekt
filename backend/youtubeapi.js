@@ -5,12 +5,6 @@ const {getExerciseByName} = require("./database.js");
 //Youtube api
 const youtubesearchapi = require("youtube-search-api");
 
-//CSP
-app.use(function (req, res, next) {
-	res.setHeader("Content-Security-Policy", "default-src 'self'; frame-src *");
-	next();
-});
-
 //Get video for exercise
 app.get("/exercise/video/:name", async (req, res) => {
 	let exercise = await getExerciseByName(req.params.name);

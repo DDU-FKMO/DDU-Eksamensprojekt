@@ -97,7 +97,7 @@ app.post("/trainingProgram/select", auth, async (req, res) => {
 		console.log("Adding exercise: " + exercise.name);
 		await addExerciseToProgram(program.programName, exercise);
 	}
-	for (let day of program.schedule.days) {
+	for (let day of program.schedule) {
 		console.log("Adding schedule day", day);
 		await addScheduleToProgram(program.programName, day);
 	}
