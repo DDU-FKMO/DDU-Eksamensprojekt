@@ -29,6 +29,7 @@
 
 	export default defineComponent({
 		name: "Schedule",
+		inject: ["$toast"],
 		data: () => ({
 			days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 			currentDay: null,
@@ -70,6 +71,7 @@
 			startCreateExercise: function (day) {
 				this.createExercise = true;
 				this.currentDay = day;
+				this.$toast.default("Add an exercise to " + day);
 			},
 			addExercise: function (exercise, sets, day) {
 				this.createExercise = false;

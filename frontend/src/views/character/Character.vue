@@ -33,6 +33,7 @@
 <script>
 	export default {
 		name: "Character",
+		inject: ["$toast"],
 		data: () => ({
 			muscleGroups: {},
 			view: "front",
@@ -64,6 +65,7 @@
 					})
 					.catch((error) => {
 						console.error(error);
+						this.$toast.error(error);
 					});
 			}
 		}

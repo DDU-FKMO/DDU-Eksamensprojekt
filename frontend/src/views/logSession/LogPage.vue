@@ -9,6 +9,7 @@
 	import Schedule from "../trainingProgram/custom/Schedule.vue";
 
 	export default {
+		inject: ["$toast"],
 		mounted() {
 			fetch("/trainingProgram/import/")
 				.then(async (response) => {
@@ -24,6 +25,7 @@
 				})
 				.catch((error) => {
 					console.error(error);
+					this.$toast.error(error);
 				});
 		},
 		data() {

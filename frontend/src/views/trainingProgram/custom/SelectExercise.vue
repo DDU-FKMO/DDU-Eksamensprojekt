@@ -68,6 +68,7 @@
 
 	export default defineComponent({
 		name: "SelectExercise",
+		inject: ["$toast"],
 		data: () => ({
 			availableExercises: [],
 			selectedExercise: null,
@@ -127,10 +128,12 @@
 					})
 					.then((data) => {
 						console.log("Success:", data);
+						this.$toast.success("Successfully retrieved available exercises");
 						this.availableExercises = data;
 					})
 					.catch((error) => {
 						console.error(error);
+						this.$toast.error(error);
 					});
 			},
 			addExercise() {
