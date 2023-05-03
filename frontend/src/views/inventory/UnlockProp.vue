@@ -46,7 +46,7 @@
 		aspect-ratio: 1 / 1;
 		/* background-size: auto; */
 		background-size: contain !important;
-		background-repeat: no-repeat;
+		background-repeat: no-repeat !important;
 	}
 	.imgUnlock {
 	}

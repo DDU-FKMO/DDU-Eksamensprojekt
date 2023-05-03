@@ -6,7 +6,7 @@
 		</p>
 		<div class="item">
 			<!-- <img class="imgUnlock" :src="content" v-if="unlockType == 'skin'" /> -->
-			<div class="imgUnlock" :style="'background: url(/achievements/' + '1' + '.png);'"></div>
+			<div class="imgUnlock" :style="'background: url(/achievements/' + (id+1) + '.png);'"></div>
 		</div>
 		<p>Item unlocked: {{ unlockName }}</p>
         <p>Description: Unlocked by reaching level {{ (id+1) }}</p>
@@ -45,7 +45,7 @@
 		aspect-ratio: 1 / 1;
 		/* background-size: auto; */
 		background-size: contain !important;
-        background-repeat: no-repeat;
+        background-repeat: no-repeat !important;
 	}
 	.imgUnlock {
 	}
