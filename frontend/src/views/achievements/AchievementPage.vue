@@ -4,8 +4,8 @@
 	<h3>Streak to next level: {{ data.streak % 7 }} / 7</h3>
 	<div class="unlocks">
 		<div v-for="name in data.unlockNames">
-			<Achievement :AcName="AcNames" :unlockName="name" :id="data.unlockNames.indexOf(name)" :unlocked="data.unlockNames.indexOf(name) < data.level"></Achievement>
-			<!-- 
+			<Achievement :AcName="AcNames[data.unlockNames.indexOf(name)]" :unlockName="name" :id="data.unlockNames.indexOf(name)" :unlocked="data.unlockNames.indexOf(name) < data.level"></Achievement>
+            <!-- 
             AcName: String,
 			unlockName: String,
 			id: String,
@@ -38,7 +38,7 @@
 		data() {
 			return {
 				data: {},
-				AcNames: "Achievement Name"
+                AcNames: ["Getting Started", "Hanging in there", "Feeling Changes", "Looking Good", "Getting Fit", "Shirts are Getting Tight", "Dwayne Johnson", "Build like a Beast"]
 			};
 		},
 		mounted() {
