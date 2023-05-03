@@ -55,8 +55,8 @@
 	</div>
 	<div class="create" v-if="type == 2">
 		<h3>Create your own training program</h3>
-		<h4>Program name:</h4>
-		<input type="text" name="programName" id="programName" v-model="custom.programName" />
+		<h4 v-if="edit != true">Program name:</h4>
+		<input v-if="edit != true" type="text" name="programName" id="programName" v-model="custom.programName" />
 		<h4>Schedule:</h4>
 		<Schedule @update="updateSchedule" :program="edit ? program : null" :edit="edit" :new-program="!edit" />
 		<button class="button" @click="createProgram">Create program</button>
@@ -74,7 +74,9 @@
 			custom: {
 				programName: "",
 				exercises: [],
-				schedule: []
+				schedule: {
+					days: []
+				}
 			}
 		}),
 		props: {
@@ -202,7 +204,9 @@
 						this.custom = {
 							programName: "",
 							exercises: [],
-							schedule: []
+							schedule: {
+								days: []
+							}
 						};
 						window.location.reload(true);
 					})

@@ -19,5 +19,5 @@ app.get("/exercise/video/:name", async (req, res) => {
 	});
 	///console.log(exercise.name + ": " + "https://www.youtube.com/watch?v=" + data.items[0].id);
 	//Send video back to client
-	res.send("https://www.youtube.com/embed/" + data.items[0].id);
+	res.send(data.items[0].id);
 });

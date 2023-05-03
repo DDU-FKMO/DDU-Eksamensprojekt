@@ -142,11 +142,11 @@ app.get("/trainingProgram/import", auth, async (req, res) => {
 		}
 	} catch (error) {
 		console.log("no schedule: ", error);
-		return res.status(400).json(userProgram); //
+		return res.status(400).send("No schedule in user program"); //
 	}
 	//console.log("Schedule days: " + userProgram.schedule.days[0].exercises);
 	console.log("Success, sending user program");
-	return res.status(200).json(userProgram); //userProgram);
+	return res.json(userProgram); //userProgram);
 });
 
 //Available Exercises

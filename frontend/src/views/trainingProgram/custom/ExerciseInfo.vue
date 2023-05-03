@@ -11,7 +11,7 @@
 		<div class="popupcontent">
 			<p class="contentheader">Equipment: {{ equipment }}</p>
 			<p>{{ instructions }}</p>
-			<iframe class="video" v-if="video" title="Instruction video" width="420" height="315" :src="video + '?origin=localhost'" crossorigin> </iframe>
+			<iframe v-if="video" width="560" height="315" :src="'https://www.youtube.com/embed/' + video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen> </iframe>
 			<button v-if="edit" class="button" @click="remove">Remove</button>
 		</div>
 	</div>
@@ -96,11 +96,14 @@
 		width: 50%;
 		left: 25%;
 		top: 10%;
+		height: 80%;
+		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 	.chevrons {
 		display: flex;
 		justify-content: baseline;
-		margin: 0.5em;
+		margin: 0.5rem;
 		height: 100%;
 	}
 	.basebutton {
@@ -117,15 +120,15 @@
 	}
 	.setsbutton {
 		clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-		width: 4em;
-		height: 3em;
+		width: 4rem;
+		height: 3rem;
 		text-align: left;
-		margin-right: -0.75em;
+		margin-right: -0.75rem;
 	}
 	.namebutton {
 		clip-path: polygon(92% 0, 100% 50%, 92% 100%, 0% 100%, 8% 50%, 0% 0%);
-		width: 13em;
-		height: 3em;
+		width: 13rem;
+		height: 3rem;
 		text-align: center;
 	}
 	.popupheader {
@@ -154,6 +157,10 @@
 	}
 	.popupcontent {
 		margin: 5px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
 	}
 	.popupcontent .video {
 		display: block;
@@ -173,5 +180,28 @@
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.6);
 		z-index: 2;
+	}
+
+	@media (max-aspect-ratio: 0.84) {
+		@media (max-width: 1000px) {
+			.popupform {
+				width: 90%;
+				left: 5%;
+				top: 15%;
+				height: 80%;
+			}
+			.popupheader {
+				flex-direction: column;
+			}
+			.popupbutton {
+				margin: 0.5rem;
+			}
+			.popupcontent {
+				margin: 0.5rem;
+			}
+			.popupcontent .video {
+				height: 50%;
+			}
+		}
 	}
 </style>
