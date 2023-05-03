@@ -96,11 +96,13 @@
 		width: 50%;
 		left: 25%;
 		top: 10%;
+		height: 80%;
+		overflow-y: scroll;
 	}
 	.chevrons {
 		display: flex;
 		justify-content: baseline;
-		margin: 0.5em;
+		margin: 0.5rem;
 		height: 100%;
 	}
 	.basebutton {
@@ -117,15 +119,15 @@
 	}
 	.setsbutton {
 		clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-		width: 4em;
-		height: 3em;
+		width: 4rem;
+		height: 3rem;
 		text-align: left;
-		margin-right: -0.75em;
+		margin-right: -0.75rem;
 	}
 	.namebutton {
 		clip-path: polygon(92% 0, 100% 50%, 92% 100%, 0% 100%, 8% 50%, 0% 0%);
-		width: 13em;
-		height: 3em;
+		width: 13rem;
+		height: 3rem;
 		text-align: center;
 	}
 	.popupheader {
