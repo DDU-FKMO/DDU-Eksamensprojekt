@@ -98,6 +98,7 @@
 		top: 10%;
 		height: 80%;
 		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 	.chevrons {
 		display: flex;
@@ -179,5 +180,28 @@
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.6);
 		z-index: 2;
+	}
+
+	@media (max-aspect-ratio: 0.84) {
+		@media (max-width: 1000px) {
+			.popupform {
+				width: 90%;
+				left: 5%;
+				top: 15%;
+				height: 80%;
+			}
+			.popupheader {
+				flex-direction: column;
+			}
+			.popupbutton {
+				margin: 0.5rem;
+			}
+			.popupcontent {
+				margin: 0.5rem;
+			}
+			.popupcontent .video {
+				height: 50%;
+			}
+		}
 	}
 </style>

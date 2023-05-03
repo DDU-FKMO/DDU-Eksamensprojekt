@@ -127,7 +127,7 @@
 		background-color: var(--color-black-3);
 		border: 0.2em solid var(--color-black-4);
 		padding: 0.5em;
-		min-width: 12.5em;
+		min-width: 17em;
 		width: 20%;
 		margin: 2.5%;
 		min-height: 15em;
