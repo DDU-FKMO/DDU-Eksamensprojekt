@@ -8,7 +8,7 @@
 				<div v-if="schedule.filter((a) => a.day == day).length > 0" v-for="exercise in schedule.find((a) => a.day == day).exercises">
 					<ExerciseInfo @remove="removeExercise(exercise, day)" :edit="edit" :name="exercise.name" :sets="exercise.sets" :equipment="exercises.find((a) => a.name == exercise.name).equipment" :instructions="exercises.find((a) => a.name == exercise.name).instructions" />
 				</div>
-				<div v-else style="height: 100%;">No exercises</div>
+				<div v-else style="height: 100%">No exercises</div>
 				<button class="button" @click="startCreateExercise(day)" v-if="!createExercise && (edit || newProgram)">Add exercise</button>
 				<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises"></Logpopup>
 			</div>

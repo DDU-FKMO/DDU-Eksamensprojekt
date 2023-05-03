@@ -68,10 +68,12 @@
 					this.info[count].reps = 0;
 					count++;
 				}
+				console.log(this.info);
 			},
 			SaveSession() {
 				let data = {};
 				data.info = this.info;
+				console.log(data.info);
 				fetch("trainingProgram/log", {
 					method: "POST",
 					headers: {
@@ -80,7 +82,7 @@
 					},
 					body: JSON.stringify(data)
 				});
-                this.popupOpen = false;
+				this.popupOpen = false;
 			},
 			async GetPreviousInfo() {
 				for (let exercise in this.exercises) {
@@ -91,7 +93,7 @@
 	});
 </script>
 
-<style>
+<style scoped>
 	.popupform {
 		position: fixed;
 		border: 3px solid rgba(0, 0, 0, 0.3);
@@ -100,6 +102,8 @@
 		width: 50%;
 		left: 25%;
 		top: 10%;
+		height: 80%;
+		overflow-y: scroll;
 	}
 	.popupheader {
 		display: flex;
@@ -117,7 +121,7 @@
 	}
 	.popupbutton {
 		color: white;
-		font-size: 2.5em;
+		font-size: 2.5rem;
 		margin: auto 0.5rem;
 		display: flex;
 	}
@@ -128,34 +132,34 @@
 		flex-wrap: wrap;
 	}
 	.popupsubtitle {
-		font-size: 1.5em;
+		font-size: 1.5rem;
 		color: rgba(0, 0, 0, 0.8);
-		margin-bottom: 0.5em;
-		margin-top: 1em;
+		margin-bottom: 0.5rem;
+		margin-top: 1rem;
 	}
 	.popuplabel {
-		margin: auto 0.5em;
+		margin: auto 0.5rem;
 	}
 	.popupfooter {
 		display: flex;
-		margin-top: 1em;
-		margin-bottom: 0.5em;
+		margin-top: 1rem;
+		margin-bottom: 0.5rem;
 	}
 	.schedulebutton {
-		margin-left: 0.5em;
-		margin-bottom: 0.5em;
-		padding-top: 0.4em;
-		padding-left: 0.4em;
-		padding-right: 0.4em;
-		padding-bottom: 0.2em;
+		margin-left: 0.5rem;
+		margin-bottom: 0.5rem;
+		padding-top: 0.4rem;
+		padding-left: 0.4rem;
+		padding-right: 0.4rem;
+		padding-bottom: 0.2rem;
 	}
 	.savebutton {
 		margin: auto;
-		font-size: 1.5em;
-		padding-top: 0.5em;
-		padding-left: 0.5em;
-		padding-right: 0.5em;
-		padding-bottom: 0.25em;
+		font-size: 1.5rem;
+		padding-top: 0.5rem;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+		padding-bottom: 0.25rem;
 	}
 	.basebutton {
 		color: white;
