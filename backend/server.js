@@ -23,12 +23,6 @@ app.use(cors());
 
 app.use(express.static("../frontend/dist"));
 
-//CSP
-app.use(function (req, res, next) {
-	res.setHeader("Content-Security-Policy", "default-src 'self'; frame-src *");
-	next();
-});
-
 //Index page
 app.get("/", (req, res) => {
 	res.sendFile("../frontend/dist/index.html");
