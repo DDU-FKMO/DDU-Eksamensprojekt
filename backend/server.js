@@ -75,6 +75,7 @@ require("./login.js");
 require("./unlocks.js");
 require("./statistics.js");
 require("./youtubeapi.js");
+require("./achievement.js");
 
 //Redirect everything else to index
 app.use("/*", express.static("../frontend/dist/index.html"));

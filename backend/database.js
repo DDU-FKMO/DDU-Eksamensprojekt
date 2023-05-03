@@ -43,7 +43,8 @@ module.exports = {
 	addUnlockToUser,
 	createUnlock,
 	getUnlockByName,
-	equipUnlock
+	equipUnlock,
+	getAllUnlocks
 };
 //Connect to database
 require("./database_connection.js").connection();
@@ -409,6 +410,11 @@ async function equipUnlock(email, unlockName) {
 	return status;
 }
 
+async function getAllUnlocks(){
+	let unlockList = await Unlock.find({});
+	return unlockList ?? false;
+}
+
 // TESTER STREAK FUNCTION; SKAL NOK BRUGE IGEN
 async function asd() {
 	//user = await getUserByEmail("Filipemails");
@@ -418,7 +424,7 @@ async function asd() {
 	//await streakCalculation("Filipemails");
 	//await Unlock.deleteMany({unlockType: "background"});
 	//await addProgramToUser("Custom program - User", "Filipemails");
-	//  let data = {};
+	// let data = {};
 	// data.content = "background-color: blue;";
 	// data.name = "blue background";
 	// data.unlockType = "background";
@@ -437,7 +443,7 @@ async function asd() {
 	// };
 	// let data = {};
 	//
-	// await addUnlockToUser("filip@emails.dk", "red background");
+	//await addUnlockToUser("reel@email.dk", "red");
 	// for (let theme of Object.keys(colors)){
 	// await addUnlockToUser("filip@emails.dk", theme);
 	// }

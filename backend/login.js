@@ -4,7 +4,7 @@ const auth = require("./authenticate.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("./models/model_user.js");
-const {getUserByEmail, addUnlockToUser} = require("./database.js");
+const {getUserByEmail, addUnlockToUser, equipUnlock} = require("./database.js");
 
 app.get("/node/auth", auth, async (req, res) => {
 	console.log("auth ok by user: " + req.body.user.email);
@@ -37,17 +37,18 @@ app.post("/node/register", async (req, res) => {
 			password: encPass
 		});
 
-		const token = jwt.sign({user_id: user._id, email, username}, process.env.JWT_TOKEN, {
+		const token = jwt.sign({user_id: user._id, email: user.email, username}, process.env.JWT_TOKEN, {
 			expiresIn: "72h"
 		});
 
 		user.token = token;
 		console.log("Succesfully registered user: " + user.username);
-		let defaultUnlocks = ["red", "blue", "green", "purple"];
+		let defaultUnlocks = ["red"];
 		for (let i = 0; i < defaultUnlocks.length; i++) {
 			console.log("adding unlock: " + defaultUnlocks[i]);
 			await addUnlockToUser(user.email, defaultUnlocks[i]);
 		}
+		equipUnlock(user.email, "red");
 		return res.status(201).json(user);
 	} catch (err) {
 		console.log(err);

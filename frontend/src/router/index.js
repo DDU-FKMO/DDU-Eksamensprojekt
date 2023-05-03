@@ -29,6 +29,12 @@ const router = createRouter({
 			meta: {auth: true}
 		},
 		{
+			path: "/achievements",
+			name: "Achievements",
+			component: () => import("../views/achievements/AchievementPage.vue"),
+			meta: {auth: true}
+		},
+		{
 			path: "/login",
 			name: "Login",
 			component: () => import("../views/userAuth/Login.vue"),
