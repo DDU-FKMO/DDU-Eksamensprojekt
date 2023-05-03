@@ -154,6 +154,10 @@
 	}
 	.popupcontent {
 		margin: 5px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
 	}
 	.popupcontent .video {
 		display: block;

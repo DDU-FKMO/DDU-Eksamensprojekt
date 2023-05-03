@@ -80,11 +80,21 @@
 					},
 					body: JSON.stringify(data)
 				});
-                this.popupOpen = false;
+				this.popupOpen = false;
 			},
 			async GetPreviousInfo() {
 				for (let exercise in this.exercises) {
-					this.stats[exercise] = await fetch("statistics/latest/" + this.exercises[exercise].name).then((response) => response.json());
+					this.stats[exercise] = await fetch("statistics/latest/" + this.exercises[exercise].name)
+						.then(async (response) => {
+							if (response.status == 400)
+								await response.text().then((t) => {
+									throw new Error(t);
+								});
+							else return response.json();
+						})
+						.catch((error) => {
+							console.error(error);
+						});
 				}
 			}
 		}

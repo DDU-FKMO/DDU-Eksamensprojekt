@@ -25,7 +25,7 @@
 	</div>
 </template>
 
-<style>
+<style scoped>
 	div.ctn {
 		width: 100%;
 		height: 70%;

@@ -97,7 +97,7 @@ app.post("/trainingProgram/select", auth, async (req, res) => {
 		console.log("Adding exercise: " + exercise.name);
 		await addExerciseToProgram(program.programName, exercise);
 	}
-	for (let day of program.schedule) {
+	for (let day of program.schedule.days) {
 		console.log("Adding schedule day", day);
 		await addScheduleToProgram(program.programName, day);
 	}
@@ -142,11 +142,11 @@ app.get("/trainingProgram/import", auth, async (req, res) => {
 		}
 	} catch (error) {
 		console.log("no schedule: ", error);
-		return res.status(400).json(userProgram); //
+		return res.status(400).send("No schedule in user program"); //
 	}
 	//console.log("Schedule days: " + userProgram.schedule.days[0].exercises);
 	console.log("Success, sending user program");
-	return res.status(200).json(userProgram); //userProgram);
+	return res.json(userProgram); //userProgram);
 });
 
 //Available Exercises
