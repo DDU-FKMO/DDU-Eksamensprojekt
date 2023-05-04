@@ -21,7 +21,7 @@ app.get("/node/achievements", auth, async (req, res) => {
         let lastUnlockName = user.unlocks[user.unlocks.length - 1].name;
         
         let idx = unlockList.indexOf(lastUnlockName);
-        let level = Math.floor(user.streak / 7);
+        let level = Math.floor(user.streak / 5);
         
         if (idx > -1){
             if (level > (idx + 1) && idx != (unlockList.length - 1)){
