@@ -97,6 +97,11 @@
 		},
 		methods: {
 			getAvailable: function (e, prevent = true) {
+				console.log("Scroll");
+				document.getElementById("newExercise").scrollIntoView({
+					behavior: "smooth",
+					block: "center"
+				});
 				console.log("Getting available exercises");
 				//Prevent default form action (reloading page)
 				if (prevent) e.preventDefault();
@@ -127,6 +132,7 @@
 						} else return response.json();
 					})
 					.then((data) => {
+						if (data.length == 0) throw new Error("No exercises found with current settings");
 						console.log("Success:", data);
 						this.$toast.success("Successfully retrieved available exercises");
 						this.availableExercises = data;
