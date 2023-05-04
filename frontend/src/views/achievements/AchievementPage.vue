@@ -5,7 +5,7 @@
 	<div class="unlocks">
 		<div v-for="name in data.unlockNames">
 			<Achievement :AcName="AcNames[data.unlockNames.indexOf(name)]" :unlockName="name" :id="data.unlockNames.indexOf(name)" :unlocked="data.unlockNames.indexOf(name) < data.level"></Achievement>
-            <!-- 
+			<!-- 
             AcName: String,
 			unlockName: String,
 			id: String,
@@ -38,7 +38,7 @@
 		data() {
 			return {
 				data: {},
-                AcNames: ["Getting Started", "Hanging in there", "Feeling Changes", "Looking Good", "Getting Fit", "Shirts are Getting Tight", "Dwayne Johnson", "Build like a Beast"]
+				AcNames: ["Getting Started", "Hanging in there", "Feeling Changes", "Looking Good", "Getting Fit", "Shirts are Getting Tight", "Dwayne Johnson", "Build like a Beast"]
 			};
 		},
 		mounted() {
