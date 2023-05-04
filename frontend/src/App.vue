@@ -19,6 +19,9 @@
 				console.log("logged in");
 			}
 			this.routes = this.$router.options.routes;
+			this.$router.afterEach((to, from) => {
+				this.color();
+			});
 			this.color();
 		},
 		methods: {

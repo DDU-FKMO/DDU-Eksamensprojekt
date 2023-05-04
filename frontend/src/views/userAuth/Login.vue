@@ -145,6 +145,7 @@
 					document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
 				});
 				this.$emit("login");
+				this.$router.push("/login");
 			}
 		},
 		methods: {
