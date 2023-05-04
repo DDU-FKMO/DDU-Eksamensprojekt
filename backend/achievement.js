@@ -3,14 +3,12 @@ const auth = require("./authenticate.js");
 //const {User} = require("./models/model_user.js");
 const {getUserByEmail, getAllUnlocks, addUnlockToUser} = require("./database.js");
 
-
-
 app.get("/node/achievements", auth, async (req, res) => {
 	const email = req.body.user.email;
 
 	let unlocks = await getAllUnlocks();
-    let user = await getUserByEmail(email);
-    console.log("Achievements for: " + user.email)
+	let user = await getUserByEmail(email);
+	console.log("Achievements for: " + user.email);
 	if (unlocks && user) {
         let unlockList = [];// = structuredClone(unlocks);
         unlocks.forEach(unlock => {
@@ -34,12 +32,17 @@ app.get("/node/achievements", auth, async (req, res) => {
 				console.log("Unlocked " + unlockList[idx + 1]);
 				await addUnlockToUser(email, unlockList[idx + 1]);
 			}
-        }
-        let data = {}
-        data.streak = user.streak;
-        data.level = level;
-        data.unlockNames = unlockList;
-        return res.status(200).json(data);
+		} else if (lastUnlockName == "red") {
+			if (level > 0) {
+				console.log("Unlocked " + unlockList[idx + 1]);
+				await addUnlockToUser(email, unlockList[idx + 1]);
+			}
+		}
+		let data = {};
+		data.streak = user.streak;
+		data.level = level;
+		data.unlockNames = unlockList;
+		return res.status(200).json(data);
 	}
 
 	return res.status(404).send("wrong!!!");

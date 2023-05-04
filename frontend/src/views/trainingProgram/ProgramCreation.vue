@@ -69,6 +69,7 @@
 
 	export default defineComponent({
 		name: "CreateProgram",
+		inject: ["$toast"],
 		data: () => ({
 			suggestions: [],
 			custom: {
@@ -103,6 +104,7 @@
 
 		methods: {
 			selectProgram: function (program) {
+				this.$toast.default("Selecting program...");
 				//Tell backend to save program
 				fetch("/trainingProgram/select", {
 					method: "POST",
@@ -121,14 +123,18 @@
 					})
 					.then((data) => {
 						console.log("Success:", data);
-						window.location.reload(true);
+						this.$toast.success("Program saved");
+						this.$emit("done");
+						///window.location.reload(true);
 					})
 					.catch((error) => {
 						console.error(error);
+						this.$toast.error(error);
 					});
 			},
 			getRecommendations: function () {
 				console.log("Getting recommendations");
+				this.$toast.default("Getting recommendations...");
 				if (this.type != 0) return;
 				fetch("/trainingProgram/recommend")
 					.then(async (response) => {
@@ -140,10 +146,12 @@
 					})
 					.then((data) => {
 						console.log("Success:", data);
+						this.$toast.success("Retrieved recommendations");
 						this.suggestions = data;
 					})
 					.catch((error) => {
 						console.error(error);
+						this.$toast.error(error);
 					});
 			},
 			getSuggestions: function (e) {
@@ -156,7 +164,7 @@
 					difficulty: data.get("difficulty"),
 					equipment: data.getAll("equipment")
 				};
-				console.log(settings);
+				this.$toast.default("Getting suggestions...");
 				//Generate suggestions based on settings
 				fetch("/trainingProgram/suggest", {
 					method: "POST",
@@ -175,14 +183,17 @@
 					})
 					.then((data) => {
 						console.log("Success:", data);
+						this.$toast.success("Retrieved suggestions");
 						this.suggestions = data;
 					})
 					.catch((error) => {
 						console.error(error);
+						this.$toast.error(error);
 					});
 			},
 			createProgram: function (e) {
 				console.log("Create program", this.custom);
+				this.$toast.default("Saving program...");
 				//Tell backend to save program
 				fetch("/trainingProgram/select", {
 					method: "POST",
@@ -201,6 +212,7 @@
 					})
 					.then((data) => {
 						console.log("Success:", data);
+						this.$toast.success("Program saved!");
 						this.custom = {
 							programName: "",
 							exercises: [],
@@ -208,16 +220,18 @@
 								days: []
 							}
 						};
-						window.location.reload(true);
+						this.$emit("done");
+						///window.location.reload(true);
 					})
 					.catch((error) => {
 						console.error(error);
+						this.$toast.error(error);
 					});
 			},
 			updateSchedule: function (schedule, exercises) {
 				console.log("Schedule updated", schedule);
 				console.log("Exercises updated", exercises);
-				this.custom.schedule = schedule;
+				this.custom.schedule.days = schedule;
 				this.custom.exercises = exercises;
 			}
 		}

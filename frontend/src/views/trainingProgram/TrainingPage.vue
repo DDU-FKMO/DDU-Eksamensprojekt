@@ -3,7 +3,7 @@
 		<div class="creation">
 			<div class="create" v-if="type != null">
 				<button class="button" @click="back">Back</button>
-				<ProgramCreation :edit="edit" :type="type" :program="program" />
+				<ProgramCreation :edit="edit" :type="type" :program="program" @done="back" />
 			</div>
 			<div class="buttons" v-else>
 				<button class="button" @click="changeType(0)">Recommended</button>
@@ -29,6 +29,7 @@
 
 	export default defineComponent({
 		name: "TrainingPage",
+		inject: ["$toast"],
 		components: {ProgramCreation, Schedule},
 		data() {
 			return {
@@ -67,6 +68,7 @@
 				})
 				.catch((error) => {
 					console.error(error);
+					this.$toast.error(error);
 				});
 		}
 	});

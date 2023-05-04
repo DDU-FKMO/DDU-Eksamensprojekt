@@ -29,6 +29,7 @@
 
 	export default {
 		name: "CharacterPage",
+		inject: ["$toast"],
 		data: () => ({
 			level: 0,
 			streak: 0,
@@ -55,6 +56,7 @@
 					})
 					.catch((error) => {
 						console.error(error);
+						this.$toast.error(error);
 					});
 			},
 			getStreak: function () {
@@ -73,6 +75,7 @@
 					})
 					.catch((error) => {
 						console.error(error);
+						this.$toast.error(error);
 					});
 			}
 		},

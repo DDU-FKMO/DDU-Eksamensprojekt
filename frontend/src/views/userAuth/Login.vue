@@ -1,7 +1,5 @@
 <template>
 	<div class="ctn center">
-		<h4 class="head" v-if="errorMsg != 'x'" style="color: red">{{ errorMsg }}</h4>
-
 		<form @submit.prevent="loginUser" method="post" v-if="!signUp">
 			<h2 class="head">Login</h2>
 			<label for="email"> E-mail: <input type="email" id="email" name="email" v-model="info.email" /></label>
@@ -128,6 +126,7 @@
 <script>
 	import axios from "axios";
 	export default {
+		inject: ["$toast"],
 		data() {
 			return {
 				signUp: false,
@@ -135,8 +134,7 @@
 					email: "",
 					username: "",
 					password: ""
-				},
-				errorMsg: "x"
+				}
 			};
 		},
 		mounted() {
@@ -147,6 +145,7 @@
 					document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
 				});
 				this.$emit("login");
+				this.$router.push("/login");
 			}
 		},
 		methods: {
@@ -160,17 +159,17 @@
 							//localStorage.setItem("user", token);
 							let c_time = 60 * 60 * 1000 * 24 * 3; // 3 dage
 							document.cookie = "user=" + token + "; expires=" + new Date(new Date().getTime() + c_time).toGMTString() + ";path=/";
-							console.log(document.cookie);
+							this.$toast.success("Logged in!");
 							this.$emit("login");
 							this.$router.push("/");
 						})
 						.catch((err) => {
-							this.errorMsg = err.response.data;
+							this.$toast.error("Failed to login! " + err.response.data);
 							console.log(err);
 						});
 				} catch (err) {
 					console.log(err);
-					this.errorMsg = "Something went wrong...";
+					this.$toast.error("Error occured while logging in!");
 				}
 			},
 			async registerAcc() {
@@ -183,15 +182,17 @@
 							//localStorage.setItem("user", token);
 							let c_time = 60 * 60 * 1000 * 24 * 3; // 3 dage
 							document.cookie = "user=" + token + "; expires=" + new Date(new Date().getTime() + c_time).toGMTString() + ";path=/";
+							this.$toast.success("Registered user and logged in!");
 							this.$emit("login");
 							this.$router.push("/");
 						})
 						.catch((err) => {
-							this.errorMsg = err.response.data;
+							this.$toast.error("Failed to register user! " + err.response.data);
 							console.log(err);
 						});
 				} catch (err) {
 					console.log(err);
+					this.$toast.error("Error occured while registering user!");
 				}
 			}
 		}

@@ -43,6 +43,7 @@
 	import {Chart} from "highcharts-vue";
 	export default {
 		name: "Statistics",
+		inject: ["$toast"],
 		data: () => ({
 			setsOverTime: {},
 			weightOverTime: {},
@@ -75,6 +76,7 @@
 				})
 				.catch((error) => {
 					console.error(error);
+					this.$toast.error(error);
 				});
 			fetch("/statistics/average")
 				.then(async (response) => {
@@ -90,6 +92,7 @@
 				})
 				.catch((error) => {
 					console.error(error);
+					this.$toast.error(error);
 				});
 		},
 		watch: {

@@ -154,13 +154,14 @@ async function addProgramToUser(programName, email) {
 		console.log("user does not exist");
 		return false; // eller noget
 	}
+	console.log(program);
 	if (userExists.programList[0] == null) {
 		userExists.programList[0] = {program: program, sessionList: [], weekStreaks: []};
 	} else {
 		userExists.programList[0].program = program;
 	}
 	await userExists.save();
-	console.log("added to user");
+	console.log("Added program to user");
 	return true;
 	//return User.updateOne({email: email}, {"$push":{"programList":data}});
 }
@@ -260,7 +261,8 @@ async function addScheduleToProgram(programName, scheduleData) {
 		return false; // eller noget
 	}
 	program.schedule.days.push(scheduleData);
-	program.save();
+	await program.save();
+	console.log("Added schedule to program");
 	return program;
 }
 
@@ -410,7 +412,7 @@ async function equipUnlock(email, unlockName) {
 	return status;
 }
 
-async function getAllUnlocks(){
+async function getAllUnlocks() {
 	let unlockList = await Unlock.find({});
 	return unlockList ?? false;
 }

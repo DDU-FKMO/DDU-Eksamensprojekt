@@ -28,6 +28,7 @@
 				video: null
 			};
 		},
+		inject: ["$toast"],
 		name: "ExerciseInfo",
 		props: {
 			name: {
@@ -70,6 +71,7 @@
 				})
 				.catch((error) => {
 					console.error(error);
+					this.$toast.error(error);
 				});
 		},
 		methods: {

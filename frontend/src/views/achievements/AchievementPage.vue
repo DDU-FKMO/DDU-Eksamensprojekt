@@ -5,7 +5,7 @@
 	<div class="unlocks">
 		<div v-for="name in data.unlockNames">
 			<Achievement :AcName="AcNames[data.unlockNames.indexOf(name)]" :unlockName="name" :id="data.unlockNames.indexOf(name)" :unlocked="data.unlockNames.indexOf(name) < data.level"></Achievement>
-            <!-- 
+			<!-- 
             AcName: String,
 			unlockName: String,
 			id: String,
@@ -13,7 +13,6 @@
             -->
 		</div>
 	</div>
-
 </template>
 
 <style scoped>
@@ -39,7 +38,7 @@
 		data() {
 			return {
 				data: {},
-                AcNames: ["Getting Started", "Hanging in there", "Feeling Changes", "Looking Good", "Getting Fit", "Shirts are Getting Tight", "Dwayne Johnson", "Build like a Beast"]
+				AcNames: ["Getting Started", "Hanging in there", "Feeling Changes", "Looking Good", "Getting Fit", "Shirts are Getting Tight", "Dwayne Johnson", "Build like a Beast"]
 			};
 		},
 		mounted() {
@@ -52,7 +51,7 @@
 						.get("/node/achievements")
 						.then((res) => {
 							this.data = res.data;
-                            console.log(data.unlockNames)
+							console.log(data.unlockNames);
 						})
 						.catch((err) => {
 							console.log("error: " + err);

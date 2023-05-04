@@ -13,7 +13,7 @@
 				<Logpopup v-if="log && schedule.filter((a) => a.day == day).length > 0" :day="day" :exercises="schedule.find((a) => a.day == day).exercises"></Logpopup>
 			</div>
 		</div>
-		<div class="createExercise" v-if="createExercise && (edit || newProgram)">
+		<div id="newExercise" class="createExercise" v-if="createExercise && (edit || newProgram)">
 			<h2>Select exercise</h2>
 			<button class="button" @click="() => (createExercise = false)">Cancel</button>
 			<Exercise :day="currentDay" @done="addExercise" />
@@ -29,6 +29,7 @@
 
 	export default defineComponent({
 		name: "Schedule",
+		inject: ["$toast"],
 		data: () => ({
 			days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 			currentDay: null,
@@ -70,6 +71,7 @@
 			startCreateExercise: function (day) {
 				this.createExercise = true;
 				this.currentDay = day;
+				this.$toast.default("Add an exercise to " + day);
 			},
 			addExercise: function (exercise, sets, day) {
 				this.createExercise = false;

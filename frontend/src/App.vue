@@ -4,7 +4,9 @@
 </script>
 <script>
 	import axios from "axios";
+
 	export default {
+		inject: ["$toast"],
 		data: () => ({
 			loggedIn: false,
 			routes: [],
@@ -17,13 +19,15 @@
 				console.log("logged in");
 			}
 			this.routes = this.$router.options.routes;
-
+			this.$router.afterEach((to, from) => {
+				this.color();
+			});
 			this.color();
 		},
 		methods: {
 			logoClick: function () {
 				let aspectRatio = window.innerWidth / window.innerHeight;
-				if (aspectRatio > 0.84) {
+				if (aspectRatio > 1.16) {
 					this.$router.push("/");
 				} else {
 					this.showSidebar = !this.showSidebar;
@@ -163,7 +167,7 @@
 	}
 
 	/* Mobile changes */
-	@media (max-aspect-ratio: 0.84) {
+	@media (max-aspect-ratio: 1.16) {
 		@media (max-width: 999px) {
 			.nav {
 				width: 50%;
