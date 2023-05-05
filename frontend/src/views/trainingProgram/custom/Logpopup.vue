@@ -73,7 +73,8 @@
 			SaveSession() {
 				let data = {};
 				data.info = this.info;
-				console.log(data.info);
+				data.info = data.info.filter((i) => i.reps != 0 && i.sets != 0);
+				console.log("Log:", data.info);
 				fetch("trainingProgram/log", {
 					method: "POST",
 					headers: {
@@ -104,6 +105,9 @@
 </script>
 
 <style scoped>
+	.logpopup {
+		width: 80%;
+	}
 	.popupform {
 		position: fixed;
 		border: 3px solid rgba(0, 0, 0, 0.3);
@@ -156,12 +160,12 @@
 		margin-bottom: 0.5rem;
 	}
 	.schedulebutton {
-		margin-left: 0.5rem;
 		margin-bottom: 0.5rem;
 		padding-top: 0.4rem;
 		padding-left: 0.4rem;
 		padding-right: 0.4rem;
 		padding-bottom: 0.2rem;
+		width: 100%;
 	}
 	.savebutton {
 		margin: auto;
@@ -194,5 +198,15 @@
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.6);
 		z-index: 2;
+	}
+	@media (max-aspect-ratio: 0.84) {
+		@media (max-width: 1000px) {
+			.popupform {
+				width: 90%;
+				left: 5%;
+				top: 15%;
+				height: 80%;
+			}
+		}
 	}
 </style>

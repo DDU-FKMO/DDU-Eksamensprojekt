@@ -169,6 +169,10 @@ app.post("/trainingProgram/exercises", async (req, res) => {
 		}
 	});
 
+	availableExercises.sort((a, b) => {
+		return a.name.localeCompare(b.name);
+	});
+
 	res.json(availableExercises);
 });
 

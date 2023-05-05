@@ -144,14 +144,20 @@ function getWeightOverTime(sessions, amount) {
 	let weightOverTime = {};
 	if (sessions.length < amount) amount = sessions.length;
 
+	let amountPerDate = {};
 	//Add all
 	for (let i = 0; i < sessions.length; i++) {
+		let date = sessions[i].date;
+		console.log(date);
 		sessions[i].info.forEach((element) => {
 			if (!weightOverTime[element.nameOfExercise]) weightOverTime[element.nameOfExercise] = {};
-			if (weightOverTime[element.nameOfExercise][sessions[i].date]) {
-				weightOverTime[element.nameOfExercise][sessions[i].date] += element.weight;
+			if (!amountPerDate[element.nameOfExercise]) amountPerDate[element.nameOfExercise] = {};
+			if (weightOverTime[element.nameOfExercise][date]) {
+				weightOverTime[element.nameOfExercise][date] += element.weight;
+				amountPerDate[element.nameOfExercise][date] += 1;
 			} else {
-				weightOverTime[element.nameOfExercise][sessions[i].date] = element.weight;
+				weightOverTime[element.nameOfExercise][date] = element.weight;
+				amountPerDate[element.nameOfExercise][date] = 1;
 			}
 		});
 	}
@@ -163,8 +169,18 @@ function getWeightOverTime(sessions, amount) {
 		});
 		for (let j = 0; j < keys.length - amount; j++) {
 			delete weightOverTime[i][keys[j]];
+			delete amountPerDate[i][keys[j]];
 		}
 	}
+	console.log("Weight old", {...weightOverTime});
+	console.log("Amount old", {...amountPerDate});
+	//Divide by amount
+	for (let i in weightOverTime) {
+		for (let j in weightOverTime[i]) {
+			weightOverTime[i][j] = weightOverTime[i][j] / amountPerDate[i][j];
+		}
+	}
+	console.log({...weightOverTime});
 	//Return
 	return weightOverTime;
 }
@@ -188,9 +204,9 @@ function getAverage(setsOverTime, repsOverTime, weightOverTime) {
 
 	for (let i in sum) {
 		average[i] = {
-			sets: sum[i].sets / number[i],
-			reps: sum[i].reps / number[i],
-			weight: sum[i].weight / number[i]
+			sets: Math.round((sum[i].sets / number[i]) * 100) / 100,
+			reps: Math.round((sum[i].reps / number[i]) * 100) / 100,
+			weight: Math.round((sum[i].weight / number[i]) * 100) / 100
 		};
 	}
 
@@ -214,9 +230,9 @@ function getCombinedAverage(sessions, amount) {
 		});
 	}
 	let average = {
-		sets: setSum / number,
-		reps: repsSum / number,
-		weight: weightSum / number
+		sets: Math.round((setSum / number) * 100) / 100,
+		reps: Math.round((repsSum / number) * 100) / 100,
+		weight: Math.round((weightSum / number) * 100) / 100
 	};
 
 	return average;

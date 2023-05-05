@@ -294,7 +294,8 @@ async function streakCalculation(email) {
 	}
 	let daysTrained = 0;
 	for (let i = 0; i < numOfDays; i++) {
-		session = sessionList[sessionList.length - (1 + i)];
+		let session = sessionList[sessionList.length - 1 - i];
+		if (session == null) continue;
 		if (session.date.getTime() >= prevMonday.getTime()) {
 			console.log(session);
 			daysTrained++;
