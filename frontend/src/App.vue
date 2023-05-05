@@ -70,10 +70,6 @@
 	<main class="page">
 		<RouterView @login="loggedIn = !loggedIn" />
 	</main>
-	<footer class="center footer">
-		<p>©DDU 2023</p>
-		<!-- <Settings /> -->
-	</footer>
 </template>
 
 <style scoped>
@@ -138,23 +134,23 @@
 		height: 100%;
 		aspect-ratio: 12/3.86;
 		margin-right: -6.5vh;
-		background-color: var(--color-black-3);
+		background: linear-gradient(0.25turn, var(--color-black-2), var(--color-black-3));
 		clip-path: polygon(0 0, 68% 0, 100% 100%, 32% 100%);
 		text-decoration: none;
 		border: 7px solid var(--color-black-2);
-		transition: background-color 0.5s, border-color 0.5s;
+		transition: border-color 0.2s;
 	}
 	.nav .navlink p {
 		color: var(--color-white);
 		font-weight: bold;
-		font-size: 2.5vh;
+		font-size: 2.25vh;
 	}
 	.nav .navlink.selected {
-		background-color: var(--base-color-3);
+		background: linear-gradient(0.25turn, var(--base-color-5), var(--base-color-2));
 		border-color: var(--base-color-5);
 	}
 	.nav .navlink:hover {
-		background-color: var(--base-color-1);
+		background: linear-gradient(0.25turn, var(--base-color-3), var(--base-color-1));
 		border-color: var(--base-color-4);
 	}
 

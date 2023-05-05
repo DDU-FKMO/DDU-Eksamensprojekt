@@ -26,11 +26,11 @@
 /* Button */
 .button {
 	aspect-ratio: 5/1;
-	background-color: var(--color-black-3);
+	background: linear-gradient(0.25turn, var(--color-black-2), var(--color-black-3));
 	clip-path: polygon(0 0, 80% 0, 100% 100%, 20% 100%);
 	text-decoration: none;
 	border: 3px solid var(--color-black-2);
-	transition: background-color 0.5s, border-color 0.5s;
+	transition: background-color 0.25s, border-color 0.25s;
 	color: var(--color-white);
 	font-weight: bold;
 	padding: 0 2em;
@@ -39,6 +39,7 @@
 .button:hover {
 	cursor: pointer;
 	background-color: var(--base-color-1);
+	background: linear-gradient(0.25turn, var(--base-color-3), var(--base-color-1));
 }
 
 /* Select */
