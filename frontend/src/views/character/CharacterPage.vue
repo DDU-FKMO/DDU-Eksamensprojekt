@@ -111,8 +111,7 @@
 	}
 	/*Character side */
 	.character {
-		width: 30%;
-		height: 75%;
+		width: 25%;
 		flex-direction: column;
 		justify-content: space-between;
 	}
@@ -137,6 +136,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		color: var(--color-black-1);
 		background: linear-gradient(to right, var(--color-gold-2), var(--color-gold-1), var(--color-gold-2));
 	}
 
@@ -155,6 +155,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		color: var(--color-black-1);
 		background: linear-gradient(to right, var(--color-gold-2), var(--color-gold-1), var(--color-gold-2));
 		font-size: 2rem;
 		clip-path: polygon(100% 0, 80% 50%, 100% 100%, 0 100%, 20% 50%, 0 0);
@@ -168,7 +169,7 @@
 		}
 		.character,
 		.statistics {
-			width: 90%;
+			width: 80%;
 			margin-bottom: 5%;
 		}
 	}

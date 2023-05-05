@@ -76,7 +76,7 @@
 	/*Main layout*/
 	.page {
 		width: 100%;
-		min-height: 80vh;
+		min-height: 75vh;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -99,7 +99,7 @@
 	}
 	header .background {
 		background-color: var(--color-black-3);
-		opacity: 0.5;
+		opacity: 0.25;
 		width: 100%;
 		height: 100%;
 		position: absolute;
