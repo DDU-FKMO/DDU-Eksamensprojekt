@@ -13,7 +13,7 @@ const app = createApp(App);
 app.use(router);
 app.use(ToastPlugin, {
 	position: "top-right",
-	duration: 4000,
+	duration: 5000,
 	dismissible: true
 });
 
