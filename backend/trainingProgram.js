@@ -50,7 +50,7 @@ app.post("/trainingProgram/suggest", async (req, res) => {
 		//Add 4 exercises per training day
 		for (let day = 0; day < 3; day++) {
 			let scheduleData = {day: dayNames[day * 2], exercises: []};
-			for (let e = 0; e < 3; e++) {
+			for (let e = 0; e < 4; e++) {
 				let exercise;
 				let tries = 0;
 				while (exercise == null) {
