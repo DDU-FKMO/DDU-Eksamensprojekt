@@ -286,14 +286,14 @@ async function streakCalculation(email) {
 	let today = new Date();
 	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
 
-	if (user.programList[0].weekStreaks.length > 0) {
-		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) {
+	if (user.programList[0].weekStreaks.length > 0) { // hvis brugeren har trænet
+		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) { // tjekker om brugeren har streak for denne uge
 			console.log("User has already fulfilled their streak this week.");
 			return true;
 		}
 	}
 	let daysTrained = 0;
-	for (let i = 0; i < numOfDays; i++) {
+	for (let i = 0; i < numOfDays; i++) { // tjekker antallet af træninger denne uge.
 		session = sessionList[sessionList.length - (1 + i)];
 		if (session.date.getTime() >= prevMonday.getTime()) {
 			console.log(session);
@@ -304,7 +304,7 @@ async function streakCalculation(email) {
 	if (daysTrained >= schedule.days.length) {
 		// hvis der er trænet der korrekte antal
 		user.programList[0].weekStreaks.push(prevMonday);
-		user.streak += 1;
+		user.streak += daysTrained; // får streak for antallet af træninger lavet i ugen
 		await user.save();
 		return true;
 	}

@@ -184,7 +184,7 @@
 							document.cookie = "user=" + token + "; expires=" + new Date(new Date().getTime() + c_time).toGMTString() + ";path=/";
 							this.$toast.success("Registered user and logged in!");
 							this.$emit("login");
-							this.$router.push("/");
+							this.$router.push("/intro");
 						})
 						.catch((err) => {
 							this.$toast.error("Failed to register user! " + err.response.data);
