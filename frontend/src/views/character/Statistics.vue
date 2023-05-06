@@ -3,15 +3,13 @@
 		<h2>Statistics</h2>
 		<div class="select">
 			<select v-model="selectedExercise">
-				<option disabled value="">Please select one</option>
-				<option value="overview">Overview</option>
+				<option disabled value="">Please select an exercise</option>
 				<option v-for="exercise in Object.keys(average)" :value="exercise">{{ exercise }}</option>
 			</select>
 		</div>
-		<div class="stat-elements" v-if="selectedExercise != 'overview'">
+		<div class="stat-elements" v-if="selectedExercise">
 			<div class="stat-element" v-if="selectedExercise != ''">
 				<div class="background"></div>
-				<h4>{{ selectedExercise }}</h4>
 				<div class="text">
 					<p>Average sets: {{ average[selectedExercise].sets }}</p>
 					<p>Average reps: {{ average[selectedExercise].reps }}</p>
@@ -21,18 +19,19 @@
 			<div class="stat-element">
 				<div class="background"></div>
 				<div class="chart-container">
-					<Chart v-if="chartData != {}" :options="chartData" id="chart" />
+					<Chart class="chart" v-if="chartData.sets != {}" :options="chartData.sets" />
 				</div>
 			</div>
-		</div>
-		<div class="stat-elements" v-else>
 			<div class="stat-element">
 				<div class="background"></div>
-				<h4>Overview</h4>
-				<div class="text">
-					<p>Average sets: {{ combinedAverage.sets }}</p>
-					<p>Average reps: {{ combinedAverage.reps }}</p>
-					<p>Average weight: {{ combinedAverage.weight }}</p>
+				<div class="chart-container">
+					<Chart class="chart" v-if="chartData.reps != {}" :options="chartData.reps" />
+				</div>
+			</div>
+			<div class="stat-element">
+				<div class="background"></div>
+				<div class="chart-container">
+					<Chart class="chart" v-if="chartData.weight != {}" :options="chartData.weight" />
 				</div>
 			</div>
 		</div>
@@ -50,9 +49,13 @@
 			average: {},
 			sessions: [],
 			dates: [],
-			selectedExercise: "overview",
+			selectedExercise: "",
 			combinedAverage: {},
-			chartData: {}
+			chartData: {
+				sets: {},
+				reps: {},
+				weight: {}
+			}
 		}),
 		components: {
 			Chart
@@ -99,8 +102,6 @@
 			selectedExercise: function (newVal, oldVal) {
 				if (newVal != oldVal) {
 					this.createTimeGraph(
-						"chart",
-						newVal + " Chart",
 						[
 							{name: "Sets", data: Object.values(this.setsOverTime[newVal])},
 							{name: "Reps", data: Object.values(this.repsOverTime[newVal])},
@@ -112,77 +113,84 @@
 			}
 		},
 		methods: {
-			createTimeGraph: function (id, name, data, timeData) {
-				this.chartData = {
-					series: data,
-					title: {
-						text: name,
-						align: "center",
-						style: {
-							fontSize: "0.9em",
-							color: "white"
-						}
-					},
-					legend: {
-						enabled: true,
-						itemStyle: {
-							color: "white"
-						},
-						layout: "horizontal",
-						padding: 0
-					},
-					chart: {
-						backgroundColor: "transparent",
-						animation: false,
-						type: "column"
-					},
-					yAxis: {
+			createTimeGraph: function (data, timeData) {
+				console.log("Data", data);
+				for (let series of data) {
+					console.log("Series " + series.name, series);
+					this.chartData[series.name.toLowerCase()] = {
+						series: [series],
 						title: {
-							text: "",
+							text: series.name,
+							align: "center",
 							style: {
+								fontSize: "0.9em",
 								color: "white"
+							},
+							animation: false
+						},
+						legend: {
+							enabled: false,
+							itemStyle: {
+								color: "white"
+							},
+							layout: "horizontal",
+							padding: 0
+						},
+						chart: {
+							backgroundColor: "transparent",
+							animation: false,
+							type: "column"
+						},
+						yAxis: {
+							title: {
+								text: "",
+								style: {
+									color: "white"
+								}
+							},
+							labels: {
+								style: {
+									color: "white",
+									fontWeight: "bold"
+								}
 							}
 						},
-						labels: {
-							style: {
-								color: "white",
-								fontWeight: "bold"
-							}
-						}
-					},
-					xAxis: {
-						categories: timeData,
+						xAxis: {
+							categories: timeData,
 
-						labels: {
-							style: {
-								color: "white",
-								fontWeight: "bold"
+							labels: {
+								style: {
+									color: "white",
+									fontWeight: "bold"
+								}
 							}
-						}
-					},
-					plotOptions: {
-						column: {
-							margin: 2,
-							pointPadding: 0,
-							groupPadding: 0.1,
-							shadow: false,
-							borderWidth: 2,
-							borderColor: "var(--color-white)",
-							borderRadius: 10
-						}
-					},
-					credits: {
-						enabled: false
-					},
-					exporting: {
-						buttons: {
-							contextButton: {
-								menuItems: ["downloadCSV", "downloadXLS"]
+						},
+						plotOptions: {
+							column: {
+								margin: 2,
+								pointPadding: 0,
+								groupPadding: 0.1,
+								shadow: false,
+								borderWidth: 2,
+								borderColor: "var(--color-white)",
+								borderRadius: 10,
+								animation: false
 							}
-						}
-					},
-					colors: ["var(--base-color-1)", "var(--base-color-3)", "var(--base-color-4)", "var(--base-color-5)"]
-				};
+						},
+						credits: {
+							enabled: false
+						},
+						exporting: {
+							buttons: {
+								contextButton: {
+									menuItems: ["downloadCSV", "downloadXLS"]
+								}
+							}
+						},
+						colors: ["var(--base-color-1)", "var(--base-color-3)", "var(--base-color-4)", "var(--base-color-5)"]
+					};
+				}
+				console.log("Charts", this.chartData);
 			}
 		}
 	};
@@ -216,6 +224,8 @@
 		width: 40%;
 		aspect-ratio: 1/1;
 		padding: 1%;
+		margin-bottom: 1em;
+		color: var(--color-white);
 	}
 	.stat-elements .stat-element .background {
 		background-color: var(--base-color-2);
@@ -238,6 +248,18 @@
 		align-items: center;
 	}
 
+	/* Selection */
+	.select {
+		width: 50%;
+		height: 2em;
+		margin: 1em 0;
+	}
+	.select select {
+		height: 100%;
+		margin: 0;
+		font-size: 1.25em;
+	}
+
 	/* Charts */
 	.chart-container {
 		width: 100%;
@@ -247,7 +269,7 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-	#chart {
+	.chart {
 		width: 100%;
 		height: 100%;
 	}

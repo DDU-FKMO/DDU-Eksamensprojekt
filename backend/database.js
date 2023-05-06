@@ -293,8 +293,9 @@ async function streakCalculation(email) {
 		}
 	}
 	let daysTrained = 0;
-	for (let i = 0; i < numOfDays; i++) { // tjekker antallet af træninger denne uge.
-		session = sessionList[sessionList.length - (1 + i)];
+	for (let i = 0; i < numOfDays; i++) {
+		let session = sessionList[sessionList.length - 1 - i];
+		if (session == null) continue;
 		if (session.date.getTime() >= prevMonday.getTime()) {
 			console.log(session);
 			daysTrained++;

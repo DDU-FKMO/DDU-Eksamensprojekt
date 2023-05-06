@@ -1,7 +1,7 @@
 <template>
 	<h1 class="title">Achievements</h1>
-    <h2>Level: {{ data.level }}</h2>
-    <h3>Streak to next level: {{ data.streak % 5 }} / 5</h3>
+	<h2>Level: {{ data.level }}</h2>
+	<h3>Streak to next level: {{ data.streak % 5 }} / 5</h3>
 	<div class="unlocks">
 		<div v-for="name in data.unlockNames">
 			<Achievement :AcName="AcNames[data.unlockNames.indexOf(name)]" :unlockName="name" :id="data.unlockNames.indexOf(name)" :unlocked="data.unlockNames.indexOf(name) < data.level"></Achievement>

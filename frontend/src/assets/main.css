@@ -7,6 +7,7 @@
 	overflow-x: hidden;
 	font-weight: normal;
 	background: none;
+	color: var(--color-white);
 }
 
 #background {
@@ -14,7 +15,21 @@
 	width: 100%;
 	height: 100%;
 	z-index: -100;
-	background: radial-gradient(circle, var(--color-black-4), var(--color-black-2));
+}
+#background #gradient {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -99;
+	background: radial-gradient(circle, var(--color-black-3), var(--color-black-2));
+}
+#background #pattern {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -98;
+	opacity: 0.1;
+	background: url("/background.png");
 }
 
 .center {
@@ -26,11 +41,11 @@
 /* Button */
 .button {
 	aspect-ratio: 5/1;
-	background-color: var(--color-black-3);
+	background: linear-gradient(0.25turn, var(--color-black-2), var(--color-black-3));
 	clip-path: polygon(0 0, 80% 0, 100% 100%, 20% 100%);
 	text-decoration: none;
 	border: 3px solid var(--color-black-2);
-	transition: background-color 0.5s, border-color 0.5s;
+	transition: background-color 0.25s, border-color 0.25s;
 	color: var(--color-white);
 	font-weight: bold;
 	padding: 0 2em;
@@ -39,6 +54,7 @@
 .button:hover {
 	cursor: pointer;
 	background-color: var(--base-color-1);
+	background: linear-gradient(0.25turn, var(--base-color-3), var(--base-color-1));
 }
 
 /* Select */
