@@ -163,6 +163,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-between;
+		color: var(--color-black-1);
 	}
 	.popupcontent .video {
 		display: block;
