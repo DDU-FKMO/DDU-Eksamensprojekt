@@ -45,6 +45,7 @@
 			stats: []
 		}),
 		name: "Logpopup",
+		inject: ["$toast"],
 		props: {
 			exercises: {
 				type: Array,
@@ -83,6 +84,7 @@
 					},
 					body: JSON.stringify(data)
 				});
+				this.$toast.success("Logged session successfully!");
 				this.popupOpen = false;
 			},
 			async GetPreviousInfo() {
