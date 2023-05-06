@@ -19,6 +19,7 @@
 				console.log("logged in");
 			}
 			this.routes = this.$router.options.routes;
+			this.routes = this.routes.filter((route) => route.path != "/intro");
 			this.$router.afterEach((to, from) => {
 				this.color();
 			});
