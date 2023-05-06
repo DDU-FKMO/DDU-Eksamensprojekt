@@ -113,8 +113,8 @@ import axios from "axios";
 	}
 	.hat{
 	    position: absolute;
-		height: 8vh;
-		width: 7vh;
+		height: 10%;
+		width: 20%;
 		top: -3%;
 		left: 40%	
 	}
