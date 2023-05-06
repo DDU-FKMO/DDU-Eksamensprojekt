@@ -90,7 +90,7 @@
 
 	/*Nav bar*/
 	header {
-		height: 7.5vh;
+		height: 8vh;
 		width: 100%;
 		display: flex;
 		flex-direction: row;
@@ -143,7 +143,7 @@
 	.nav .navlink p {
 		color: var(--color-white);
 		font-weight: bold;
-		font-size: 2.25vh;
+		font-size: 2.2vh;
 	}
 	.nav .navlink.selected {
 		background: linear-gradient(0.25turn, var(--base-color-5), var(--base-color-2));
@@ -219,7 +219,7 @@
 				margin-right: -3.5vh;
 			}
 			.nav .navlink p {
-				font-size: 1.5rem;
+				font-size: 1.3rem;
 			}
 		}
 	}
