@@ -38,7 +38,7 @@
 		data() {
 			return {
 				data: {},
-				AcNames: ["Getting Started", "Hanging in there", "Feeling Changes", "Looking Good", "Getting Fit", "Shirts are Getting Tight", "Dwayne Johnson", "Build like a Beast"]
+				AcNames: ["Getting Started", "Hanging in there", "Feeling Changes", "Looking Good", "Getting Fit", "Shirts are Getting Tight", "Dwayne Johnson", "Build like a Beast", "Rawr ;)"]
 			};
 		},
 		mounted() {

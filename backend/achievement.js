@@ -14,8 +14,14 @@ app.get("/node/achievements", auth, async (req, res) => {
 		unlocks.forEach((unlock) => {
 			unlockList.push(unlock.name);
 		});
+
+	
+		//console.log(unlockList);
 		unlockList.splice(1, 1); // red
-		//console.log(unlockList)
+		unlockList.splice(8, 1); // female, remember that index decrease by 1 when splicing ^^ ...
+		
+	
+
 		let lastUnlockName = user.unlocks[user.unlocks.length - 1].name;
 
 		let idx = unlockList.indexOf(lastUnlockName);
