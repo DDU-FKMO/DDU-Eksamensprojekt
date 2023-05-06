@@ -428,12 +428,12 @@ async function asd() {
 	//await Unlock.deleteMany({unlockType: "background"});
 	//await addProgramToUser("Custom program - User", "Filipemails");
 	// let data = {};
-	// data.content = "background-color: blue;";
-	// data.name = "blue background";
-	// data.unlockType = "background";
+	// data.content = "/unlocks/fedora.png";
+	// data.name = "Fedora";
+	// data.unlockType = "hat";
 	// await createUnlock(data);
-	// await addUnlockToUser("filip@emails.dk", "blue background");
-	// await addUnlockToUser("filip@emails.dk", "red background");
+	// await addUnlockToUser("filip@emails.dk", "Fedora");
+	//await addUnlockToUser("filip@emails.dk", "red background");
 	// let colors = {
 	// 	red: "#ff0000",
 	// 	blue: "#0e4c73",

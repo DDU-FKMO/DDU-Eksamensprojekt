@@ -1,5 +1,6 @@
 <template>
 	<div class="all">
+		
 		<svg viewBox="0 0 2481 3508" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule: evenodd; clip-rule: evenodd; stroke-linejoin: round; stroke-miterlimit: 2">
 			<filter id="blur">
 				<feGaussianBlur stdDeviation="5" />
@@ -13,6 +14,7 @@
 			<use style="fill: var(--color-black-1)" :href="'/skin_' + gender + '_' + view + '.svg#silhouette'"></use>
 			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_' + gender + '_' + view + '.svg#' + muscle"></use>
 		</svg>
+		<img :src="hat" class="hat" alt="" v-if="hat != 'none'">
 	</div>
 
 	<div class="select">
@@ -22,22 +24,24 @@
 			<option value="back">Back</option>
 		</select>
 
-		<select v-model="gender">
+		<!-- <select v-model="gender">
 			<option disabled value="">Please select gender</option>
 			<option value="male">Male</option>
 			<option value="female">Female</option>
-		</select>
+		</select> -->
 	</div>
 </template>
 
 <script>
+import axios from "axios";
 	export default {
 		name: "Character",
 		inject: ["$toast"],
 		data: () => ({
 			muscleGroups: {},
 			view: "front",
-			gender: "male"
+			gender: "",
+			hat: ""
 		}),
 		props: {
 			name: {
@@ -48,6 +52,8 @@
 		},
 		mounted() {
 			this.getMuscleGroups();
+			this.skin();
+			this.getHat();
 		},
 		methods: {
 			getMuscleGroups() {
@@ -67,6 +73,30 @@
 						console.error(error);
 						this.$toast.error(error);
 					});
+			},
+			async skin() {
+				await axios
+					.get("/node/skin")
+					.then((res) => {
+						console.log("Gender: " + res.data);
+						this.gender = res.data;
+					})
+					.catch((err) => {
+						console.log("error: " + err);
+						this.gender = "male";
+					});
+			},
+			async getHat() {
+				await axios
+					.get("/node/hats")
+					.then((res) => {
+						console.log("Hat: " + res.data);
+						this.hat = res.data;
+					})
+					.catch((err) => {
+						console.log("error: " + err);
+						this.hat = "none";
+					});
 			}
 		}
 	};
@@ -81,4 +111,12 @@
 		align-items: center;
 		flex-direction: column;
 	}
+	.hat{
+	    position: absolute;
+		height: 8vh;
+		width: 7vh;
+		top: -3%;
+		left: 40%	
+	}
+
 </style>

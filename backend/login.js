@@ -43,7 +43,7 @@ app.post("/node/register", async (req, res) => {
 
 		user.token = token;
 		console.log("Succesfully registered user: " + user.username);
-		let defaultUnlocks = ["red"];
+		let defaultUnlocks = ["red", "Female Skin"];
 		for (let i = 0; i < defaultUnlocks.length; i++) {
 			console.log("adding unlock: " + defaultUnlocks[i]);
 			await addUnlockToUser(user.email, defaultUnlocks[i]);

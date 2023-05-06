@@ -55,3 +55,38 @@ app.get("/node/color", auth, async (req, res) => {
 
 	return res.status(200).send("red");
 });
+
+app.get("/node/skin", auth, async (req, res) => {
+	const email = req.body.user.email;
+
+	let user = await getUserByEmail(email);
+	if (user) {
+		for (let unlock of user.unlocks) {
+			console.log(unlock.name in user.equipment);
+			if (user.equipment.includes(unlock.name) && unlock.unlockType == "character") {
+				console.log("Character: " + unlock.name);
+				let skin_name = unlock.name.split(" ")[0].toLowerCase();
+				return res.status(200).send(skin_name);
+			}
+		}
+	}
+
+	return res.status(200).send("male");
+});
+
+app.get("/node/hats", auth, async (req, res) => {
+	const email = req.body.user.email;
+
+	let user = await getUserByEmail(email);
+	if (user) {
+		for (let unlock of user.unlocks) {
+			console.log(unlock.name in user.equipment);
+			if (user.equipment.includes(unlock.name) && unlock.unlockType == "hat") {
+				console.log("Hat: " + unlock.name);
+				return res.status(200).send(unlock.content);
+			}
+		}
+	}
+
+	return res.status(200).send("none");
+});
