@@ -15,7 +15,7 @@
 				<p>Streak: {{ streak }}</p>
 			</div>
 			<div class="motivationl">
-				<p v-if="gotStreakThisWeek">User has completed their training this week! Good Job!</p>
+				<p v-if="gotStreakThisWeek">You have completed your training this week! Good Job!</p>
 				<p v-else>You still have time to complete your training this week!</p>
 			</div>
 			<Statistics />
