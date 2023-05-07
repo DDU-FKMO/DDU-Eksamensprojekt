@@ -1,6 +1,5 @@
 <template>
 	<div class="all">
-		
 		<svg viewBox="0 0 2481 3508" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule: evenodd; clip-rule: evenodd; stroke-linejoin: round; stroke-miterlimit: 2">
 			<filter id="blur">
 				<feGaussianBlur stdDeviation="5" />
@@ -14,7 +13,7 @@
 			<use style="fill: var(--color-black-1)" :href="'/skin_' + gender + '_' + view + '.svg#silhouette'"></use>
 			<use v-for="muscle of Object.keys(muscleGroups)" :style="muscleGroups[muscle] ? 'fill: var(--base-color-1)' : 'fill: var(--color-black-2)'" :href="'/skin_' + gender + '_' + view + '.svg#' + muscle"></use>
 		</svg>
-		<img :src="hat" class="hat" alt="" v-if="hat != 'none'">
+		<img :src="hat" class="hat" alt="" v-if="hat != 'none'" />
 	</div>
 
 	<div class="select">
@@ -33,7 +32,7 @@
 </template>
 
 <script>
-import axios from "axios";
+	import axios from "axios";
 	export default {
 		name: "Character",
 		inject: ["$toast"],
@@ -111,12 +110,11 @@ import axios from "axios";
 		align-items: center;
 		flex-direction: column;
 	}
-	.hat{
-	    position: absolute;
+	.hat {
+		position: absolute;
 		height: 10%;
 		width: 20%;
 		top: -3%;
-		left: 40%	
+		left: 40%;
 	}
-
 </style>

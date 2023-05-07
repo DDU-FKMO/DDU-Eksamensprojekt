@@ -286,8 +286,10 @@ async function streakCalculation(email) {
 	let today = new Date();
 	prevMonday.setDate(prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7));
 
-	if (user.programList[0].weekStreaks.length > 0) { // hvis brugeren har trænet
-		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) { // tjekker om brugeren har streak for denne uge
+	if (user.programList[0].weekStreaks.length > 0) {
+		// hvis brugeren har trænet
+		if (user.programList[0].weekStreaks[user.programList[0].weekStreaks.length - 1].getDate() == prevMonday.getDate()) {
+			// tjekker om brugeren har streak for denne uge
 			console.log("User has already fulfilled their streak this week.");
 			return true;
 		}

@@ -75,5 +75,4 @@
 		background-size: contain !important;
 		background-repeat: no-repeat !important;
 	}
-
 </style>
