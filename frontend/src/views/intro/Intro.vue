@@ -16,13 +16,14 @@
         <p>Here, you personalize your workout. You can either make your own or choose a pre-generated workout.
             If you are new to working out, we recommend choosing a pre-generated workout by clicking "Recommended".
             Alternatively, you can auto-generate a workout that hits some musclegroups of your choice. 
+            Clicking on an exercise will make a popup appear with an introduction on, how to perform the exercise, including a written explanation and an youtubevideo.
         </p>
     </div>
     <div class="Explanation">
         <h2 class="subtitle">Log Session</h2>
         <img src="/pages/log.png" alt="">
         <p>To log a workout session, use this page. Your program is already present on this page, so just press "log" on the current day.
-            After pressing "log", you can insert your repetitions, sets and weight.
+            After pressing "log", you can insert your repetitions, sets and weight. Like with the training page, clicking on an exercise will show an instruction.
         </p>
     </div>
     <div class="Explanation">
