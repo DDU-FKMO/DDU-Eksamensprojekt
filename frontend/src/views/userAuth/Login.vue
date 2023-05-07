@@ -1,4 +1,5 @@
 <template>
+	<h1 class="title">Welcome to <u>Apex Fitness</u></h1>
 	<div class="ctn center">
 		<form @submit.prevent="loginUser" method="post" v-if="!signUp">
 			<h2 class="head">Login</h2>
@@ -24,6 +25,10 @@
 </template>
 
 <style scoped>
+	.title{
+		margin-bottom: 4vh;
+	}
+
 	div.ctn {
 		width: 100%;
 		height: 70%;
