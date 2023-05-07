@@ -51,7 +51,7 @@
 						.get("/node/achievements")
 						.then((res) => {
 							this.data = res.data;
-							console.log(data.unlockNames);
+							console.log(this.data.unlockNames);
 						})
 						.catch((err) => {
 							console.log("error: " + err);
