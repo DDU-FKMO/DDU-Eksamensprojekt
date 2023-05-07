@@ -146,6 +146,7 @@
 		flex-direction: row;
 		justify-content: flex-start;
 		flex-wrap: wrap;
+		color: var(--color-black-1);
 	}
 	.popupsubtitle {
 		font-size: 1.5rem;
