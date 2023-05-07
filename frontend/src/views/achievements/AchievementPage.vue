@@ -41,20 +41,29 @@
 				AcNames: ["Getting Started", "Hanging in there", "Feeling Changes", "Looking Good", "Getting Fit", "Shirts are Getting Tight", "Dwayne Johnson", "Build like a Beast", "Rawr ;)"]
 			};
 		},
+		inject: ["$toast"],
 		mounted() {
 			this.getAchievements();
 		},
 		methods: {
 			async getAchievements() {
 				try {
-					await axios
-						.get("/node/achievements")
-						.then((res) => {
-							this.data = res.data;
-							console.log(this.data.unlockNames);
+					await fetch("/node/achievements")
+						.then(async (response) => {
+							console.log("Response:", response);
+							if (response.status == 400)
+								await response.text().then((t) => {
+									throw new Error(t);
+								});
+							else return response.json();
+						})
+						.then((data) => {
+							this.data = data;
+							console.log("Achievements: ", this.data);
 						})
 						.catch((err) => {
-							console.log("error: " + err);
+							console.log(err);
+							this.$toast.error(err);
 						});
 				} catch (err) {
 					console.log("Something went wrong... " + err);

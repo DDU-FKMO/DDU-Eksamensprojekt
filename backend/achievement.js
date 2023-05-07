@@ -44,7 +44,8 @@ app.get("/node/achievements", auth, async (req, res) => {
 		data.streak = user.streak;
 		data.level = level;
 		data.unlockNames = unlockList;
-		return res.status(200).json(data);
+		console.log("Achievements: ", data);
+		return res.json(data);
 	}
 
 	return res.status(404).send("wrong!!!");
